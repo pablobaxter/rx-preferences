@@ -110,15 +110,14 @@ jobs:
 
 workflows:
   version: 2
-  Core-Test-And-Build:
+  Test-And-Build:
     jobs:
       - Core-Test
       - Core-Build:
           requires:
             - Core-Test
-  Rx2-Test-And-Build:
-    jobs:
       - Rx2-Test
       - Rx2-Build:
           requires:
             - Rx2-Test
+
