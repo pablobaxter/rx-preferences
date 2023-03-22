@@ -3,7 +3,6 @@ package com.frybits.gradle
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.LibraryPlugin
 import com.android.build.gradle.tasks.JavaDocGenerationTask
-import dagger.hilt.android.plugin.util.capitalize
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.attributes.DocsType
@@ -87,7 +86,7 @@ private fun LibraryExtension.configureAndroidLibrary() {
 
 private fun Project.configureDokka() {
     val dokka = tasks.getByName<DokkaTask>("dokkaHtml") {
-        moduleName.set(this@configureDokka.name.capitalize())
+        moduleName.set(findProperty("libraryName")?.toString())
         dokkaSourceSets.maybeCreate("main").apply {
             noAndroidSdkLink.set(false)
             outputDirectory.set(File("${buildDir}/dokka"))
@@ -123,7 +122,10 @@ private fun Project.configurePublishing() {
             publications {
                 whenObjectAdded {
                     if (this is MavenPublication) {
-//                        configurePom(harmonyPomName(), harmonyDescription())
+                        configurePom(
+                            findProperty("libraryName")?.toString().orEmpty(),
+                            findProperty("description")?.toString().orEmpty()
+                        )
                     }
                 }
                 create<MavenPublication>("release") {

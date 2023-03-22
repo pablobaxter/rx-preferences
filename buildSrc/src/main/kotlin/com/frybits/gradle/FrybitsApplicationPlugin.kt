@@ -1,9 +1,7 @@
 package com.frybits.gradle
 
-import androidx.navigation.safeargs.gradle.SafeArgsKotlinPlugin
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.gradle.AppPlugin
-import dagger.hilt.android.plugin.HiltGradlePlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
@@ -45,9 +43,7 @@ private fun Project.applyAppPlugins() {
     apply<AppPlugin>()
     apply<KotlinAndroidPluginWrapper>()
     apply<ParcelizeSubplugin>()
-    apply<SafeArgsKotlinPlugin>()
     apply<Kapt3GradleSubplugin>()
-//    apply<HiltGradlePlugin>()
 }
 
 @Suppress("UnstableApiUsage")
