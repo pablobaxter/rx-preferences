@@ -11,8 +11,8 @@ jobs:
       resource-class: small
     steps:
       - checkout
-      - android/change-java-version:
-          java-version: 17
+#      - android/change-java-version:
+#          java-version: 17
       - android/restore-gradle-cache:
           cache-prefix: v1-core
       - android/restore-build-cache:
