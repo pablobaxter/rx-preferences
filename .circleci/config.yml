@@ -11,11 +11,11 @@ jobs:
       resource-class: small
     steps:
       - checkout
-      - change-java-version
+      - android/change-java-version:
           java-version: 17
-      - android/restore-gradle-cache
+      - android/restore-gradle-cache:
           cache-prefix: v1-core
-      - android/restore-build-cache
+      - android/restore-build-cache:
           cache-prefix: v1-core
       - run:
           name: Check build health
@@ -23,9 +23,9 @@ jobs:
             ./gradlew buildHealth
       - android/run-tests:
           test-command: ./gradlew :core:test
-      - android/save-gradle-cache
+      - android/save-gradle-cache:
           cache-prefix: v1-core
-      - android/save-build-cache
+      - android/save-build-cache:
           cache-prefix: v1-core
       - run:
           name: Save test results
@@ -45,11 +45,11 @@ jobs:
       resource-class: small
     steps:
       - checkout
-      - change-java-version
-        java-version: 17
-      - android/restore-gradle-cache
+      - android/change-java-version:
+          java-version: 17
+      - android/restore-gradle-cache:
           cache-prefix: v1-core
-      - android/restore-build-cache
+      - android/restore-build-cache:
           cache-prefix: v1-core
       - run:
           name: Assemble Rx-Preferences
@@ -57,9 +57,9 @@ jobs:
             ./gradlew :core:assembleRelease
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :core:publishToMavenLocal
-      - android/save-gradle-cache
+      - android/save-gradle-cache:
           cache-prefix: v1-core
-      - android/save-build-cache
+      - android/save-build-cache:
           cache-prefix: v1-core
 
 workflows:
@@ -67,6 +67,6 @@ workflows:
   Build_Upload:
     jobs:
       - Core-Test
-      - Core-Build
+      - Core-Build:
         requires:
           - Core-Test
