@@ -46,7 +46,7 @@ jobs:
       - android/restore-build-cache:
           cache-prefix: v1-core
       - run:
-          name: Assemble Rx-Preferences
+          name: Assemble Core Library
           command: |
             ./gradlew :core:assembleRelease
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
@@ -56,6 +56,58 @@ jobs:
       - android/save-build-cache:
           cache-prefix: v1-core
 
+  Rx2-Test:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: v1-rx2
+      - android/restore-build-cache:
+          cache-prefix: v1-rx2
+      - run:
+          name: Check build health
+          command: |
+            ./gradlew buildHealth
+      - android/run-tests:
+          test-command: ./gradlew :rx2:test
+      - android/save-gradle-cache:
+          cache-prefix: v1-rx2
+      - android/save-build-cache:
+          cache-prefix: v1-rx2
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+  Rx2-Build:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: v1-rx2
+      - android/restore-build-cache:
+          cache-prefix: v1-rx2
+      - run:
+          name: Assemble Rx2 Library
+          command: |
+            ./gradlew :rx2:assembleRelease
+            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+            ./gradlew :rx2:publishToMavenLocal
+      - android/save-gradle-cache:
+          cache-prefix: v1-rx2
+      - android/save-build-cache:
+          cache-prefix: v1-rx2
+
 workflows:
   version: 2
   Core-Test-And-Build:
@@ -64,3 +116,9 @@ workflows:
       - Core-Build:
           requires:
             - Core-Test
+  Rx2-Test-And-Build:
+    jobs:
+      - Rx2-Test
+      - Rx2-Build:
+          requires:
+            - Rx2-Test
