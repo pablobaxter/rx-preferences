@@ -1,0 +1,60 @@
+version: 2.1
+
+jobs:
+
+  Rx-Preferences-Test:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+
+    environment:
+      # Configure the JVM and Gradle to avoid OOM errors
+      _JAVA_OPTIONS: "-Xmx3g"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: Check build health
+          command: |
+            ./gradlew buildHealth
+      - run:
+          name: Run all unit tests
+          command: |
+            ./gradlew :rx-preferences:test
+
+      - store_test_results:
+          path: ~/temp_results
+
+  Rx-Preferences-Build:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+
+    environment:
+      # Configure the JVM and Gradle to avoid OOM errors
+      _JAVA_OPTIONS: "-Xmx3g"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: Assemble Rx-Preferences
+          command: |
+            ./gradlew :rx-preferences:assembleRelease
+            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+            ./gradlew :rx-preferences:publishToMavenLocal
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+
+workflows:
+  version: 2
+  Build_Upload:
+    jobs:
+      - Rx-Preferences-Test
+      - Rx-Preferences-Build

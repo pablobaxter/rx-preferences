@@ -3,7 +3,7 @@ package com.f2prateek.rx.preferences2;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
-import androidx.test.core.app.ApplicationProvider;
+import androidx.test.platform.app.InstrumentationRegistry;
 import io.reactivex.functions.Consumer;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
@@ -35,7 +35,7 @@ public class PreferenceTest {
   private RxSharedPreferences rxPreferences;
 
   @Before public void setUp() {
-    preferences = getDefaultSharedPreferences(ApplicationProvider.getApplicationContext());
+    preferences = getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().getContext());
     preferences.edit().clear().commit();
     rxPreferences = RxSharedPreferences.create(preferences);
   }
