@@ -1,35 +1,24 @@
-apply plugin: 'com.android.application'
+plugins {
+    id 'frybits-application'
+}
+
 apply plugin: 'com.jakewharton.butterknife'
 
 android {
-  compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
-
-  compileOptions {
-    sourceCompatibility rootProject.ext.java8Version
-    targetCompatibility rootProject.ext.java8Version
-  }
-
-  defaultConfig {
-    applicationId 'com.f2prateek.rx.preferences.sample'
-    minSdkVersion 14 // rxBinding has a minimum of 14
-    targetSdkVersion rootProject.ext.targetSdkVersion
-    versionCode 1
-    versionName '1.0.0'
-  }
-
-  lintOptions {
-    textReport true
-    textOutput 'stdout'
-    ignoreWarnings true
-  }
+    namespace 'com.f2prateek.rx.preferences2.sample'
+    defaultConfig {
+        applicationId 'com.f2prateek.rx.preferences2.sample'
+        targetSdk 32
+        versionCode 1
+        versionName "1.0"
+    }
 }
 
 dependencies {
-  implementation project(':rx-preferences')
-  implementation deps.rxandroid
-  implementation deps.rxbinding
-  implementation deps.butterknife
+    implementation project(':rx-preferences')
+    implementation libs.reactivex.rxandroid2
+    implementation libs.jakewharton.rxbinding3
+    implementation libs.jakewharton.butterknife
 
-  annotationProcessor deps.butterknifeCompiler
+    kapt libs.jakewharton.butterknife.compiler
 }

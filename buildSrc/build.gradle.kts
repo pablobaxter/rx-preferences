@@ -17,17 +17,17 @@ gradlePlugin {
     plugins {
         create("frybitsAppPlugin") {
             id = "frybits-application"
-            implementationClass = "com.frybits.harmony.gradle.FrybitsApplicationPlugin"
+            implementationClass = "com.frybits.gradle.FrybitsApplicationPlugin"
         }
 
         create("frybitsLibraryPlugin") {
             id = "frybits-library"
-            implementationClass = "com.frybits.harmony.gradle.FrybitsLibraryPlugin"
+            implementationClass = "com.frybits.gradle.FrybitsLibraryPlugin"
         }
 
         create("frybitsTestPlugin") {
             id = "frybits-test"
-            implementationClass = "com.frybits.harmony.gradle.FrybitsTestPlugin"
+            implementationClass = "com.frybits.gradle.FrybitsTestPlugin"
         }
     }
 }

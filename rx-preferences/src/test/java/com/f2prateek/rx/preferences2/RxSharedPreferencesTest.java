@@ -3,7 +3,7 @@ package com.f2prateek.rx.preferences2;
 import android.annotation.SuppressLint;
 import android.content.SharedPreferences;
 
-import androidx.test.core.app.ApplicationProvider;
+import androidx.test.platform.app.InstrumentationRegistry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,7 @@ public class RxSharedPreferencesTest {
   private RxSharedPreferences rxPreferences;
 
   @Before public void setUp() {
-    SharedPreferences preferences = getDefaultSharedPreferences(ApplicationProvider.getApplicationContext());
+    SharedPreferences preferences = getDefaultSharedPreferences(InstrumentationRegistry.getInstrumentation().getContext());
     preferences.edit().clear().commit();
     rxPreferences = RxSharedPreferences.create(preferences);
   }

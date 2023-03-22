@@ -1,32 +1,20 @@
-apply plugin: 'com.android.library'
+plugins {
+    id 'frybits-library'
+}
 
 android {
-  compileSdkVersion rootProject.ext.compileSdkVersion
-  buildToolsVersion rootProject.ext.buildToolsVersion
-
-  compileOptions {
-    sourceCompatibility rootProject.ext.javaVersion
-    targetCompatibility rootProject.ext.javaVersion
-  }
-
-  defaultConfig {
-    minSdkVersion rootProject.ext.minSdkVersion
-  }
-
-  lintOptions {
-    textReport true
-    textOutput 'stdout'
-  }
+    namespace 'com.f2prateek.rx.preferences2'
+    defaultConfig {
+        minSdk = 21
+    }
 }
 
 dependencies {
-  implementation deps.annotations
-  api deps.rxjava2
+    implementation libs.androidx.annotation
+    api libs.reactivex.rx2
 
-  testImplementation deps.junit
-  testImplementation deps.assertj
-  testImplementation deps.testcore
-  testImplementation deps.robolectric
+    testImplementation libs.kotlin.test.junit
+
+    testImplementation 'org.robolectric:robolectric:4.9'
+    testImplementation "org.assertj:assertj-core:3.16.1"
 }
-
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

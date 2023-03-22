@@ -47,7 +47,7 @@ private fun Project.applyAppPlugins() {
     apply<ParcelizeSubplugin>()
     apply<SafeArgsKotlinPlugin>()
     apply<Kapt3GradleSubplugin>()
-    apply<HiltGradlePlugin>()
+//    apply<HiltGradlePlugin>()
 }
 
 @Suppress("UnstableApiUsage")
