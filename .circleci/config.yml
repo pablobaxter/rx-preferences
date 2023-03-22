@@ -1,60 +1,66 @@
 version: 2.1
 
-jobs:
+orbs:
+  android: circleci/android@2.2.0
 
-  Rx-Preferences-Test:
+jobs:
+  Core-Test:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
-
-    environment:
-      # Configure the JVM and Gradle to avoid OOM errors
-      _JAVA_OPTIONS: "-Xmx3g"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
-
-    working_directory: ~/repo
-
+    resource_class: small
     steps:
       - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: v1-core
+      - android/restore-build-cache:
+          cache-prefix: v1-core
       - run:
           name: Check build health
           command: |
             ./gradlew buildHealth
+      - android/run-tests:
+          test-command: ./gradlew :core:test
+      - android/save-gradle-cache:
+          cache-prefix: v1-core
+      - android/save-build-cache:
+          cache-prefix: v1-core
       - run:
-          name: Run all unit tests
+          name: Save test results
           command: |
-            ./gradlew :rx-preferences:test
-
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
       - store_test_results:
-          path: ~/temp_results
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
 
-  Rx-Preferences-Build:
+  Core-Build:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
-
-    environment:
-      # Configure the JVM and Gradle to avoid OOM errors
-      _JAVA_OPTIONS: "-Xmx3g"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
-
-    working_directory: ~/repo
-
+    resource_class: small
     steps:
       - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: v1-core
+      - android/restore-build-cache:
+          cache-prefix: v1-core
       - run:
           name: Assemble Rx-Preferences
           command: |
-            ./gradlew :rx-preferences:assembleRelease
+            ./gradlew :core:assembleRelease
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
-            ./gradlew :rx-preferences:publishToMavenLocal
-
-      - persist_to_workspace:
-          root: ~/repo
-          paths:
-            - .
+            ./gradlew :core:publishToMavenLocal
+      - android/save-gradle-cache:
+          cache-prefix: v1-core
+      - android/save-build-cache:
+          cache-prefix: v1-core
 
 workflows:
   version: 2
-  Build_Upload:
+  Core-Test-And-Build:
     jobs:
-      - Rx-Preferences-Test
-      - Rx-Preferences-Build
+      - Core-Test
+      - Core-Build:
+          requires:
+            - Core-Test
