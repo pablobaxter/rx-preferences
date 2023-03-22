@@ -7,7 +7,7 @@ jobs:
   Core-Test:
     executor:
       name: android/android-docker
-      tag: 2023.02
+      tag: 2023.02.1
       resource-class: small
 
     steps:
@@ -42,7 +42,7 @@ jobs:
   Core-Build:
     executor:
       name: android/android-docker
-      tag: 2023.02
+      tag: 2023.02.1
       resource-class: small
 
     steps:
