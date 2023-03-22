@@ -3,67 +3,70 @@ version: 2.1
 orbs:
   android: circleci/android@2.0
 
+jobs:
+  Core-Test:
+    executor:
+      name: android/android-docker
+      tag: 2022.08.1
+      resource-class: small
+    steps:
+      - checkout
+      - android/change-java-version:
+          java-version: 17
+      - android/restore-gradle-cache:
+          cache-prefix: v1-core
+      - android/restore-build-cache:
+          cache-prefix: v1-core
+      - run:
+          name: Check build health
+          command: |
+            ./gradlew buildHealth
+      - android/run-tests:
+          test-command: ./gradlew :core:test
+      - android/save-gradle-cache:
+          cache-prefix: v1-core
+      - android/save-build-cache:
+          cache-prefix: v1-core
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+#  Core-Build:
+#    executor:
+#      name: android/android-docker
+#      tag: 2022.08.1
+#      resource-class: small
+#    steps:
+#      - checkout
+#      - android/change-java-version:
+#          java-version: 17
+#      - android/restore-gradle-cache:
+#          cache-prefix: v1-core
+#      - android/restore-build-cache:
+#          cache-prefix: v1-core
+#      - run:
+#          name: Assemble Rx-Preferences
+#          command: |
+#            ./gradlew :core:assembleRelease
+#            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+#            ./gradlew :core:publishToMavenLocal
+#      - android/save-gradle-cache:
+#          cache-prefix: v1-core
+#      - android/save-build-cache:
+#          cache-prefix: v1-core
+
 workflows:
   version: 2
   Core-Test-And-Build:
     jobs:
-      - Core-Test:
-          jobs:
-            executor:
-              name: android/android-docker
-              tag: 2022.08.1
-              resource-class: small
-            steps:
-              - checkout
-              - android/change-java-version:
-                  java-version: 17
-              - android/restore-gradle-cache:
-                  cache-prefix: v1-core
-              - android/restore-build-cache:
-                  cache-prefix: v1-core
-              - run:
-                  name: Check build health
-                  command: |
-                    ./gradlew buildHealth
-              - android/run-tests:
-                  test-command: ./gradlew :core:test
-              - android/save-gradle-cache:
-                  cache-prefix: v1-core
-              - android/save-build-cache:
-                  cache-prefix: v1-core
-              - run:
-                  name: Save test results
-                  command: |
-                    mkdir -p ~/test-results/junit/
-                    find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
-                  when: always
-              - store_test_results:
-                  path: ~/test-results
-              - store_artifacts:
-                  path: ~/test-results/junit
-      - Core-Build:
-          jobs:
-            executor:
-              name: android/android-docker
-              tag: 2022.08.1
-              resource-class: small
-              steps:
-                - checkout
-                - android/change-java-version:
-                    java-version: 17
-                - android/restore-gradle-cache:
-                    cache-prefix: v1-core
-                - android/restore-build-cache:
-                    cache-prefix: v1-core
-                - run:
-                    name: Assemble Rx-Preferences
-                    command: |
-                      ./gradlew :core:assembleRelease
-                      echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
-                      ./gradlew :core:publishToMavenLocal
-                - android/save-gradle-cache:
-                    cache-prefix: v1-core
-                - android/save-build-cache:
-                    cache-prefix: v1-core
-          requires:
-            - Core-Test
+      - Core-Test
+#      - Core-Build:
+#          requires:
+#            - Core-Test
