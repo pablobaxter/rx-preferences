@@ -1,3 +1,5 @@
+# NOTE: It appears this project has been abandoned. This fork is an attempt to continue maintaining and improving upon this project.
+
 Rx Preferences
 --------------
 
