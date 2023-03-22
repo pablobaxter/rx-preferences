@@ -5,15 +5,10 @@ orbs:
 
 jobs:
   Core-Test:
-    environment:
-      # Configure the JVM and Gradle to avoid OOM errors
-      _JAVA_OPTIONS: "-Xmx3g"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
-
     executor:
       name: android/android-docker
       tag: 2022.08.1
-      resource-class: large
+      resource-class: small
 
     steps:
       - checkout
@@ -45,15 +40,10 @@ jobs:
           path: ~/test-results/junit
 
   Core-Build:
-    environment:
-      # Configure the JVM and Gradle to avoid OOM errors
-      _JAVA_OPTIONS: "-Xmx3g"
-      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
-
     executor:
       name: android/android-docker
       tag: 2022.08.1
-      resource-class: large
+      resource-class: small
 
     steps:
       - checkout
