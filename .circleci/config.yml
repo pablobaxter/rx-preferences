@@ -64,9 +64,9 @@ jobs:
 
 workflows:
   version: 2
-  Build_Upload:
+  Core-Test-And-Build:
     jobs:
       - Core-Test
       - Core-Build:
-        requires:
-          - Core-Test
+          requires:
+            - Core-Test
