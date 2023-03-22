@@ -1,4 +1,23 @@
-include ':rx-preferences'
-include ':rx-preferences-sample'
+import org.gradle.api.initialization.resolve.RepositoriesMode
 
-rootProject.name = 'rx-preferences-root'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    versionCatalogs {
+        libs {
+            from(files("./libs.versions.toml"))
+        }
+    }
+}
