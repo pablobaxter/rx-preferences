@@ -25,3 +25,5 @@ dependencyResolutionManagement {
 rootProject.name = "com.frybits.rx.preferences"
 include ":rx-preferences"
 include ":rx-preferences-sample"
+include ":bom"
+include ":core"

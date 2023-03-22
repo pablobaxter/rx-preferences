@@ -1,0 +1,18 @@
+plugins {
+    id 'java-platform'
+    id 'maven-publish'
+}
+
+dependencies {
+    constraints {
+        api project(":core")
+    }
+}
+
+publishing {
+    publications {
+        rxPreferencesBom(MavenPublication) {
+            from components.javaPlatform
+        }
+    }
+}

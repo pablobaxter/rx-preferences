@@ -1,0 +1,16 @@
+plugins {
+    id 'frybits-library'
+}
+
+android.namespace 'com.frybits.rx.preferences.core'
+
+dependencies {
+    // Kotlin
+    implementation libs.kotlin.stdlib
+    implementation libs.androidx.annotation
+
+    // Test
+    testImplementation libs.kotlin.test
+    testImplementation libs.kotlin.test.junit
+    testImplementation libs.mockito.kotlin
+}
