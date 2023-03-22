@@ -1,54 +1,50 @@
-buildscript {
-    ext {
-        minSdkVersion = 9
-        targetSdkVersion = 28
-        compileSdkVersion = 28
-        buildToolsVersion = '28.0.3'
-        javaVersion = JavaVersion.VERSION_1_7
-        java8Version = JavaVersion.VERSION_1_8
-        butterknifeVersion = '10.1.0'
-    }
-
-    repositories {
-        mavenCentral()
-        google()
-        jcenter()
-    }
-
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
-        classpath "com.jakewharton:butterknife-gradle-plugin:${butterknifeVersion}"
-    }
-}
-
 plugins {
-    id("net.ltgt.errorprone") version "0.7.1"
+    alias(libs.plugins.gradle.nexus.publish)
+    alias(libs.plugins.dependency.analysis)
 }
 
-allprojects {
+ext {
+    // Android project
+    minSdk_version = 23
+    targetSdk_version = 33
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext["signing.keyId"] = ''
+ext["signing.password"] = ''
+ext["signing.secretKeyRingFile"] = ''
+ext["ossrhUsername"] = ''
+ext["ossrhPassword"] = ''
+ext["profileId"] = ''
+
+File secretPropsFile = project.rootProject.file('local.properties')
+if (secretPropsFile.exists()) {
+    println "Found secret props file, loading props"
+    Properties p = new Properties()
+    p.load(new FileInputStream(secretPropsFile))
+    p.each { name, value ->
+        ext[name] = value
+    }
+} else {
+    println "No props file, loading env vars"
+    ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
+    ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
+    ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
+    ext["ossrhUsername"] = System.getenv('MAVEN_USERNAME')
+    ext["ossrhPassword"] = System.getenv('MAVEN_PASSWORD')
+    ext["profileId"] = System.getenv('STAGING_PROFILE_ID')
+}
+
+nexusPublishing {
+    packageGroup = 'com.frybits.rx.preferences'
     repositories {
-        mavenCentral()
-        google()
-        jcenter()
+        sonatype {
+            stagingProfileId = profileId
+            username = ossrhUsername
+            password = ossrhPassword
+        }
     }
-
-    tasks.withType(JavaCompile) {
-        options.compilerArgs += ['-Xlint:all', '-Xlint:-processing', '-Werror']
-    }
-
-    group = GROUP
-    version = VERSION_NAME
 }
-
-ext.deps = [
-        annotations        : 'androidx.annotation:annotation:1.0.2',
-        rxjava2            : 'io.reactivex.rxjava2:rxjava:2.2.7',
-        rxandroid          : 'io.reactivex.rxjava2:rxandroid:2.1.1',
-        rxbinding          : 'com.jakewharton.rxbinding3:rxbinding:3.0.0',
-        butterknife        : "com.jakewharton:butterknife:${ext.butterknifeVersion}",
-        butterknifeCompiler: "com.jakewharton:butterknife-compiler:${ext.butterknifeVersion}",
-        junit              : 'junit:junit:4.12',
-        assertj            : 'org.assertj:assertj-core:3.12.2',
-        robolectric        : 'org.robolectric:robolectric:4.2.1',
-        testcore           : 'androidx.test:core:1.0.0'
-]
