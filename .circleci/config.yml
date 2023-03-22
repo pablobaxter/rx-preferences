@@ -5,14 +5,20 @@ orbs:
 
 jobs:
   Core-Test:
+    environment:
+      # Configure the JVM and Gradle to avoid OOM errors
+      _JAVA_OPTIONS: "-Xmx3g"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+
     executor:
       name: android/android-docker
       tag: 2022.08.1
-      resource-class: medium
+      resource-class: small
+
     steps:
       - checkout
-#      - android/change-java-version:
-#          java-version: 17
+      - android/change-java-version:
+          java-version: 17
       - android/restore-gradle-cache:
           cache-prefix: v1-core
       - android/restore-build-cache:
@@ -39,14 +45,20 @@ jobs:
           path: ~/test-results/junit
 
   Core-Build:
+    environment:
+      # Configure the JVM and Gradle to avoid OOM errors
+      _JAVA_OPTIONS: "-Xmx3g"
+      GRADLE_OPTS: "-Dorg.gradle.daemon=false -Dorg.gradle.workers.max=2"
+
     executor:
       name: android/android-docker
       tag: 2022.08.1
       resource-class: small
+
     steps:
       - checkout
-#      - android/change-java-version:
-#          java-version: 17
+      - android/change-java-version:
+          java-version: 17
       - android/restore-gradle-cache:
           cache-prefix: v1-core
       - android/restore-build-cache:
