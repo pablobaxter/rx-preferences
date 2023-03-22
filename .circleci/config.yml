@@ -9,6 +9,7 @@ jobs:
       - image: soaboz/android-jdk-17:0.0.1
     resource_class: small
     steps:
+      - checkout
       - android/restore-gradle-cache
       - android/restore-build-cache
       - run:
