@@ -5,18 +5,11 @@ orbs:
 
 jobs:
   Core-Test:
-    executor:
-      name: android/android-docker
-      tag: 2023.02.1
-      resource-class: small
-
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
     steps:
       - checkout
-      - run:
-          name: Apt-get update
-          command: sudo apt-get update
-      - android/change-java-version:
-          java-version: 17
       - android/restore-gradle-cache:
           cache-prefix: v1-core
       - android/restore-build-cache:
@@ -43,18 +36,11 @@ jobs:
           path: ~/test-results/junit
 
   Core-Build:
-    executor:
-      name: android/android-docker
-      tag: 2023.02.1
-      resource-class: small
-
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
     steps:
       - checkout
-      - run:
-          name: Apt-get update
-          command: sudo apt-get update
-      - android/change-java-version:
-          java-version: 17
       - android/restore-gradle-cache:
           cache-prefix: v1-core
       - android/restore-build-cache:
