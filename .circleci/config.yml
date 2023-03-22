@@ -12,6 +12,9 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Apt-get update
+          command: sudo apt-get update
       - android/change-java-version:
           java-version: 17
       - android/restore-gradle-cache:
@@ -47,6 +50,9 @@ jobs:
 
     steps:
       - checkout
+      - run:
+          name: Apt-get update
+          command: sudo apt-get update
       - android/change-java-version:
           java-version: 17
       - android/restore-gradle-cache:
