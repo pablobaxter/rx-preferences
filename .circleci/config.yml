@@ -8,9 +8,12 @@ jobs:
     executor:
       name: android/android-docker
       tag: 2022.08.1
-      resource-class: small
+      resource-class: medium
     steps:
       - checkout
+      - run:
+          name: Update apt repositories
+          command: apt-get update
       - android/change-java-version:
           java-version: 17
       - android/restore-gradle-cache:
@@ -45,6 +48,9 @@ jobs:
       resource-class: small
     steps:
       - checkout
+      - run:
+          name: Update apt repositories
+          command: apt-get update
       - android/change-java-version:
           java-version: 17
       - android/restore-gradle-cache:
