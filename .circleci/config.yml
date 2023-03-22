@@ -4,26 +4,29 @@ orbs:
   android: circleci/android@2.2.0
 
 jobs:
+  Check-Build-Health:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - run:
+          name: Check build health
+          command: |
+            ./gradlew buildHealth
+      - android/save-gradle-cache
+      - android/save-build-cache
   Core-Test:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: v1-core
-      - android/restore-build-cache:
-          cache-prefix: v1-core
-      - run:
-          name: Check build health
-          command: |
-            ./gradlew buildHealth
+      - android/restore-gradle-cache
+      - android/restore-build-cache
       - android/run-tests:
           test-command: ./gradlew :core:test
-      - android/save-gradle-cache:
-          cache-prefix: v1-core
-      - android/save-build-cache:
-          cache-prefix: v1-core
       - run:
           name: Save test results
           command: |
@@ -41,20 +44,14 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: v1-core
-      - android/restore-build-cache:
-          cache-prefix: v1-core
+      - android/restore-gradle-cache
+      - android/restore-build-cache
       - run:
           name: Assemble Core Library
           command: |
             ./gradlew :core:assembleRelease
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :core:publishToMavenLocal
-      - android/save-gradle-cache:
-          cache-prefix: v1-core
-      - android/save-build-cache:
-          cache-prefix: v1-core
 
   Rx2-Test:
     docker:
@@ -62,20 +59,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: v1-rx2
-      - android/restore-build-cache:
-          cache-prefix: v1-rx2
-      - run:
-          name: Check build health
-          command: |
-            ./gradlew buildHealth
+      - android/restore-gradle-cache
+      - android/restore-build-cache
       - android/run-tests:
           test-command: ./gradlew :rx2:test
-      - android/save-gradle-cache:
-          cache-prefix: v1-rx2
-      - android/save-build-cache:
-          cache-prefix: v1-rx2
       - run:
           name: Save test results
           command: |
@@ -93,30 +80,29 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: v1-rx2
-      - android/restore-build-cache:
-          cache-prefix: v1-rx2
+      - android/restore-gradle-cache
+      - android/restore-build-cache
       - run:
           name: Assemble Rx2 Library
           command: |
             ./gradlew :rx2:assembleRelease
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx2:publishToMavenLocal
-      - android/save-gradle-cache:
-          cache-prefix: v1-rx2
-      - android/save-build-cache:
-          cache-prefix: v1-rx2
 
 workflows:
   version: 2
   Test-And-Build:
     jobs:
-      - Core-Test
+      - Check-Build-Health
+      - Core-Test:
+          requires:
+            - Check-Build-Health
       - Core-Build:
           requires:
             - Core-Test
-      - Rx2-Test
+      - Rx2-Test:
+          requires:
+            - Check-Build-Health
       - Rx2-Build:
           requires:
             - Rx2-Test
