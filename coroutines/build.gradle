@@ -5,15 +5,13 @@ android.namespace 'com.frybits.rx.preferences.coroutines'
 dependencies {
 
     api project(':core')
+
     // Kotlin
     implementation libs.kotlin.stdlib
     implementation libs.androidx.annotation
 
     // Android
     implementation libs.kotlinx.coroutines.android
-
-    // RxJava
-    implementation libs.reactivex.rx2
 
     // Test
     testImplementation libs.kotlin.test
