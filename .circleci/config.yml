@@ -143,4 +143,9 @@ workflows:
       - Rx2-Build:
           requires:
             - Rx2-Test
-
+      - Coroutines-Test:
+          requires:
+            - Check-Build-Health
+      - Coroutines-Build:
+          requires:
+            - Coroutines-Test
