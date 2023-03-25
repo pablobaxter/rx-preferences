@@ -8,6 +8,7 @@ dependencies {
         api project(":core")
         api project(":coroutines")
         api project(":rx2")
+        api project(":rx3")
     }
 }
 
