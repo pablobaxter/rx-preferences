@@ -1,6 +1,6 @@
 apply plugin: 'frybits-library'
 
-android.namespace 'com.frybits.preferences.rx2'
+android.namespace 'com.frybits.rx.preferences.rx2'
 
 dependencies {
 
