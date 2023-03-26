@@ -162,6 +162,42 @@ jobs:
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :coroutines:publishToMavenLocal
 
+  Livedata-Test:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - android/run-tests:
+          test-command: ./gradlew :livedata:test
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+  Livedata-Build:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - run:
+          name: Assemble Livedata Library
+          command: |
+            ./gradlew :livedata:assembleRelease
+            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+            ./gradlew :livedata:publishToMavenLocal
+
 workflows:
   version: 2
   Test-And-Build:
@@ -191,3 +227,9 @@ workflows:
       - Coroutines-Build:
           requires:
             - Coroutines-Test
+      - Livedata-Test:
+          requires:
+            - Check-Build-Health
+      - Livedata-Build:
+          requires:
+            - Livedata-Test
