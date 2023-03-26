@@ -22,7 +22,7 @@ import com.frybits.rx.preferences.core.Preference
 
 data class Point(val x: Int, val y: Int)
 
-abstract class PointPreferenceConverter: Preference.Converter<Point?> {
+abstract class PointPreferenceConverter : Preference.Converter<Point?> {
 
     override fun deserialize(serialized: String?): Point? {
         val parts = serialized?.split(",") ?: return null
