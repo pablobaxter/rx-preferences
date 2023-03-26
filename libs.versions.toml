@@ -18,6 +18,8 @@ androidx-annotation = "1.6.0"
 androidx-test-ext = "1.1.5"
 androidx-test-rules = "1.5.0"
 androidx-test-runner = "1.5.2"
+androidx-livedata = "2.6.1"
+androidx-arch = "2.2.0"
 
 # Google
 google-material = "1.8.0"
@@ -66,6 +68,8 @@ androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayo
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
+androidx-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "androidx-livedata" }
+androidx-arch = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch" }
 
 # Google
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
