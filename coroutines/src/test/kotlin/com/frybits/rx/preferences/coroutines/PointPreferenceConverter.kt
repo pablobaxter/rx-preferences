@@ -1,4 +1,6 @@
-package com.frybits.rx.preferences.core
+package com.frybits.rx.preferences.coroutines
+
+import com.frybits.rx.preferences.core.Preference
 
 /*
  *  Copyright 2014 Prateek Srivastava

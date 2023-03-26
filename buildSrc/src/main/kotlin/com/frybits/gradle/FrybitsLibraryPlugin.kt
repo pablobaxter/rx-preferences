@@ -64,6 +64,8 @@ private fun Project.applyLibraryPlugins() {
     apply<DokkaPlugin>()
     apply<MavenPublishPlugin>()
     apply<SigningPlugin>()
+
+    configureCommon()
 }
 
 private fun LibraryExtension.configureAndroidLibrary() {

@@ -1,4 +1,4 @@
-package com.frybits.rx.preferences.core
+package com.frybits.rx.preferences.coroutines
 
 /*
  *  Copyright 2014 Prateek Srivastava
@@ -18,19 +18,11 @@ package com.frybits.rx.preferences.core
  * Created by Pablo Baxter (Github: pablobaxter)
  */
 
-data class Point(val x: Int, val y: Int)
+/**
+ * Thrown when [android.content.SharedPreferences.Editor.commit] fails in [CoroutinePreference.asCollector]
+ */
+class PreferenceNotStoredException internal constructor(message: String) : Exception(message)
 
-abstract class PointPreferenceConverter : Preference.Converter<Point?> {
-
-    override fun deserialize(serialized: String?): Point? {
-        val parts = serialized?.split(",") ?: return null
-        if (parts.size != 2) {
-            throw IllegalStateException("Malformed point value: '$serialized'")
-        }
-        return Point(parts[0].toInt(), parts[1].toInt())
-    }
-
-    override fun serialize(value: Point?): String? {
-        return value?.let { "${it.x},${it.y}" }
-    }
-}
+// Internal caller to hide constructor
+internal fun <T> PreferenceNotStoredException(value: T): PreferenceNotStoredException =
+    PreferenceNotStoredException("$value was not stored")

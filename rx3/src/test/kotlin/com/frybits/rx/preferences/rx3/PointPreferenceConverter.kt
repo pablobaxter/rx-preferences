@@ -1,4 +1,6 @@
-package com.frybits.rx.preferences.core
+package com.frybits.rx.preferences.rx3
+
+import com.frybits.rx.preferences.core.Preference
 
 /*
  *  Copyright 2014 Prateek Srivastava
@@ -20,17 +22,17 @@ package com.frybits.rx.preferences.core
 
 data class Point(val x: Int, val y: Int)
 
-abstract class PointPreferenceConverter : Preference.Converter<Point?> {
+abstract class PointPreferenceConverter : Preference.Converter<Point> {
 
-    override fun deserialize(serialized: String?): Point? {
-        val parts = serialized?.split(",") ?: return null
+    override fun deserialize(serialized: String?): Point {
+        val parts = checkNotNull(serialized?.split(","))
         if (parts.size != 2) {
             throw IllegalStateException("Malformed point value: '$serialized'")
         }
         return Point(parts[0].toInt(), parts[1].toInt())
     }
 
-    override fun serialize(value: Point?): String? {
-        return value?.let { "${it.x},${it.y}" }
+    override fun serialize(value: Point): String? {
+        return value.let { "${it.x},${it.y}" }
     }
 }

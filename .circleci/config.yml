@@ -18,6 +18,19 @@ jobs:
             ./gradlew buildHealth
       - android/save-gradle-cache
       - android/save-build-cache
+
+  Core-Lint:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - run:
+          name: Ktlint
+          command: ./gradlew :core:ktlintCheck
+
   Core-Test:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
@@ -53,6 +66,18 @@ jobs:
             ./gradlew :core:assembleRelease
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :core:publishToMavenLocal
+
+  Rx2-Lint:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - run:
+          name: Ktlint
+          command: ./gradlew :rx2:ktlintCheck
 
   Rx2-Test:
     docker:
@@ -90,6 +115,18 @@ jobs:
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx2:publishToMavenLocal
 
+  Rx3-Lint:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - run:
+          name: Ktlint
+          command: ./gradlew :rx3:ktlintCheck
+
   Rx3-Test:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
@@ -126,6 +163,18 @@ jobs:
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx3:publishToMavenLocal
 
+  Coroutines-Lint:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - run:
+          name: Ktlint
+          command: ./gradlew :coroutines:ktlintCheck
+
   Coroutines-Test:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
@@ -161,6 +210,18 @@ jobs:
             ./gradlew :coroutines:assembleRelease
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :coroutines:publishToMavenLocal
+
+  Livedata-Lint:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache
+      - android/restore-build-cache
+      - run:
+          name: Ktlint
+          command: ./gradlew :livedata:ktlintCheck
 
   Livedata-Test:
     docker:
@@ -203,33 +264,48 @@ workflows:
   Test-And-Build:
     jobs:
       - Check-Build-Health
-      - Core-Test:
+      - Core-Lint:
           requires:
             - Check-Build-Health
+      - Core-Test:
+          requires:
+            - Core-Lint
       - Core-Build:
           requires:
             - Core-Test
-      - Rx2-Test:
+      - Rx2-Lint:
           requires:
             - Check-Build-Health
+      - Rx2-Test:
+          requires:
+            - Rx2-Lint
       - Rx2-Build:
           requires:
             - Rx2-Test
-      - Rx3-Test:
+      - Rx3-Lint:
           requires:
             - Check-Build-Health
+      - Rx3-Test:
+          requires:
+            - Rx3-Lint
       - Rx3-Build:
           requires:
             - Rx3-Test
-      - Coroutines-Test:
+      - Coroutines-Lint:
           requires:
             - Check-Build-Health
+      - Coroutines-Test:
+          requires:
+            - Coroutines-Lint
       - Coroutines-Build:
           requires:
             - Coroutines-Test
-      - Livedata-Test:
+      - Livedata-Lint:
           requires:
             - Check-Build-Health
+      - Livedata-Test:
+          requires:
+            - Livedata-Lint
       - Livedata-Build:
           requires:
             - Livedata-Test

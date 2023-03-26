@@ -39,6 +39,8 @@ class FrybitsTestPlugin : Plugin<Project> {
 private fun Project.applyTestPlugins() {
     apply<TestPlugin>()
     apply<KotlinAndroidPluginWrapper>()
+
+    configureCommon()
 }
 
 @Suppress("UnstableApiUsage")
