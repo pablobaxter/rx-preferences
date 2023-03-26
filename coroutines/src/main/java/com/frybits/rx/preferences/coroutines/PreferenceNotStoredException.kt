@@ -21,7 +21,8 @@ package com.frybits.rx.preferences.coroutines
 /**
  * Thrown when [android.content.SharedPreferences.Editor.commit] fails in [CoroutinePreference.asCollector]
  */
-class PreferenceNotStoredException internal constructor(message: String): Exception(message)
+class PreferenceNotStoredException internal constructor(message: String) : Exception(message)
 
 // Internal caller to hide constructor
-internal fun <T> PreferenceNotStoredException(value: T): PreferenceNotStoredException = PreferenceNotStoredException("$value was not stored")
+internal fun <T> PreferenceNotStoredException(value: T): PreferenceNotStoredException =
+    PreferenceNotStoredException("$value was not stored")

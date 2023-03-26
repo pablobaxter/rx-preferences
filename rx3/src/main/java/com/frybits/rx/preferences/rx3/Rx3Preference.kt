@@ -28,14 +28,18 @@ import io.reactivex.rxjava3.functions.Consumer
  *
  * This preference exposes RxJava2 specific functions.
  */
-interface Rx3Preference<T: Any>: Preference<T> {
+interface Rx3Preference<T : Any> : Preference<T> {
 
     /**
      * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
      *
      * @see [Preference.key]
      */
-    @Deprecated(message = "Use `key` instead.", replaceWith = ReplaceWith("key"), level = DeprecationLevel.ERROR)
+    @Deprecated(
+        message = "Use `key` instead.",
+        replaceWith = ReplaceWith("key"),
+        level = DeprecationLevel.ERROR
+    )
     fun key(): String? {
         return key
     }
@@ -45,7 +49,11 @@ interface Rx3Preference<T: Any>: Preference<T> {
      *
      * @see [Preference.defaultValue]
      */
-    @Deprecated(message = "Use `defaultValue` instead.", replaceWith = ReplaceWith("defaultValue"), level = DeprecationLevel.ERROR)
+    @Deprecated(
+        message = "Use `defaultValue` instead.",
+        replaceWith = ReplaceWith("defaultValue"),
+        level = DeprecationLevel.ERROR
+    )
     fun defaultValue(): T {
         return defaultValue
     }
@@ -55,7 +63,11 @@ interface Rx3Preference<T: Any>: Preference<T> {
      *
      * @see [Preference.value]
      */
-    @Deprecated(message = "Use `value` instead.", replaceWith = ReplaceWith("value"), level = DeprecationLevel.ERROR)
+    @Deprecated(
+        message = "Use `value` instead.",
+        replaceWith = ReplaceWith("value"),
+        level = DeprecationLevel.ERROR
+    )
     fun get(): T {
         return value
     }
@@ -85,12 +97,13 @@ interface Rx3Preference<T: Any>: Preference<T> {
 
 // Wraps the underling preference and returns the Rx3Preference variant.
 // Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
-internal fun <T: Any> Preference<T>.asRx3Preference(keysChanged: Observable<Optional<String?>>): Rx3Preference<T> = Rx3PreferenceImpl(this, keysChanged)
+internal fun <T : Any> Preference<T>.asRx3Preference(keysChanged: Observable<Optional<String?>>): Rx3Preference<T> =
+    Rx3PreferenceImpl(this, keysChanged)
 
-private class Rx3PreferenceImpl<T: Any>(
+private class Rx3PreferenceImpl<T : Any>(
     private val preference: Preference<T>,
     private val keysChanged: Observable<Optional<String?>>
-): Rx3Preference<T>, Preference<T> by preference {
+) : Rx3Preference<T>, Preference<T> by preference {
 
     @Deprecated("Use `this.value = value` instead.", level = DeprecationLevel.ERROR)
     override fun set(value: T) {

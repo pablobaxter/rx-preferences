@@ -33,7 +33,7 @@ import kotlinx.coroutines.withContext
  *
  * This preference exposes Coroutine specific functions.
  */
-interface CoroutinePreference<T>: Preference<T> {
+interface CoroutinePreference<T> : Preference<T> {
 
     /**
      * Observe changes to this preference. The current [value] or [defaultValue] will be emitted
@@ -68,12 +68,13 @@ interface CoroutinePreference<T>: Preference<T> {
 
 // Wraps the underling preference and returns the CoroutinePreference variant.
 // Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
-internal fun <T> Preference<T>.asCoroutinePreference(keysChanged: Flow<String?>): CoroutinePreference<T> = CoroutinePreferenceImpl(this, keysChanged)
+internal fun <T> Preference<T>.asCoroutinePreference(keysChanged: Flow<String?>): CoroutinePreference<T> =
+    CoroutinePreferenceImpl(this, keysChanged)
 
 private class CoroutinePreferenceImpl<T>(
     private val preference: Preference<T>,
     private val keysChanged: Flow<String?>
-): CoroutinePreference<T>, Preference<T> by preference {
+) : CoroutinePreference<T>, Preference<T> by preference {
 
     override fun asFlow(): Flow<T> {
         return keysChanged.filter { it == key || it == null }

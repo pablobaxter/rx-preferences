@@ -52,7 +52,8 @@ class LiveDataSharedPreferencesTest {
         MockitoAnnotations.openMocks(this)
 
         keysChangedLiveData = MutableLiveData()
-        liveDataSharedPreferences = LiveDataSharedPreferences(sharedPreferences, keysChangedLiveData)
+        liveDataSharedPreferences =
+            LiveDataSharedPreferences(sharedPreferences, keysChangedLiveData)
     }
 
     @AfterTest
@@ -76,7 +77,6 @@ class LiveDataSharedPreferencesTest {
         assertNull(liveDataSharedPreferences.getStringSet("test").defaultValue)
     }
 
-
     @Test
     fun testWithNoValueReturnsDefaultValue() {
         sharedPreferences.stub {
@@ -93,7 +93,17 @@ class LiveDataSharedPreferencesTest {
         assertEquals(1, liveDataSharedPreferences.getInteger("test", 1).value)
         assertEquals(1L, liveDataSharedPreferences.getLong("test", 1L).value)
         assertEquals("bar", liveDataSharedPreferences.getString("test", "bar").value)
-        assertEquals(setOf("foo"), liveDataSharedPreferences.getStringSet("test", setOf("foo")).value)
-        assertEquals(Point(1, 1), liveDataSharedPreferences.getObject("test", Point(1, 1), spy<PointPreferenceConverter>()).value)
+        assertEquals(
+            setOf("foo"),
+            liveDataSharedPreferences.getStringSet("test", setOf("foo")).value
+        )
+        assertEquals(
+            Point(1, 1),
+            liveDataSharedPreferences.getObject(
+                "test",
+                Point(1, 1),
+                spy<PointPreferenceConverter>()
+            ).value
+        )
     }
 }

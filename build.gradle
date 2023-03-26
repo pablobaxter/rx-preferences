@@ -13,12 +13,6 @@ plugins {
     alias(libs.plugins.dependency.analysis)
 }
 
-ext {
-    // Android project
-    minSdk_version = 23
-    targetSdk_version = 33
-}
-
 task clean(type: Delete) {
     delete rootProject.buildDir
 }

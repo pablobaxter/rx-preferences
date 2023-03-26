@@ -23,7 +23,7 @@ import com.frybits.rx.preferences.core.Preference
  * Created by Pablo Baxter (Github: pablobaxter)
  */
 
-interface LiveDataPreference<T>: Preference<T> {
+interface LiveDataPreference<T> : Preference<T> {
 
     fun asLiveData(): LiveData<T>
 
@@ -32,12 +32,13 @@ interface LiveDataPreference<T>: Preference<T> {
 
 // Wraps the underling preference and returns the CoroutinePreference variant.
 // Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
-internal fun <T> Preference<T>.asLiveDataPreference(keysChanged: LiveData<String?>): LiveDataPreference<T> = LiveDataPreferenceImpl(this, keysChanged)
+internal fun <T> Preference<T>.asLiveDataPreference(keysChanged: LiveData<String?>): LiveDataPreference<T> =
+    LiveDataPreferenceImpl(this, keysChanged)
 
 private class LiveDataPreferenceImpl<T>(
     private val preference: Preference<T>,
     private val keysChanged: LiveData<String?>
-): LiveDataPreference<T>, Preference<T> by preference {
+) : LiveDataPreference<T>, Preference<T> by preference {
 
     override fun asLiveData(): LiveData<T> {
         val mediatorLiveData = MediatorLiveData<T>()

@@ -49,7 +49,7 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
     sharedPreferences: SharedPreferences,
     overrideKeyChanges: Flow<String?>?,
     scope: CoroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-): BaseRxSharedPreferences(sharedPreferences) {
+) : BaseRxSharedPreferences(sharedPreferences) {
 
     companion object {
 
@@ -63,7 +63,10 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
          */
         @JvmStatic
         @JvmOverloads
-        fun create(sharedPreferences: SharedPreferences, keyChanges: Flow<String?>? = null): CoroutineSharedPreferences {
+        fun create(
+            sharedPreferences: SharedPreferences,
+            keyChanges: Flow<String?>? = null
+        ): CoroutineSharedPreferences {
             return CoroutineSharedPreferences(sharedPreferences, keyChanges)
         }
     }
@@ -88,20 +91,40 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
 
     /** Creates a [Boolean] preference for the [key] with a default of [defaultValue] */
     @CheckResult
-    public override fun getBoolean(key: String?, defaultValue: Boolean): CoroutinePreference<Boolean> {
-        return Preference(sharedPreferences, key, defaultValue, BooleanAdapter).asCoroutinePreference(keyChanges)
+    public override fun getBoolean(
+        key: String?,
+        defaultValue: Boolean
+    ): CoroutinePreference<Boolean> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            BooleanAdapter
+        ).asCoroutinePreference(keyChanges)
     }
 
     /** Creates a [T] preference for the [key] using the enum class type [T] with a default of [defaultValue] */
     @CheckResult
-    inline fun <reified T: Enum<T>> getEnum(key: String?, defaultValue: T): CoroutinePreference<T> {
+    inline fun <reified T : Enum<T>> getEnum(
+        key: String?,
+        defaultValue: T
+    ): CoroutinePreference<T> {
         return getEnum(key, defaultValue, T::class.java)
     }
 
     /** Creates a [T] preference for the [key] using the enum class [clazz] with a default of [defaultValue] */
     @CheckResult
-    public override fun <T : Enum<T>> getEnum(key: String?, defaultValue: T, clazz: Class<T>): CoroutinePreference<T> {
-        return Preference(sharedPreferences, key, defaultValue, EnumAdapter(clazz)).asCoroutinePreference(keyChanges)
+    public override fun <T : Enum<T>> getEnum(
+        key: String?,
+        defaultValue: T,
+        clazz: Class<T>
+    ): CoroutinePreference<T> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            EnumAdapter(clazz)
+        ).asCoroutinePreference(keyChanges)
     }
 
     /** Creates a [Float] preference for the [key] with a default of `0F` */
@@ -113,7 +136,9 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
     /** Creates a [Float] preference for the [key] with a default of [defaultValue] */
     @CheckResult
     public override fun getFloat(key: String?, defaultValue: Float): CoroutinePreference<Float> {
-        return Preference(sharedPreferences, key, defaultValue, FloatAdapter).asCoroutinePreference(keyChanges)
+        return Preference(sharedPreferences, key, defaultValue, FloatAdapter).asCoroutinePreference(
+            keyChanges
+        )
     }
 
     /** Creates a [Int] preference for the [key] with a default of `0` */
@@ -125,7 +150,12 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
     /** Creates a [Int] preference for the [key] with a default of [defaultValue] */
     @CheckResult
     public override fun getInteger(key: String?, defaultValue: Int): CoroutinePreference<Int> {
-        return Preference(sharedPreferences, key, defaultValue, IntegerAdapter).asCoroutinePreference(keyChanges)
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            IntegerAdapter
+        ).asCoroutinePreference(keyChanges)
     }
 
     /** Creates a [Long] preference for the [key] with a default of `0L` */
@@ -137,13 +167,24 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
     /** Creates a [Long] preference for the [key] with a default of [defaultValue] */
     @CheckResult
     public override fun getLong(key: String?, defaultValue: Long): CoroutinePreference<Long> {
-        return Preference(sharedPreferences, key, defaultValue, LongAdapter).asCoroutinePreference(keyChanges)
+        return Preference(sharedPreferences, key, defaultValue, LongAdapter).asCoroutinePreference(
+            keyChanges
+        )
     }
 
     /** Creates a [T] preference for the [key] using the [converter], and with a default of [defaultValue] */
     @CheckResult
-    public override fun <T> getObject(key: String?, defaultValue: T, converter: Preference.Converter<T>): CoroutinePreference<T> {
-        return Preference(sharedPreferences, key, defaultValue, ConverterAdapter(converter)).asCoroutinePreference(keyChanges)
+    public override fun <T> getObject(
+        key: String?,
+        defaultValue: T,
+        converter: Preference.Converter<T>
+    ): CoroutinePreference<T> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            ConverterAdapter(converter)
+        ).asCoroutinePreference(keyChanges)
     }
 
     /** Creates a [String] preference for the [key] with a default of `null` */
@@ -154,8 +195,16 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
 
     /** Creates a [String] preference for the [key] with a default of [defaultValue] */
     @CheckResult
-    public override fun getString(key: String?, defaultValue: String?): CoroutinePreference<String?> {
-        return Preference(sharedPreferences, key, defaultValue, StringAdapter).asCoroutinePreference(keyChanges)
+    public override fun getString(
+        key: String?,
+        defaultValue: String?
+    ): CoroutinePreference<String?> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            StringAdapter
+        ).asCoroutinePreference(keyChanges)
     }
 
     /** Creates a string [Set] preference for the [key] with a default of `null` */
@@ -166,8 +215,16 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
 
     /** Creates a string [Set] preference for the [key] with a default of [defaultValue] */
     @CheckResult
-    public override fun getStringSet(key: String?, defaultValue: Set<String?>?): CoroutinePreference<Set<String?>?> {
-        return Preference(sharedPreferences, key, defaultValue, StringSetAdapter).asCoroutinePreference(keyChanges)
+    public override fun getStringSet(
+        key: String?,
+        defaultValue: Set<String?>?
+    ): CoroutinePreference<Set<String?>?> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            StringSetAdapter
+        ).asCoroutinePreference(keyChanges)
     }
 
     /** Clears the underlying shared preferences with [SharedPreferences.Editor.commit] in [Dispatchers.IO] */

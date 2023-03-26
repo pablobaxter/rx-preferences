@@ -41,18 +41,25 @@ class Rx3PreferenceTest {
             on { getString(any(), anyOrNull()) } doReturn "1,2"
         }
         val keyChangeSharedObservable = Observable.empty<Optional<String?>>()
-        val rx3Pref = Preference(sharedPrefs, "test", Point(0, 0), Rx3ConverterAdapter(object : Preference.Converter<Point> {
-            override fun deserialize(serialized: String?): Point {
-                throw NullPointerException()
-            }
+        val rx3Pref = Preference(
+            sharedPrefs,
+            "test",
+            Point(0, 0),
+            Rx3ConverterAdapter(object : Preference.Converter<Point> {
+                override fun deserialize(serialized: String?): Point {
+                    throw NullPointerException()
+                }
 
-            override fun serialize(value: Point): String? {
-                return null
-            }
-        })).asRx3Preference(keyChangeSharedObservable)
+                override fun serialize(value: Point): String? {
+                    return null
+                }
+            })
+        ).asRx3Preference(keyChangeSharedObservable)
 
         assertFailsWith<NullPointerException>("Deserialized value must not be null from string: 1,2") { rx3Pref.value }
-        assertFailsWith<NullPointerException>("Serialized string must not be null from value: Point(x=1, y=2)") { rx3Pref.value = Point(1, 2) }
+        assertFailsWith<NullPointerException>("Serialized string must not be null from value: Point(x=1, y=2)") {
+            rx3Pref.value = Point(1, 2)
+        }
     }
 
     @Test
@@ -61,7 +68,9 @@ class Rx3PreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keyChangeSharedObservable = PublishSubject.create<Optional<String?>>()
-        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(keyChangeSharedObservable)
+        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(
+            keyChangeSharedObservable
+        )
 
         rx3Pref.asObservable().test()
             .assertValueCount(1)
@@ -75,7 +84,9 @@ class Rx3PreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keyChangeSharedObservable = PublishSubject.create<Optional<String?>>()
-        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(keyChangeSharedObservable)
+        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(
+            keyChangeSharedObservable
+        )
 
         val testObservable = rx3Pref.asObservable().test()
 
@@ -91,7 +102,9 @@ class Rx3PreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keyChangeSharedObservable = PublishSubject.create<Optional<String?>>()
-        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(keyChangeSharedObservable)
+        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(
+            keyChangeSharedObservable
+        )
 
         val testObservable = rx3Pref.asObservable().test()
 
@@ -107,7 +120,9 @@ class Rx3PreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keyChangeSharedObservable = PublishSubject.create<Optional<String?>>()
-        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(keyChangeSharedObservable)
+        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(
+            keyChangeSharedObservable
+        )
 
         val testObservable = rx3Pref.asObservable().test()
 
@@ -124,7 +139,8 @@ class Rx3PreferenceTest {
             on { getInt(any(), any()) } doReturn 2
             on { edit() } doReturn editor
         }
-        val rx3Pref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(Observable.empty())
+        val rx3Pref =
+            Preference(sharedPrefs, "test", -1, IntegerAdapter).asRx3Preference(Observable.empty())
 
         val consumer = rx3Pref.asConsumer()
 

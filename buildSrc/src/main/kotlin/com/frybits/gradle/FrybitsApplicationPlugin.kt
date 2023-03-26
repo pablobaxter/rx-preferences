@@ -44,6 +44,7 @@ private fun Project.applyAppPlugins() {
     apply<KotlinAndroidPluginWrapper>()
     apply<ParcelizeSubplugin>()
     apply<Kapt3GradleSubplugin>()
+    configureCommon()
 }
 
 @Suppress("UnstableApiUsage")

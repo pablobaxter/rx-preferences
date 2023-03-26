@@ -23,21 +23,27 @@ import com.frybits.rx.preferences.core.Preference
  */
 
 // Internal adapter for RxJava to ensure parity with original Legacy function to support transition from https://github.com/f2prateek/rx-preferences/
-internal class Rx3ConverterAdapter<T: Any>(private val converter: Preference.Converter<T>): Adapter<T> {
+internal class Rx3ConverterAdapter<T : Any>(private val converter: Preference.Converter<T>) :
+    Adapter<T> {
     override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: T): T {
         val serialized = sharedPreference.getString(key, null) ?: return defaultValue
         return requireNotNull(converter.deserialize(serialized)) { throw NullPointerException("Deserialized value must not be null from string: $serialized") }
     }
 
     override fun set(key: String?, value: T, editor: SharedPreferences.Editor) {
-        val serialized = requireNotNull(converter.serialize(value)) { throw NullPointerException("Serialized string must not be null from value: $value") }
+        val serialized =
+            requireNotNull(converter.serialize(value)) { throw NullPointerException("Serialized string must not be null from value: $value") }
         editor.putString(key, serialized)
     }
 }
 
 /** Store and retrieves instances of [String] in [SharedPreferences] */
-internal object NonNullStringAdapter: Adapter<String> {
-    override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: String): String {
+internal object NonNullStringAdapter : Adapter<String> {
+    override fun get(
+        key: String?,
+        sharedPreference: SharedPreferences,
+        defaultValue: String
+    ): String {
         return sharedPreference.getString(key, defaultValue) ?: defaultValue
     }
 
@@ -47,8 +53,12 @@ internal object NonNullStringAdapter: Adapter<String> {
 }
 
 /** Store and retrieves instances of a collection of [String] within a [Set] in [SharedPreferences] */
-internal object NonNullStringSetAdapter: Adapter<Set<String?>> {
-    override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: Set<String?>): Set<String?> {
+internal object NonNullStringSetAdapter : Adapter<Set<String?>> {
+    override fun get(
+        key: String?,
+        sharedPreference: SharedPreferences,
+        defaultValue: Set<String?>
+    ): Set<String?> {
         return sharedPreference.getStringSet(key, defaultValue)?.toSet() ?: defaultValue
     }
 

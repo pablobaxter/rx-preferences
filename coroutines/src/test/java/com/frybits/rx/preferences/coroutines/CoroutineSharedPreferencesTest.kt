@@ -19,7 +19,6 @@ import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
-import kotlin.test.fail
 
 /*
  *  Copyright 2014 Prateek Srivastava
@@ -54,7 +53,8 @@ class CoroutineSharedPreferencesTest {
 
         testScope = TestScope()
         keysChangedSharedFlow = MutableSharedFlow()
-        coroutineSharedPreferences = CoroutineSharedPreferences(sharedPreferences, keysChangedSharedFlow, testScope)
+        coroutineSharedPreferences =
+            CoroutineSharedPreferences(sharedPreferences, keysChangedSharedFlow, testScope)
     }
 
     @AfterTest
@@ -96,7 +96,17 @@ class CoroutineSharedPreferencesTest {
         assertEquals(1, coroutineSharedPreferences.getInteger("test", 1).value)
         assertEquals(1L, coroutineSharedPreferences.getLong("test", 1L).value)
         assertEquals("bar", coroutineSharedPreferences.getString("test", "bar").value)
-        assertEquals(setOf("foo"), coroutineSharedPreferences.getStringSet("test", setOf("foo")).value)
-        assertEquals(Point(1, 1), coroutineSharedPreferences.getObject("test", Point(1, 1), spy<PointPreferenceConverter>()).value)
+        assertEquals(
+            setOf("foo"),
+            coroutineSharedPreferences.getStringSet("test", setOf("foo")).value
+        )
+        assertEquals(
+            Point(1, 1),
+            coroutineSharedPreferences.getObject(
+                "test",
+                Point(1, 1),
+                spy<PointPreferenceConverter>()
+            ).value
+        )
     }
 }

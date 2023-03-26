@@ -6,9 +6,13 @@ import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.DefaultConfig
 import com.android.build.api.dsl.ProductFlavor
 import org.gradle.api.JavaVersion
+import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
+import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import org.jlleitschuh.gradle.ktlint.KtlintExtension
+import org.jlleitschuh.gradle.ktlint.KtlintPlugin
 
 /*
  *  Copyright 2014 Prateek Srivastava
@@ -51,5 +55,15 @@ internal fun <BuildFeaturesT : BuildFeatures, BuildTypeT : BuildType, DefaultCon
 
     (this as? ExtensionAware)?.configure<KotlinJvmOptions> {
         jvmTarget = "17"
+    }
+}
+
+internal fun Project.configureCommon() {
+    apply<KtlintPlugin>()
+
+    configure<KtlintExtension> {
+        version.set("0.48.2")
+        outputToConsole.set(true)
+        outputColorName.set("RED")
     }
 }

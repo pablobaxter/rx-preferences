@@ -35,9 +35,9 @@ import com.frybits.rx.preferences.core.StringSetAdapter
  */
 
 class LiveDataSharedPreferences @VisibleForTesting internal constructor(
-   sharedPreferences: SharedPreferences,
-   overrideKeyChanges: LiveData<String?>?
-): BaseRxSharedPreferences(sharedPreferences) {
+    sharedPreferences: SharedPreferences,
+    overrideKeyChanges: LiveData<String?>?
+) : BaseRxSharedPreferences(sharedPreferences) {
 
     companion object {
 
@@ -51,13 +51,17 @@ class LiveDataSharedPreferences @VisibleForTesting internal constructor(
          */
         @JvmStatic
         @JvmOverloads
-        fun create(sharedPreferences: SharedPreferences, keyChanges: LiveData<String?>? = null): LiveDataSharedPreferences {
+        fun create(
+            sharedPreferences: SharedPreferences,
+            keyChanges: LiveData<String?>? = null
+        ): LiveDataSharedPreferences {
             return LiveDataSharedPreferences(sharedPreferences, keyChanges)
         }
     }
 
     // Either use the key changes flow passed in, or the default flow
-    private val keyChanges: LiveData<String?> = overrideKeyChanges ?: SharedPreferenceKeyChangedLiveData(sharedPreferences)
+    private val keyChanges: LiveData<String?> =
+        overrideKeyChanges ?: SharedPreferenceKeyChangedLiveData(sharedPreferences)
 
     /** Creates a [Boolean] preference for the [key] with a default of `false` */
     @CheckResult
@@ -67,20 +71,37 @@ class LiveDataSharedPreferences @VisibleForTesting internal constructor(
 
     /** Creates a [Boolean] preference for the [key] with a default of [defaultValue] */
     @CheckResult
-    public override fun getBoolean(key: String?, defaultValue: Boolean): LiveDataPreference<Boolean> {
-        return Preference(sharedPreferences, key, defaultValue, BooleanAdapter).asLiveDataPreference(keyChanges)
+    public override fun getBoolean(
+        key: String?,
+        defaultValue: Boolean
+    ): LiveDataPreference<Boolean> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            BooleanAdapter
+        ).asLiveDataPreference(keyChanges)
     }
 
     /** Creates a [T] preference for the [key] using the enum class type [T] with a default of [defaultValue] */
     @CheckResult
-    inline fun <reified T: Enum<T>> getEnum(key: String?, defaultValue: T): LiveDataPreference<T> {
+    inline fun <reified T : Enum<T>> getEnum(key: String?, defaultValue: T): LiveDataPreference<T> {
         return getEnum(key, defaultValue, T::class.java)
     }
 
     /** Creates a [T] preference for the [key] using the enum class [clazz] with a default of [defaultValue] */
     @CheckResult
-    public override fun <T : Enum<T>> getEnum(key: String?, defaultValue: T, clazz: Class<T>): LiveDataPreference<T> {
-        return Preference(sharedPreferences, key, defaultValue, EnumAdapter(clazz)).asLiveDataPreference(keyChanges)
+    public override fun <T : Enum<T>> getEnum(
+        key: String?,
+        defaultValue: T,
+        clazz: Class<T>
+    ): LiveDataPreference<T> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            EnumAdapter(clazz)
+        ).asLiveDataPreference(keyChanges)
     }
 
     /** Creates a [Float] preference for the [key] with a default of `0F` */
@@ -92,7 +113,9 @@ class LiveDataSharedPreferences @VisibleForTesting internal constructor(
     /** Creates a [Float] preference for the [key] with a default of [defaultValue] */
     @CheckResult
     public override fun getFloat(key: String?, defaultValue: Float): LiveDataPreference<Float> {
-        return Preference(sharedPreferences, key, defaultValue, FloatAdapter).asLiveDataPreference(keyChanges)
+        return Preference(sharedPreferences, key, defaultValue, FloatAdapter).asLiveDataPreference(
+            keyChanges
+        )
     }
 
     /** Creates a [Int] preference for the [key] with a default of `0` */
@@ -104,7 +127,12 @@ class LiveDataSharedPreferences @VisibleForTesting internal constructor(
     /** Creates a [Int] preference for the [key] with a default of [defaultValue] */
     @CheckResult
     public override fun getInteger(key: String?, defaultValue: Int): LiveDataPreference<Int> {
-        return Preference(sharedPreferences, key, defaultValue, IntegerAdapter).asLiveDataPreference(keyChanges)
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            IntegerAdapter
+        ).asLiveDataPreference(keyChanges)
     }
 
     /** Creates a [Long] preference for the [key] with a default of `0L` */
@@ -116,13 +144,24 @@ class LiveDataSharedPreferences @VisibleForTesting internal constructor(
     /** Creates a [Long] preference for the [key] with a default of [defaultValue] */
     @CheckResult
     public override fun getLong(key: String?, defaultValue: Long): LiveDataPreference<Long> {
-        return Preference(sharedPreferences, key, defaultValue, LongAdapter).asLiveDataPreference(keyChanges)
+        return Preference(sharedPreferences, key, defaultValue, LongAdapter).asLiveDataPreference(
+            keyChanges
+        )
     }
 
     /** Creates a [T] preference for the [key] using the [converter], and with a default of [defaultValue] */
     @CheckResult
-    public override fun <T> getObject(key: String?, defaultValue: T, converter: Preference.Converter<T>): LiveDataPreference<T> {
-        return Preference(sharedPreferences, key, defaultValue, ConverterAdapter(converter)).asLiveDataPreference(keyChanges)
+    public override fun <T> getObject(
+        key: String?,
+        defaultValue: T,
+        converter: Preference.Converter<T>
+    ): LiveDataPreference<T> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            ConverterAdapter(converter)
+        ).asLiveDataPreference(keyChanges)
     }
 
     /** Creates a [String] preference for the [key] with a default of `null` */
@@ -133,8 +172,13 @@ class LiveDataSharedPreferences @VisibleForTesting internal constructor(
 
     /** Creates a [String] preference for the [key] with a default of [defaultValue] */
     @CheckResult
-    public override fun getString(key: String?, defaultValue: String?): LiveDataPreference<String?> {
-        return Preference(sharedPreferences, key, defaultValue, StringAdapter).asLiveDataPreference(keyChanges)
+    public override fun getString(
+        key: String?,
+        defaultValue: String?
+    ): LiveDataPreference<String?> {
+        return Preference(sharedPreferences, key, defaultValue, StringAdapter).asLiveDataPreference(
+            keyChanges
+        )
     }
 
     /** Creates a string [Set] preference for the [key] with a default of `null` */
@@ -145,12 +189,21 @@ class LiveDataSharedPreferences @VisibleForTesting internal constructor(
 
     /** Creates a string [Set] preference for the [key] with a default of [defaultValue] */
     @CheckResult
-    public override fun getStringSet(key: String?, defaultValue: Set<String?>?): LiveDataPreference<Set<String?>?> {
-        return Preference(sharedPreferences, key, defaultValue, StringSetAdapter).asLiveDataPreference(keyChanges)
+    public override fun getStringSet(
+        key: String?,
+        defaultValue: Set<String?>?
+    ): LiveDataPreference<Set<String?>?> {
+        return Preference(
+            sharedPreferences,
+            key,
+            defaultValue,
+            StringSetAdapter
+        ).asLiveDataPreference(keyChanges)
     }
 }
 
-private class SharedPreferenceKeyChangedLiveData(private val sharedPreferences: SharedPreferences): LiveData<String?>() {
+private class SharedPreferenceKeyChangedLiveData(private val sharedPreferences: SharedPreferences) :
+    LiveData<String?>() {
 
     private val listener = OnSharedPreferenceChangeListener { prefs, key ->
         check(prefs === sharedPreferences) { "CoroutinePreferences not listening to the right SharedPreferences" }
