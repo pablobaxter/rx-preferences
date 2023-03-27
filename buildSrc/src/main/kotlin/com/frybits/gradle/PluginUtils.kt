@@ -5,6 +5,7 @@ import com.android.build.api.dsl.BuildType
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.DefaultConfig
 import com.android.build.api.dsl.ProductFlavor
+import com.autonomousapps.DependencyAnalysisSubExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
 import org.gradle.api.plugins.ExtensionAware
@@ -59,11 +60,30 @@ internal fun <BuildFeaturesT : BuildFeatures, BuildTypeT : BuildType, DefaultCon
 }
 
 internal fun Project.configureCommon() {
-    apply<KtlintPlugin>()
+    applyKtlint()
+    applyDependencyAnalysis()
+}
 
+internal fun Project.applyKtlint() {
+    apply<KtlintPlugin>()
     configure<KtlintExtension> {
         version.set("0.48.2")
         outputToConsole.set(true)
         outputColorName.set("RED")
+    }
+}
+
+internal fun Project.applyDependencyAnalysis() {
+    configure<DependencyAnalysisSubExtension> {
+        issues {
+            onAny {
+                // TODO For now, we don't care about the old projects. Will update or remove later.
+                if (path.contains(":rx-preferences")) {
+                    severity("ignore")
+                } else {
+                    severity("fail")
+                }
+            }
+        }
     }
 }
