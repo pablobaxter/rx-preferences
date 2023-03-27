@@ -1,4 +1,6 @@
-apply plugin: 'frybits-library'
+plugins {
+    id 'frybits-library'
+}
 
 android.namespace 'com.frybits.rx.preferences.coroutines'
 
@@ -11,11 +13,12 @@ dependencies {
     implementation libs.androidx.annotation
 
     // Android
-    implementation libs.kotlinx.coroutines.android
+    api libs.kotlinx.coroutines.core
 
     // Test
+    testImplementation libs.junit
     testImplementation libs.kotlin.test
-    testImplementation libs.kotlin.test.junit
+    testImplementation libs.mockito.core
     testImplementation libs.mockito.kotlin
     testImplementation libs.kotlinx.coroutines.test
 }

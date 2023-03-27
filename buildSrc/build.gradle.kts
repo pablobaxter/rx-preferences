@@ -10,6 +10,7 @@ dependencies {
     implementation(libs.kotlin.gradle.plugin)
     implementation(libs.kotlin.dokka.plugin)
     implementation(libs.ktlint.plugin)
+    implementation(libs.dependency.analysis)
 }
 
 gradlePlugin {
@@ -28,6 +29,10 @@ gradlePlugin {
             id = "frybits-test"
             implementationClass = "com.frybits.gradle.FrybitsTestPlugin"
         }
+
+        create("frybitsPlatformPlugin") {
+            id = "frybits-platform"
+            implementationClass = "com.frybits.gradle.FrybitsPlatformPlugin"
+        }
     }
 }
-

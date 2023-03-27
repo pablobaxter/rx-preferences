@@ -61,9 +61,6 @@ class FrybitsLibraryPlugin : Plugin<Project> {
 private fun Project.applyLibraryPlugins() {
     apply<LibraryPlugin>()
     apply<KotlinAndroidPluginWrapper>()
-    apply<DokkaPlugin>()
-    apply<MavenPublishPlugin>()
-    apply<SigningPlugin>()
 
     configureCommon()
 }
@@ -87,6 +84,7 @@ private fun LibraryExtension.configureAndroidLibrary() {
 }
 
 private fun Project.configureDokka() {
+    apply<DokkaPlugin>()
     val dokka = tasks.getByName<DokkaTask>("dokkaHtml") {
         moduleName.set(findProperty("libraryName")?.toString())
         dokkaSourceSets.maybeCreate("main").apply {
@@ -119,6 +117,8 @@ private fun Project.configureDokka() {
 }
 
 private fun Project.configurePublishing() {
+    apply<MavenPublishPlugin>()
+    apply<SigningPlugin>()
     afterEvaluate {
         configure<PublishingExtension> {
             publications {

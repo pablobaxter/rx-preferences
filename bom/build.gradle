@@ -1,6 +1,5 @@
 plugins {
-    id 'java-platform'
-    id 'maven-publish'
+    id 'frybits-platform'
 }
 
 dependencies {
@@ -10,13 +9,5 @@ dependencies {
         api project(":livedata")
         api project(":rx2")
         api project(":rx3")
-    }
-}
-
-publishing {
-    publications {
-        rxPreferencesBom(MavenPublication) {
-            from components.javaPlatform
-        }
     }
 }
