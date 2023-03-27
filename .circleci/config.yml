@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Check Core build health
           command: |
-            ./gradlew -p core buildHealth
+            ./gradlew -p core projectHealth
       - android/save-gradle-cache:
           cache-prefix: core-v1
       - android/save-build-cache:
@@ -90,7 +90,7 @@ jobs:
       - run:
           name: Check Rx2 build health
           command: |
-            ./gradlew -p rx2 buildHealth
+            ./gradlew -p rx2 projectHealth
       - android/save-gradle-cache:
           cache-prefix: rx2-v1
       - android/save-build-cache:
@@ -163,7 +163,7 @@ jobs:
       - run:
           name: Check Rx3 build health
           command: |
-            ./gradlew -p rx3 buildHealth
+            ./gradlew -p rx3 projectHealth
       - android/save-gradle-cache:
           cache-prefix: rx3-v1
       - android/save-build-cache:
@@ -236,7 +236,7 @@ jobs:
       - run:
           name: Check Coroutines build health
           command: |
-            ./gradlew -p coroutines buildHealth
+            ./gradlew -p coroutines projectHealth
       - android/save-gradle-cache:
           cache-prefix: coroutines-v1
       - android/save-build-cache:
@@ -309,7 +309,7 @@ jobs:
       - run:
           name: Check Livedata build health
           command: |
-            ./gradlew -p livedata buildHealth
+            ./gradlew -p livedata projectHealth
       - android/save-gradle-cache:
           cache-prefix: livedata-v1
       - android/save-build-cache:
