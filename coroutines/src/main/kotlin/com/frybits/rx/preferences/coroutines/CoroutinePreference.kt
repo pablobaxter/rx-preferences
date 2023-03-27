@@ -68,6 +68,7 @@ interface CoroutinePreference<T> : Preference<T> {
 
 // Wraps the underling preference and returns the CoroutinePreference variant.
 // Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
+@JvmSynthetic
 internal fun <T> Preference<T>.asCoroutinePreference(keysChanged: Flow<String?>): CoroutinePreference<T> =
     CoroutinePreferenceImpl(this, keysChanged)
 

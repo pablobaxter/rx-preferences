@@ -4,16 +4,13 @@ kotlin = "1.8.10"
 kotlin-coroutines = "1.7.0-Beta"
 dokka = "1.8.10"
 
-# Android
+# Android Build
 android-build-gradle = "7.4.2"
 
 # Androidx
-androidx-navigation = "2.5.3"
-androidx-appcompat = "1.6.1"
 androidx-core = "1.9.0"
 androidx-lifecycle = "2.6.0"
 androidx-constraintlayout = "2.1.4"
-androidx-room = "2.5.0"
 androidx-annotation = "1.6.0"
 androidx-test-ext = "1.1.5"
 androidx-test-rules = "1.5.0"
@@ -24,9 +21,6 @@ androidx-arch = "2.2.0"
 # Google
 google-material = "1.8.0"
 
-# Dependency Injection
-hilt = "2.43.2"
-
 # RxJava
 rx2 = "2.2.21"
 rx2Android = "2.1.1"
@@ -34,14 +28,13 @@ rx3 = "3.1.6"
 
 rxBinding3 = "3.1.0"
 
-butterknife = "10.2.3"
-
-# Mockito
+# Testing
 mockitoCore = "5.2.0"
 mockitoKotlin = "4.1.0"
 
 junit = "4.13.2"
 
+# Plugins
 publish-plugin = "1.1.0"
 dependency-analysis = "1.19.0"
 ktlint-plugin = "11.3.1"
@@ -52,8 +45,6 @@ android-build-gradle = { module = "com.android.tools.build:gradle", version.ref 
 android-build-gradle-api = { module = "com.android.tools.build:gradle-api", version.ref = "android-build-gradle" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 kotlin-dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
-androidx-navigation-safeargs-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "androidx-navigation" }
-hilt-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
 ktlint-plugin = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint-plugin" }
 dependency-analysis = { module = "com.autonomousapps:dependency-analysis-gradle-plugin", version.ref = "dependency-analysis" }
 
@@ -65,25 +56,15 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
 
 # Androidx
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
-androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "androidx-navigation" }
-androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "androidx-navigation" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "androidx-constraintlayout" }
-androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidx-room" }
-androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidx-room" }
 androidx-annotation = { module = "androidx.annotation:annotation", version.ref = "androidx-annotation" }
 androidx-livedata = { module = "androidx.lifecycle:lifecycle-livedata", version.ref = "androidx-livedata" }
 androidx-livedata-core = { module = "androidx.lifecycle:lifecycle-livedata-core", version.ref = "androidx-livedata" }
-androidx-arch = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch" }
 
 # Google
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
-
-# Dependency Injection
-google-dagger-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
-google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 
 # RxJava
 reactivex-rx2 = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rx2" }
@@ -91,8 +72,6 @@ reactivex-rxandroid2 = { module = "io.reactivex.rxjava2:rxandroid", version.ref 
 reactivex-rx3 = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rx3" }
 
 jakewharton-rxbinding3 = { module = "com.jakewharton.rxbinding3:rxbinding", version.ref = "rxBinding3" }
-jakewharton-butterknife = { module = "com.jakewharton:butterknife", version.ref = "butterknife" }
-jakewharton-butterknife-compiler = { module = "com.jakewharton:butterknife-compiler", version.ref = "butterknife" }
 
 # Testing
 junit = { module = "junit:junit", version.ref = "junit" }
@@ -100,6 +79,7 @@ junit = { module = "junit:junit", version.ref = "junit" }
 androidx-test-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext" }
 androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test-rules" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
+androidx-arch-test = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

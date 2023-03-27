@@ -1,0 +1,24 @@
+plugins {
+    id 'frybits-application'
+}
+
+android {
+    namespace 'com.frybits.rx.preferences.livedata.app'
+    defaultConfig {
+        applicationId "com.frybits.rx.preferences.livedata.app"
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+dependencies {
+
+    implementation project(":livedata")
+
+    // Kotlin
+    implementation libs.kotlin.stdlib
+
+    // Android
+    implementation libs.androidx.constraintlayout
+    implementation libs.google.material
+}

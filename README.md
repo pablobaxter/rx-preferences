@@ -1,60 +1,49 @@
-# NOTE: It appears this project has been abandoned. This fork is an attempt to continue maintaining and improving upon this project.
+# Rx Preferences
 
-Rx Preferences
---------------
+A collection of libraries to allow `SharedPreferences` to be reactive
 
-Reactive `SharedPreferences` for Android.
+This library was created to continue improving on the great work that [@f2prateek][1] had done with [rx-preferences][2].
 
+In order to handle the varying number of reactive frameworks available, there are multiple libraries available, which all share the same basic APIs and adapters.
 
-Usage
------
+## Available Reactive SharedPreferences Libraries
 
-Create an `RxSharedPreferences` instance which wraps a `SharedPreferences`:
+- [Core][3]
+  - `implementation 'com.frybits.rx.preferences:core:3.0.0'`
+- [Coroutine/Flow][4]
+  - `implementation 'com.frybits.rx.preferences:coroutine:3.0.0'`
+- [LiveData][5]
+  - `implementation 'com.frybits.rx.preferences:livedata:3.0.0'`
+- [Rx2][6]
+  - `implementation 'com.frybits.rx.preferences:rx2:3.0.0'`
+- [Rx3][7]
+  - `implementation 'com.frybits.rx.preferences:rx3:3.0.0'`
 
-```java
-SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-RxSharedPreferences rxPreferences = RxSharedPreferences.create(preferences);
-```
-
-*Hint: Keep a strong reference on your `RxSharedPreferences` instance for as long as you want to observe them to prevent listeners from being GCed.*
-
-Create individual `Preference` objects:
-
-```java
-Preference<String> username = rxPreferences.getString("username");
-Preference<Boolean> showWhatsNew = rxPreferences.getBoolean("show-whats-new", true);
-```
-
-Observe changes to individual preferences:
-
-```java
-username.asObservable().subscribe(new Action1<String>() {
-  @Override public void call(String username) {
-    Log.d(TAG, "Username: " + username);
-  }
-}
-```
-
-Subscribe preferences to streams to store values:
-
-```java
-RxCompoundButton.checks(showWhatsNewView)
-    .subscribe(showWhatsNew.asConsumer());
-```
-*(Note: `RxCompoundButton` is from [RxBinding][1])*
-
-
-Download
---------
+For ease of ensuring all libraries are compatible, as they may have varying release cadences, a BOM is also provided:
 
 ```groovy
-implementation 'com.f2prateek.rx.preferences2:rx-preferences:2.0.1'
+// Import BOM
+implementation platform('com.frybits.rx.preferences:bom:3.0.0')
+implementation 'com.frybits.rx.preferences:core'
+implementation 'com.frybits.rx.preferences:livedata'
 ```
 
+## Migration from `:rx-preferences` to `:rx2`
+
+Many of the APIs are similar to [f2prateek/rx-preferences][8], however there were some changes to packages and class names, mainly due to the addition of the other reactive frameworks.
+This guide can be used for migrating from `:rx-preferences` to `:rx2` library (and potentially even `:rx3`).
+
+1. Change Gradle dependency import from `com.f2prateek.rx.preferences2:rx-preferences` to `com.frybits.rx.preferences:rx2`
+2. Rename all `com.f2prateek.rx.preferences2.Preference` imports to `com.frybits.rx.preferences.rx2.Rx2Preference`
+3. Rename all `Preferences` class usages to `Rx2Preference`
+4. Rename all `com.f2prateek.rx.preferences2.RxSharedPreferences` imports to `com.frybits.rx.preferences.rx2.Rx2SharedPreferences`
+5. Rename all `RxSharedPreferences` class usages to `Rx2SharedPreferences`
+
+All other API usages remain the same.
 
 License
 -------
-
+```
     Copyright 2014 Prateek Srivastava
 
     Licensed under the Apache License, Version 2.0 (the "License");
@@ -68,8 +57,13 @@ License
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
+```
 
-
-
- [1]: https://github.com/JakeWharton/RxBinding
- [2]: http://repository.sonatype.org/service/local/artifact/maven/redirect?r=central-proxy&g=com.f2prateek.rx.preferences&a=rx-preferences&v=LATEST
+[1]:https://github.com/f2prateek
+[2]:https://github.com/f2prateek/rx-preferences
+[3]:./core
+[4]:./coroutines
+[5]:./livedata
+[6]:./rx2
+[7]:./rx3
+[8]:https://github.com/f2prateek/rx-preferences

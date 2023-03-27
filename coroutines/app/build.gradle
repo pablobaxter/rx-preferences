@@ -1,0 +1,25 @@
+plugins {
+    id 'frybits-application'
+}
+
+android {
+    namespace 'com.frybits.rx.preferences.coroutines.app'
+    defaultConfig {
+        applicationId "com.frybits.rx.preferences.coroutines.app"
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+dependencies {
+
+    implementation project(":coroutines")
+
+    // Kotlin
+    implementation libs.kotlin.stdlib
+
+    // Android
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation libs.google.material
+}

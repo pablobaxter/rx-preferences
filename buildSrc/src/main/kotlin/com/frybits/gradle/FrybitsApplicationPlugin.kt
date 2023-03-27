@@ -6,7 +6,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.jetbrains.kotlin.gradle.internal.Kapt3GradleSubplugin
 import org.jetbrains.kotlin.gradle.internal.ParcelizeSubplugin
 import org.jetbrains.kotlin.gradle.plugin.KotlinAndroidPluginWrapper
 
@@ -43,7 +42,6 @@ private fun Project.applyAppPlugins() {
     apply<AppPlugin>()
     apply<KotlinAndroidPluginWrapper>()
     apply<ParcelizeSubplugin>()
-    apply<Kapt3GradleSubplugin>()
     configureCommon()
 }
 
@@ -59,4 +57,10 @@ private fun ApplicationExtension.configureAndroidApplication() {
     }
 
     buildFeatures.viewBinding = true
+
+    packagingOptions {
+        resources {
+            excludes += "META-INF/versions/9/previous-compilation-data.bin"
+        }
+    }
 }

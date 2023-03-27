@@ -23,11 +23,11 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "com.frybits.rx.preferences"
-include ":rx-preferences"
-include ":rx-preferences-sample"
 include ":bom"
 include ":core"
 include ":coroutines"
+include ':coroutines:app'
 include ":livedata"
+include ":livedata:app"
 include ":rx2"
 include ":rx3"
