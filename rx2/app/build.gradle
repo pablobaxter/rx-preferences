@@ -3,9 +3,9 @@ plugins {
 }
 
 android {
-    namespace 'com.frybits.rx.preferences.coroutines.app'
+    namespace 'com.frybits.rx.preferences.rx2.app'
     defaultConfig {
-        applicationId "com.frybits.rx.preferences.coroutines.app"
+        applicationId "com.frybits.rx.preferences.rx2.app"
         versionCode 1
         versionName "1.0"
     }
@@ -13,19 +13,20 @@ android {
 
 dependencies {
 
-    implementation project(":coroutines")
+    implementation project(":rx2")
 
     // Kotlin
     implementation libs.kotlin.stdlib
-    implementation libs.kotlinx.coroutines.core
 
     // Android
     implementation libs.androidx.annotation
     implementation libs.androidx.appcompat
     implementation libs.androidx.core
     implementation libs.androidx.constraintlayout
-    implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.androidx.lifecycle.common
     implementation libs.androidx.lifecycle.viewmodel
     implementation libs.google.material
+
+    // RxJava2
+    implementation libs.reactivex.rx2
 }

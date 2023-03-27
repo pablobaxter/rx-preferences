@@ -30,4 +30,6 @@ include ':coroutines:app'
 include ":livedata"
 include ":livedata:app"
 include ":rx2"
+include ":rx2:app"
 include ":rx3"
+include ":rx3:app"
