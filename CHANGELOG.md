@@ -1,6 +1,20 @@
-Change Log
-==========
+# Change Log
 
+### Version 1.0.0 - ALL / 2023-03-27
+* Fork of [f2prateek/rx-preferences](https://github.com/f2prateek/rx-preferences)
+  * Due to group ID change and package change, this project will start the versioning at `1.0.0` for all libraries.
+* `rx2`
+  * Initial release
+  * Contains fix for [f2prateek/rx-preferences#141](https://github.com/f2prateek/rx-preferences/issues/141)
+* `rx3`
+  * Initial release
+  * Fix for [f2prateek/rx-preferences#135](https://github.com/f2prateek/rx-preferences/issues/135)
+* `coroutines`, `livedata`, `core`, `bom`
+  * Initial release
+
+---
+## **=== Migration to `com.frybits.rx.preferences`** ===
+---
 
 Version 2.0.1 *(18-09-2020)*
 --------------------------------

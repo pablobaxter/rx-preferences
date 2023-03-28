@@ -1,0 +1,445 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@2.2.0
+
+jobs:
+  Check-Core-Health:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
+      - run:
+          name: Check Core build health
+          command: |
+            ./gradlew -p core projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: core-v1
+      - android/save-build-cache:
+          cache-prefix: core-v1
+
+  Core-Lint:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
+      - run:
+          name: Ktlint
+          command: ./gradlew :core:ktlintCheck
+
+  Core-Test:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
+      - android/run-tests:
+          test-command: ./gradlew :core:test
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+  Core-Build:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
+      - run:
+          name: Assemble Core Library
+          command: |
+            ./gradlew :core:assembleRelease
+            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+            ./gradlew :core:publishToMavenLocal
+
+  Check-Rx2-Health:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - run:
+          name: Check Rx2 build health
+          command: |
+            ./gradlew -p rx2 projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/save-build-cache:
+          cache-prefix: rx2-v1
+
+  Rx2-Lint:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - run:
+          name: Ktlint
+          command: ./gradlew :rx2:ktlintCheck
+
+  Rx2-Test:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - android/run-tests:
+          test-command: ./gradlew :rx2:test
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+  Rx2-Build:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - run:
+          name: Assemble Rx2 Library
+          command: |
+            ./gradlew :rx2:assembleRelease
+            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+            ./gradlew :rx2:publishToMavenLocal
+
+  Check-Rx3-Health:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - run:
+          name: Check Rx3 build health
+          command: |
+            ./gradlew -p rx3 projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/save-build-cache:
+          cache-prefix: rx3-v1
+
+  Rx3-Lint:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - run:
+          name: Ktlint
+          command: ./gradlew :rx3:ktlintCheck
+
+  Rx3-Test:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - android/run-tests:
+          test-command: ./gradlew :rx3:test
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+  Rx3-Build:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - run:
+          name: Assemble Rx3 Library
+          command: |
+            ./gradlew :rx3:assembleRelease
+            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+            ./gradlew :rx3:publishToMavenLocal
+
+  Check-Coroutines-Health:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - run:
+          name: Check Coroutines build health
+          command: |
+            ./gradlew -p coroutines projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/save-build-cache:
+          cache-prefix: coroutines-v1
+
+  Coroutines-Lint:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - run:
+          name: Ktlint
+          command: ./gradlew :coroutines:ktlintCheck
+
+  Coroutines-Test:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - android/run-tests:
+          test-command: ./gradlew :coroutines:test
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+  Coroutines-Build:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - run:
+          name: Assemble Coroutines Library
+          command: |
+            ./gradlew :coroutines:assembleRelease
+            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+            ./gradlew :coroutines:publishToMavenLocal
+
+  Check-Livedata-Health:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
+      - run:
+          name: Check Livedata build health
+          command: |
+            ./gradlew -p livedata projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/save-build-cache:
+          cache-prefix: livedata-v1
+
+  Livedata-Lint:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
+      - run:
+          name: Ktlint
+          command: ./gradlew :livedata:ktlintCheck
+
+  Livedata-Test:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
+      - android/run-tests:
+          test-command: ./gradlew :livedata:test
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+      - store_test_results:
+          path: ~/test-results
+      - store_artifacts:
+          path: ~/test-results/junit
+
+  Livedata-Build:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
+      - run:
+          name: Assemble Livedata Library
+          command: |
+            ./gradlew :livedata:assembleRelease
+            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
+            ./gradlew :livedata:publishToMavenLocal
+
+workflows:
+  version: 2
+  Test-And-Build:
+    jobs:
+      - Check-Core-Health
+      - Core-Lint:
+          requires:
+            - Check-Core-Health
+      - Core-Test:
+          requires:
+            - Core-Lint
+      - Core-Build:
+          requires:
+            - Core-Test
+      - Check-Rx2-Health
+      - Rx2-Lint:
+          requires:
+            - Check-Rx2-Health
+      - Rx2-Test:
+          requires:
+            - Rx2-Lint
+      - Rx2-Build:
+          requires:
+            - Rx2-Test
+      - Check-Rx3-Health
+      - Rx3-Lint:
+          requires:
+            - Check-Rx3-Health
+      - Rx3-Test:
+          requires:
+            - Rx3-Lint
+      - Rx3-Build:
+          requires:
+            - Rx3-Test
+      - Check-Coroutines-Health
+      - Coroutines-Lint:
+          requires:
+            - Check-Coroutines-Health
+      - Coroutines-Test:
+          requires:
+            - Coroutines-Lint
+      - Coroutines-Build:
+          requires:
+            - Coroutines-Test
+      - Check-Livedata-Health
+      - Livedata-Lint:
+          requires:
+            - Check-Livedata-Health
+      - Livedata-Test:
+          requires:
+            - Livedata-Lint
+      - Livedata-Build:
+          requires:
+            - Livedata-Test

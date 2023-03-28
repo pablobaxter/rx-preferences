@@ -1,0 +1,23 @@
+plugins {
+    id 'frybits-library'
+}
+
+android.namespace 'com.frybits.rx.preferences.rx3'
+
+dependencies {
+
+    api project(':core')
+
+    // Kotlin
+    implementation libs.kotlin.stdlib
+    implementation libs.androidx.annotation
+
+    // RxJava
+    api libs.reactivex.rx3
+
+    // Test
+    testImplementation libs.junit
+    testImplementation libs.kotlin.test
+    testImplementation libs.mockito.core
+    testImplementation libs.mockito.kotlin
+}

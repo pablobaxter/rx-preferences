@@ -1,4 +1,35 @@
-include ':rx-preferences'
-include ':rx-preferences-sample'
+import org.gradle.api.initialization.resolve.RepositoriesMode
 
-rootProject.name = 'rx-preferences-root'
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    versionCatalogs {
+        libs {
+            from(files("./libs.versions.toml"))
+        }
+    }
+}
+
+rootProject.name = "com.frybits.rx.preferences"
+include ":bom"
+include ":core"
+include ":coroutines"
+include ':coroutines:app'
+include ":livedata"
+include ":livedata:app"
+include ":rx2"
+include ":rx2:app"
+include ":rx3"
+include ":rx3:app"
