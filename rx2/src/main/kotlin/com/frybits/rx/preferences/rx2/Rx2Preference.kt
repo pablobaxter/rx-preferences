@@ -85,6 +85,7 @@ interface Rx2Preference<T: Any>: Preference<T> {
 
 // Wraps the underling preference and returns the Rx2Preference variant.
 // Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
+@JvmSynthetic
 internal fun <T: Any> Preference<T>.asRx2Preference(keysChanged: Observable<Optional<String?>>): Rx2Preference<T> = Rx2PreferenceImpl(this, keysChanged)
 
 private class Rx2PreferenceImpl<T: Any>(

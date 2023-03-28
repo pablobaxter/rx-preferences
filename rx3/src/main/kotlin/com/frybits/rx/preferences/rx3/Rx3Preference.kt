@@ -97,6 +97,7 @@ interface Rx3Preference<T : Any> : Preference<T> {
 
 // Wraps the underling preference and returns the Rx3Preference variant.
 // Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
+@JvmSynthetic
 internal fun <T : Any> Preference<T>.asRx3Preference(keysChanged: Observable<Optional<String?>>): Rx3Preference<T> =
     Rx3PreferenceImpl(this, keysChanged)
 

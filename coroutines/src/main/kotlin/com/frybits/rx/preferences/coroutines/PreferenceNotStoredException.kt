@@ -24,5 +24,6 @@ package com.frybits.rx.preferences.coroutines
 class PreferenceNotStoredException internal constructor(message: String) : Exception(message)
 
 // Internal caller to hide constructor
+@JvmSynthetic
 internal fun <T> PreferenceNotStoredException(value: T): PreferenceNotStoredException =
     PreferenceNotStoredException("$value was not stored")

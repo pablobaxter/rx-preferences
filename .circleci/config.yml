@@ -4,20 +4,24 @@ orbs:
   android: circleci/android@2.2.0
 
 jobs:
-  Check-Build-Health:
+  Check-Core-Health:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
       - run:
-          name: Check build health
+          name: Check Core build health
           command: |
-            ./gradlew buildHealth
-      - android/save-gradle-cache
-      - android/save-build-cache
+            ./gradlew -p core projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: core-v1
+      - android/save-build-cache:
+          cache-prefix: core-v1
 
   Core-Lint:
     docker:
@@ -25,8 +29,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
       - run:
           name: Ktlint
           command: ./gradlew :core:ktlintCheck
@@ -37,8 +43,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
       - android/run-tests:
           test-command: ./gradlew :core:test
       - run:
@@ -58,8 +66,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
       - run:
           name: Assemble Core Library
           command: |
@@ -67,14 +77,35 @@ jobs:
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :core:publishToMavenLocal
 
+  Check-Rx2-Health:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - run:
+          name: Check Rx2 build health
+          command: |
+            ./gradlew -p rx2 projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/save-build-cache:
+          cache-prefix: rx2-v1
+
   Rx2-Lint:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
       - run:
           name: Ktlint
           command: ./gradlew :rx2:ktlintCheck
@@ -85,8 +116,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
       - android/run-tests:
           test-command: ./gradlew :rx2:test
       - run:
@@ -106,8 +139,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
       - run:
           name: Assemble Rx2 Library
           command: |
@@ -115,14 +150,35 @@ jobs:
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx2:publishToMavenLocal
 
+  Check-Rx3-Health:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - run:
+          name: Check Rx3 build health
+          command: |
+            ./gradlew -p rx3 projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/save-build-cache:
+          cache-prefix: rx3-v1
+
   Rx3-Lint:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
       - run:
           name: Ktlint
           command: ./gradlew :rx3:ktlintCheck
@@ -133,8 +189,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
       - android/run-tests:
           test-command: ./gradlew :rx3:test
       - run:
@@ -154,8 +212,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
       - run:
           name: Assemble Rx3 Library
           command: |
@@ -163,14 +223,35 @@ jobs:
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx3:publishToMavenLocal
 
+  Check-Coroutines-Health:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - run:
+          name: Check Coroutines build health
+          command: |
+            ./gradlew -p coroutines projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/save-build-cache:
+          cache-prefix: coroutines-v1
+
   Coroutines-Lint:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
       - run:
           name: Ktlint
           command: ./gradlew :coroutines:ktlintCheck
@@ -181,8 +262,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
       - android/run-tests:
           test-command: ./gradlew :coroutines:test
       - run:
@@ -202,8 +285,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
       - run:
           name: Assemble Coroutines Library
           command: |
@@ -211,14 +296,35 @@ jobs:
             echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :coroutines:publishToMavenLocal
 
+  Check-Livedata-Health:
+    docker:
+      - image: soaboz/android-jdk-17:0.0.1
+    resource_class: small
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
+      - run:
+          name: Check Livedata build health
+          command: |
+            ./gradlew -p livedata projectHealth
+      - android/save-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/save-build-cache:
+          cache-prefix: livedata-v1
+
   Livedata-Lint:
     docker:
       - image: soaboz/android-jdk-17:0.0.1
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
       - run:
           name: Ktlint
           command: ./gradlew :livedata:ktlintCheck
@@ -229,8 +335,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
       - android/run-tests:
           test-command: ./gradlew :livedata:test
       - run:
@@ -250,8 +358,10 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - android/restore-gradle-cache
-      - android/restore-build-cache
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
       - run:
           name: Assemble Livedata Library
           command: |
@@ -263,46 +373,50 @@ workflows:
   version: 2
   Test-And-Build:
     jobs:
-      - Check-Build-Health
+      - Check-Core-Health
       - Core-Lint:
           requires:
-            - Check-Build-Health
+            - Check-Core-Health
       - Core-Test:
           requires:
             - Core-Lint
       - Core-Build:
           requires:
             - Core-Test
+      - Check-Rx2-Health
       - Rx2-Lint:
           requires:
-            - Check-Build-Health
+            - Check-Rx2-Health
       - Rx2-Test:
           requires:
             - Rx2-Lint
       - Rx2-Build:
           requires:
             - Rx2-Test
+      - Check-Rx3-Health
       - Rx3-Lint:
           requires:
-            - Check-Build-Health
+            - Check-Rx3-Health
       - Rx3-Test:
           requires:
             - Rx3-Lint
       - Rx3-Build:
           requires:
             - Rx3-Test
+      - Check-Coroutines-Health
       - Coroutines-Lint:
           requires:
-            - Check-Build-Health
+            - Check-Coroutines-Health
       - Coroutines-Test:
           requires:
             - Coroutines-Lint
       - Coroutines-Build:
           requires:
             - Coroutines-Test
+      - Check-Livedata-Health
       - Livedata-Lint:
           requires:
-            - Check-Build-Health
+            - Check-Livedata-Health
       - Livedata-Test:
           requires:
             - Livedata-Lint

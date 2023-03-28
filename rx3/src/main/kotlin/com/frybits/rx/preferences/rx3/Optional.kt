@@ -21,4 +21,5 @@ package com.frybits.rx.preferences.rx3
 // Internal optional to handle null keys
 internal data class Optional<T>(val value: T?)
 
+@JvmSynthetic
 internal fun <T> T?.asOptional() = Optional(this)
