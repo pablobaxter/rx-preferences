@@ -13,7 +13,7 @@
   * Initial release
 
 ---
-## **=== Migration to `com.frybits.rx.preferences`** ===
+### **=== Migration to `com.frybits.rx.preferences`** ===
 ---
 
 Version 2.0.1 *(18-09-2020)*
