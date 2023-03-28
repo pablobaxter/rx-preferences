@@ -5,9 +5,10 @@ orbs:
 
 jobs:
   Check-Core-Health:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -24,9 +25,10 @@ jobs:
           cache-prefix: core-v1
 
   Core-Lint:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -38,9 +40,10 @@ jobs:
           command: ./gradlew :core:ktlintCheck
 
   Core-Test:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -61,9 +64,10 @@ jobs:
           path: ~/test-results/junit
 
   Core-Build:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -78,9 +82,10 @@ jobs:
             ./gradlew :core:publishToMavenLocal
 
   Check-Rx2-Health:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -97,9 +102,10 @@ jobs:
           cache-prefix: rx2-v1
 
   Rx2-Lint:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -111,9 +117,10 @@ jobs:
           command: ./gradlew :rx2:ktlintCheck
 
   Rx2-Test:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -134,9 +141,10 @@ jobs:
           path: ~/test-results/junit
 
   Rx2-Build:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -151,9 +159,10 @@ jobs:
             ./gradlew :rx2:publishToMavenLocal
 
   Check-Rx3-Health:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -170,9 +179,10 @@ jobs:
           cache-prefix: rx3-v1
 
   Rx3-Lint:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -184,9 +194,10 @@ jobs:
           command: ./gradlew :rx3:ktlintCheck
 
   Rx3-Test:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -207,9 +218,10 @@ jobs:
           path: ~/test-results/junit
 
   Rx3-Build:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -224,9 +236,10 @@ jobs:
             ./gradlew :rx3:publishToMavenLocal
 
   Check-Coroutines-Health:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -243,9 +256,10 @@ jobs:
           cache-prefix: coroutines-v1
 
   Coroutines-Lint:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -257,9 +271,10 @@ jobs:
           command: ./gradlew :coroutines:ktlintCheck
 
   Coroutines-Test:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -280,9 +295,10 @@ jobs:
           path: ~/test-results/junit
 
   Coroutines-Build:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -297,9 +313,10 @@ jobs:
             ./gradlew :coroutines:publishToMavenLocal
 
   Check-Livedata-Health:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -316,9 +333,10 @@ jobs:
           cache-prefix: livedata-v1
 
   Livedata-Lint:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -330,9 +348,10 @@ jobs:
           command: ./gradlew :livedata:ktlintCheck
 
   Livedata-Test:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -353,9 +372,10 @@ jobs:
           path: ~/test-results/junit
 
   Livedata-Build:
-    docker:
-      - image: soaboz/android-jdk-17:0.0.1
-    resource_class: small
+    executor:
+      name: android/android-machine
+      resource-class: small
+      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:

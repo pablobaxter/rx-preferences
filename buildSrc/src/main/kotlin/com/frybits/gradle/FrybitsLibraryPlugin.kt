@@ -93,7 +93,7 @@ private fun Project.configureDokka() {
             reportUndocumented.set(true)
             platform.set(Platform.jvm)
             sourceRoots.setFrom(File("src/main"))
-            jdkVersion.set(17)
+            jdkVersion.set(11)
 
             perPackageOption {
                 matchingRegex.set("kotlin($|\\.).*")
