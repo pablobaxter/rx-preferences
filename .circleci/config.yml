@@ -7,7 +7,7 @@ jobs:
   Check-Core-Health:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -27,7 +27,7 @@ jobs:
   Core-Lint:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -42,7 +42,7 @@ jobs:
   Core-Test:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -66,7 +66,7 @@ jobs:
   Core-Build:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -84,7 +84,7 @@ jobs:
   Check-Rx2-Health:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -104,7 +104,7 @@ jobs:
   Rx2-Lint:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -119,7 +119,7 @@ jobs:
   Rx2-Test:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -143,7 +143,7 @@ jobs:
   Rx2-Build:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -161,7 +161,7 @@ jobs:
   Check-Rx3-Health:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -181,7 +181,7 @@ jobs:
   Rx3-Lint:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -196,7 +196,7 @@ jobs:
   Rx3-Test:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -220,7 +220,7 @@ jobs:
   Rx3-Build:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -238,7 +238,7 @@ jobs:
   Check-Coroutines-Health:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -258,7 +258,7 @@ jobs:
   Coroutines-Lint:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -273,7 +273,7 @@ jobs:
   Coroutines-Test:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -297,7 +297,7 @@ jobs:
   Coroutines-Build:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -315,7 +315,7 @@ jobs:
   Check-Livedata-Health:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -335,7 +335,7 @@ jobs:
   Livedata-Lint:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -350,7 +350,7 @@ jobs:
   Livedata-Test:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
@@ -374,7 +374,7 @@ jobs:
   Livedata-Build:
     executor:
       name: android/android-machine
-      resource-class: small
+      resource-class: medium
       tag: 2023.03.1
     steps:
       - checkout
