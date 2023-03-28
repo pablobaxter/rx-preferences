@@ -36,6 +36,8 @@ nexusPublishing {
     packageGroup = 'com.frybits.rx.preferences'
     repositories {
         sonatype {
+            nexusUrl.set(uri("https://s01.oss.sonatype.org/service/local/"))
+            snapshotRepositoryUrl.set(uri("https://s01.oss.sonatype.org/content/repositories/snapshots/"))
             stagingProfileId = profileId
             username = ossrhUsername
             password = ossrhPassword
