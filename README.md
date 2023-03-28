@@ -1,5 +1,9 @@
 # Rx Preferences
 
+[![CircleCI][9]][10]
+[![GitHub][11]][12]
+[![Maven Central][13]][14] 
+
 A collection of libraries to allow `SharedPreferences` to be reactive
 
 This library was created to continue improving on the great work that [@f2prateek][1] had done with [rx-preferences][2].
@@ -9,21 +13,21 @@ In order to handle the varying number of reactive frameworks available, there ar
 ## Available Reactive SharedPreferences Libraries
 
 - [Core][3]
-  - `implementation 'com.frybits.rx.preferences:core:3.0.0'`
+  - `implementation 'com.frybits.rx.preferences:core:1.0.0'`
 - [Coroutine/Flow][4]
-  - `implementation 'com.frybits.rx.preferences:coroutine:3.0.0'`
+  - `implementation 'com.frybits.rx.preferences:coroutine:1.0.0'`
 - [LiveData][5]
-  - `implementation 'com.frybits.rx.preferences:livedata:3.0.0'`
+  - `implementation 'com.frybits.rx.preferences:livedata:1.0.0'`
 - [Rx2][6]
-  - `implementation 'com.frybits.rx.preferences:rx2:3.0.0'`
+  - `implementation 'com.frybits.rx.preferences:rx2:1.0.0'`
 - [Rx3][7]
-  - `implementation 'com.frybits.rx.preferences:rx3:3.0.0'`
+  - `implementation 'com.frybits.rx.preferences:rx3:1.0.0'`
 
 For ease of ensuring all libraries are compatible, as they may have varying release cadences, a BOM is also provided:
 
 ```groovy
 // Import BOM
-implementation platform('com.frybits.rx.preferences:bom:3.0.0')
+implementation platform('com.frybits.rx.preferences:bom:1.0.0')
 implementation 'com.frybits.rx.preferences:core'
 implementation 'com.frybits.rx.preferences:livedata'
 ```
@@ -67,3 +71,12 @@ License
 [6]:./rx2
 [7]:./rx3
 [8]:https://github.com/f2prateek/rx-preferences
+
+[9]:https://dl.circleci.com/status-badge/img/gh/pablobaxter/rx-preferences/tree/master.svg?style=svg
+[10]:https://dl.circleci.com/status-badge/redirect/gh/pablobaxter/rx-preferences/tree/master
+
+[11]:https://img.shields.io/github/license/pablobaxter/rx-preferences
+[12]:./LICENSE
+
+[13]:https://img.shields.io/maven-central/v/com.frybits.rx-preferences/bom?label=bom
+[14]:https://search.maven.org/artifact/com.frybits.rx-preferences/bom/1.0.0/pom
