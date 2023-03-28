@@ -1,9 +1,11 @@
 # LiveData Preferences
 
+[![Maven Central][1]][2] 
+
 ### Download
 
 ```groovy
-implementation 'com.frybits.rx.preferences:livedata:3.0.0'
+implementation 'com.frybits.rx.preferences:livedata:1.0.0'
 ```
 
 ### Usage
@@ -37,3 +39,6 @@ Subscribe preferences to streams to store values:
 ```kotlin
 someBooleanLiveData.observeForever(showWhatsNew.asObserver())
 ```
+
+[1]:https://img.shields.io/maven-central/v/com.frybits.rx-preferences/livedata?label=livedata
+[2]:https://search.maven.org/artifact/com.frybits.rx-preferences/livedata/1.0.0/aar
