@@ -50,12 +50,12 @@ internal fun <BuildFeaturesT : BuildFeatures, BuildTypeT : BuildType, DefaultCon
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     (this as? ExtensionAware)?.configure<KotlinJvmOptions> {
-        jvmTarget = "17"
+        jvmTarget = "11"
     }
 }
 
