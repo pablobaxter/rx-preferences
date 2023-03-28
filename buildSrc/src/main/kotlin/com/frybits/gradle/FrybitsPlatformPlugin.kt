@@ -42,6 +42,14 @@ private fun Project.applyPublishingPlugin() {
     afterEvaluate {
         configure<PublishingExtension> {
             publications {
+                whenObjectAdded {
+                    if (this is MavenPublication) {
+                        configurePom(
+                            findProperty("libraryName")?.toString().orEmpty(),
+                            findProperty("description")?.toString().orEmpty()
+                        )
+                    }
+                }
                 create<MavenPublication>("release") {
                     from(components["javaPlatform"])
                 }
@@ -51,5 +59,38 @@ private fun Project.applyPublishingPlugin() {
 
     configure<SigningExtension> {
         sign(extensions.getByType<PublishingExtension>().publications)
+    }
+}
+
+private fun MavenPublication.configurePom(
+    projectName: String,
+    projectDescription: String
+) {
+    pom {
+        name.set(projectName)
+        description.set(projectDescription)
+        url.set("https://github.com/pablobaxter/rx-preferences")
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("https://opensource.org/licenses/Apache-2.0")
+            }
+        }
+        developers {
+            developer {
+                id.set("pablobaxter")
+                name.set("Pablo Baxter")
+                email.set("pablo@frybits.com")
+            }
+            developer {
+                id.set("f2prateek")
+                name.set("Prateek Srivastava")
+            }
+        }
+        scm {
+            connection.set("scm:git:git://github.com/pablobaxter/rx-preferences.git")
+            developerConnection.set("git:ssh://github.com/pablobaxter/rx-preferences.git")
+            url.set("https://github.com/pablobaxter/rx-preferences")
+        }
     }
 }
