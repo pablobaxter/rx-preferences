@@ -40,5 +40,5 @@ Subscribe preferences to streams to store values:
 someBooleanLiveData.observeForever(showWhatsNew.asObserver())
 ```
 
-[1]:https://img.shields.io/maven-central/v/com.frybits.rx-preferences/livedata?label=livedata
-[2]:https://search.maven.org/artifact/com.frybits.rx-preferences/livedata/1.0.0/aar
+[1]:https://img.shields.io/maven-central/v/com.frybits.rx.preferences/livedata?label=livedata
+[2]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/livedata/1.0.0

@@ -77,12 +77,7 @@ internal fun Project.applyDependencyAnalysis() {
     configure<DependencyAnalysisSubExtension> {
         issues {
             onAny {
-                // TODO For now, we don't care about the old projects. Will update or remove later.
-                if (path.contains(":rx-preferences")) {
-                    severity("ignore")
-                } else {
-                    severity("fail")
-                }
+                severity("fail")
             }
         }
     }

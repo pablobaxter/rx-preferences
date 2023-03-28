@@ -78,5 +78,5 @@ License
 [11]:https://img.shields.io/github/license/pablobaxter/rx-preferences
 [12]:./LICENSE
 
-[13]:https://img.shields.io/maven-central/v/com.frybits.rx-preferences/bom?label=bom
-[14]:https://search.maven.org/artifact/com.frybits.rx-preferences/bom/1.0.0/pom
+[13]:https://img.shields.io/maven-central/v/com.frybits.rx.preferences/bom?label=bom
+[14]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/bom/1.0.0

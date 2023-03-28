@@ -42,5 +42,5 @@ RxCompoundButton.checks(showWhatsNewView)
 ```
 *(Note: `RxCompoundButton` is from [RxBinding](https://github.com/JakeWharton/RxBinding))*
 
-[1]:https://img.shields.io/maven-central/v/com.frybits.rx-preferences/rx2?label=rx2
-[2]:https://search.maven.org/artifact/com.frybits.rx-preferences/rx2/1.0.0/aar
+[1]:https://img.shields.io/maven-central/v/com.frybits.rx.preferences/rx2?label=rx2
+[2]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/rx2/1.0.0
