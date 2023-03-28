@@ -1,9 +1,11 @@
 # Rx3 Preferences
 
+[![Maven Central][1]][2] 
+
 ### Download
 
 ```groovy
-implementation 'com.frybits.rx.preferences:rx3:3.0.0'
+implementation 'com.frybits.rx.preferences:rx3:1.0.0'
 ```
 
 ### Usage
@@ -37,3 +39,6 @@ Subscribe preferences to streams to store values:
 ```kotlin
 someBooleanRx3Stream.subscribe(showWhatsNew.asConsumer())
 ```
+
+[1]:https://img.shields.io/maven-central/v/com.frybits.rx-preferences/rx3?label=rx3
+[2]:https://search.maven.org/artifact/com.frybits.rx-preferences/rx3/1.0.0/aar

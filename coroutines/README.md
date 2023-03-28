@@ -1,9 +1,11 @@
 # Coroutines/Flow Preferences
 
+[![Maven Central][1]][2] 
+
 ### Download
 
 ```groovy
-implementation 'com.frybits.rx.preferences:coroutines:3.0.0'
+implementation 'com.frybits.rx.preferences:coroutines:1.0.0'
 ```
 
 ### Usage
@@ -39,3 +41,6 @@ showWhatsNewView.checkedChanges().skipInitialValue()
     .collect(showWhatsNew.asCollector())
 ```
 *(Note: `checkedChanges()` is from [FlowBinding](https://github.com/ReactiveCircus/FlowBinding))*
+
+[1]:https://img.shields.io/maven-central/v/com.frybits.rx-preferences/coroutines?label=coroutines
+[2]:https://search.maven.org/artifact/com.frybits.rx-preferences/coroutines/1.0.0/aar
