@@ -1,5 +1,12 @@
 # Change Log
 
+### Version 1.1.0 / 2023-10-03
+* Update dependencies
+* Move to compile sdk 34
+* Use vanniktech for maven publishing
+* Update CI script so that publishing occurs via CI now
+* Remove build health checks from CI (for now)
+
 ### Version 1.0.0 - ALL / 2023-03-27
 * Fork of [f2prateek/rx-preferences](https://github.com/f2prateek/rx-preferences)
   * Due to group ID change and package change, this project will start the versioning at `1.0.0` for all libraries.
