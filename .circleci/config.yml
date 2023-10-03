@@ -46,6 +46,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: core-v1
+      - android/save-build-cache:
+          cache-prefix: core-v1
 
   Core-Build:
     executor:
@@ -63,6 +67,11 @@ jobs:
           command: |
             ./gradlew :core:assembleRelease
             ./gradlew :core:publishToMavenLocal
+      - android/save-gradle-cache:
+          cache-prefix: core-v1
+      - android/save-build-cache:
+          cache-prefix: core-v1
+
 
   Rx2-Lint:
     executor:
@@ -106,6 +115,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/save-build-cache:
+          cache-prefix: rx2-v1
 
   Rx2-Build:
     executor:
@@ -123,6 +136,10 @@ jobs:
           command: |
             ./gradlew :rx2:assembleRelease
             ./gradlew :rx2:publishToMavenLocal
+      - android/save-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/save-build-cache:
+          cache-prefix: rx2-v1
 
   Rx3-Lint:
     executor:
@@ -166,6 +183,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/save-build-cache:
+          cache-prefix: rx3-v1
 
   Rx3-Build:
     executor:
@@ -183,6 +204,10 @@ jobs:
           command: |
             ./gradlew :rx3:assembleRelease
             ./gradlew :rx3:publishToMavenLocal
+      - android/save-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/save-build-cache:
+          cache-prefix: rx3-v1
 
   Coroutines-Lint:
     executor:
@@ -226,6 +251,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/save-build-cache:
+          cache-prefix: coroutines-v1
 
   Coroutines-Build:
     executor:
@@ -243,6 +272,10 @@ jobs:
           command: |
             ./gradlew :coroutines:assembleRelease
             ./gradlew :coroutines:publishToMavenLocal
+      - android/save-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/save-build-cache:
+          cache-prefix: coroutines-v1
 
   Livedata-Lint:
     executor:
@@ -286,6 +319,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/save-build-cache:
+          cache-prefix: livedata-v1
 
   Livedata-Build:
     executor:
@@ -303,6 +340,10 @@ jobs:
           command: |
             ./gradlew :livedata:assembleRelease
             ./gradlew :livedata:publishToMavenLocal
+      - android/save-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/save-build-cache:
+          cache-prefix: livedata-v1
 
   Rx-Preferences-Upload:
     executor:
@@ -311,6 +352,26 @@ jobs:
       tag: 2023.03.1
     steps:
       - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
       - run:
           name: Upload RxPreferences Libraries
           command: |
