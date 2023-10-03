@@ -4,26 +4,6 @@ orbs:
   android: circleci/android@2.2.0
 
 jobs:
-  Check-Core-Health:
-    executor:
-      name: android/android-machine
-      resource-class: medium
-      tag: 2023.03.1
-    steps:
-      - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: core-v1
-      - android/restore-build-cache:
-          cache-prefix: core-v1
-      - run:
-          name: Check Core build health
-          command: |
-            ./gradlew -p core projectHealth
-      - android/save-gradle-cache:
-          cache-prefix: core-v1
-      - android/save-build-cache:
-          cache-prefix: core-v1
-
   Core-Lint:
     executor:
       name: android/android-machine
@@ -38,6 +18,10 @@ jobs:
       - run:
           name: Ktlint
           command: ./gradlew :core:ktlintCheck
+      - android/save-gradle-cache:
+          cache-prefix: core-v1
+      - android/save-build-cache:
+          cache-prefix: core-v1
 
   Core-Test:
     executor:
@@ -62,6 +46,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: core-v1
+      - android/save-build-cache:
+          cache-prefix: core-v1
 
   Core-Build:
     executor:
@@ -78,28 +66,12 @@ jobs:
           name: Assemble Core Library
           command: |
             ./gradlew :core:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :core:publishToMavenLocal
-
-  Check-Rx2-Health:
-    executor:
-      name: android/android-machine
-      resource-class: medium
-      tag: 2023.03.1
-    steps:
-      - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: rx2-v1
-      - android/restore-build-cache:
-          cache-prefix: rx2-v1
-      - run:
-          name: Check Rx2 build health
-          command: |
-            ./gradlew -p rx2 projectHealth
       - android/save-gradle-cache:
-          cache-prefix: rx2-v1
+          cache-prefix: core-v1
       - android/save-build-cache:
-          cache-prefix: rx2-v1
+          cache-prefix: core-v1
+
 
   Rx2-Lint:
     executor:
@@ -115,6 +87,10 @@ jobs:
       - run:
           name: Ktlint
           command: ./gradlew :rx2:ktlintCheck
+      - android/save-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/save-build-cache:
+          cache-prefix: rx2-v1
 
   Rx2-Test:
     executor:
@@ -139,6 +115,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/save-build-cache:
+          cache-prefix: rx2-v1
 
   Rx2-Build:
     executor:
@@ -155,28 +135,11 @@ jobs:
           name: Assemble Rx2 Library
           command: |
             ./gradlew :rx2:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx2:publishToMavenLocal
-
-  Check-Rx3-Health:
-    executor:
-      name: android/android-machine
-      resource-class: medium
-      tag: 2023.03.1
-    steps:
-      - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: rx3-v1
-      - android/restore-build-cache:
-          cache-prefix: rx3-v1
-      - run:
-          name: Check Rx3 build health
-          command: |
-            ./gradlew -p rx3 projectHealth
       - android/save-gradle-cache:
-          cache-prefix: rx3-v1
+          cache-prefix: rx2-v1
       - android/save-build-cache:
-          cache-prefix: rx3-v1
+          cache-prefix: rx2-v1
 
   Rx3-Lint:
     executor:
@@ -192,6 +155,10 @@ jobs:
       - run:
           name: Ktlint
           command: ./gradlew :rx3:ktlintCheck
+      - android/save-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/save-build-cache:
+          cache-prefix: rx3-v1
 
   Rx3-Test:
     executor:
@@ -216,6 +183,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/save-build-cache:
+          cache-prefix: rx3-v1
 
   Rx3-Build:
     executor:
@@ -232,28 +203,11 @@ jobs:
           name: Assemble Rx3 Library
           command: |
             ./gradlew :rx3:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx3:publishToMavenLocal
-
-  Check-Coroutines-Health:
-    executor:
-      name: android/android-machine
-      resource-class: medium
-      tag: 2023.03.1
-    steps:
-      - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: coroutines-v1
-      - android/restore-build-cache:
-          cache-prefix: coroutines-v1
-      - run:
-          name: Check Coroutines build health
-          command: |
-            ./gradlew -p coroutines projectHealth
       - android/save-gradle-cache:
-          cache-prefix: coroutines-v1
+          cache-prefix: rx3-v1
       - android/save-build-cache:
-          cache-prefix: coroutines-v1
+          cache-prefix: rx3-v1
 
   Coroutines-Lint:
     executor:
@@ -269,6 +223,10 @@ jobs:
       - run:
           name: Ktlint
           command: ./gradlew :coroutines:ktlintCheck
+      - android/save-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/save-build-cache:
+          cache-prefix: coroutines-v1
 
   Coroutines-Test:
     executor:
@@ -293,6 +251,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/save-build-cache:
+          cache-prefix: coroutines-v1
 
   Coroutines-Build:
     executor:
@@ -309,28 +271,11 @@ jobs:
           name: Assemble Coroutines Library
           command: |
             ./gradlew :coroutines:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :coroutines:publishToMavenLocal
-
-  Check-Livedata-Health:
-    executor:
-      name: android/android-machine
-      resource-class: medium
-      tag: 2023.03.1
-    steps:
-      - checkout
-      - android/restore-gradle-cache:
-          cache-prefix: livedata-v1
-      - android/restore-build-cache:
-          cache-prefix: livedata-v1
-      - run:
-          name: Check Livedata build health
-          command: |
-            ./gradlew -p livedata projectHealth
       - android/save-gradle-cache:
-          cache-prefix: livedata-v1
+          cache-prefix: coroutines-v1
       - android/save-build-cache:
-          cache-prefix: livedata-v1
+          cache-prefix: coroutines-v1
 
   Livedata-Lint:
     executor:
@@ -346,6 +291,10 @@ jobs:
       - run:
           name: Ktlint
           command: ./gradlew :livedata:ktlintCheck
+      - android/save-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/save-build-cache:
+          cache-prefix: livedata-v1
 
   Livedata-Test:
     executor:
@@ -370,6 +319,10 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results/junit
+      - android/save-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/save-build-cache:
+          cache-prefix: livedata-v1
 
   Livedata-Build:
     executor:
@@ -386,60 +339,100 @@ jobs:
           name: Assemble Livedata Library
           command: |
             ./gradlew :livedata:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :livedata:publishToMavenLocal
+      - android/save-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/save-build-cache:
+          cache-prefix: livedata-v1
+
+  Rx-Preferences-Upload:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
+      - run:
+          name: Upload RxPreferences Libraries
+          command: |
+            ./gradlew publishAllPublicationsToMavenCentralRepository --no-parallel --no-configuration-cache --stacktrace
+
 
 workflows:
   version: 2
   Test-And-Build:
     jobs:
-      - Check-Core-Health
-      - Core-Lint:
-          requires:
-            - Check-Core-Health
+      - Core-Lint
       - Core-Test:
           requires:
             - Core-Lint
       - Core-Build:
           requires:
             - Core-Test
-      - Check-Rx2-Health
-      - Rx2-Lint:
-          requires:
-            - Check-Rx2-Health
+      - Rx2-Lint
       - Rx2-Test:
           requires:
             - Rx2-Lint
       - Rx2-Build:
           requires:
             - Rx2-Test
-      - Check-Rx3-Health
-      - Rx3-Lint:
-          requires:
-            - Check-Rx3-Health
+      - Rx3-Lint
       - Rx3-Test:
           requires:
             - Rx3-Lint
       - Rx3-Build:
           requires:
             - Rx3-Test
-      - Check-Coroutines-Health
-      - Coroutines-Lint:
-          requires:
-            - Check-Coroutines-Health
+      - Coroutines-Lint
       - Coroutines-Test:
           requires:
             - Coroutines-Lint
       - Coroutines-Build:
           requires:
             - Coroutines-Test
-      - Check-Livedata-Health
-      - Livedata-Lint:
-          requires:
-            - Check-Livedata-Health
+      - Livedata-Lint
       - Livedata-Test:
           requires:
             - Livedata-Lint
       - Livedata-Build:
           requires:
             - Livedata-Test
+      - Rx-Preferences-Upload-Approval:
+          type: approval
+          requires:
+            - Core-Build
+            - Rx2-Build
+            - Rx3-Build
+            - Coroutines-Build
+            - Livedata-Build
+          filters:
+            branches:
+              only:
+                - master
+      - Rx-Preferences-Upload:
+          requires:
+            - Rx-Preferences-Upload-Approval
+          filters:
+            branches:
+              only:
+                - master

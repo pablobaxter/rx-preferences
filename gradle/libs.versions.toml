@@ -1,26 +1,26 @@
 [versions]
 # Kotlin
-kotlin = "1.8.10"
-kotlin-coroutines = "1.6.4"
-dokka = "1.8.10"
+kotlin = "1.9.10"
+kotlin-coroutines = "1.7.3"
+dokka = "1.9.0"
 
 # Android Build
-android-build-gradle = "7.4.2"
+android-build-gradle = "8.1.2"
 
 # Androidx
 androidx-appcompat = "1.6.1"
-androidx-core = "1.9.0"
-androidx-lifecycle = "2.6.1"
+androidx-core = "1.12.0"
+androidx-lifecycle = "2.6.2"
 androidx-constraintlayout = "2.1.4"
-androidx-annotation = "1.6.0"
+androidx-annotation = "1.7.0"
 androidx-test-ext = "1.1.5"
 androidx-test-rules = "1.5.0"
 androidx-test-runner = "1.5.2"
-androidx-livedata = "2.6.1"
+androidx-livedata = "2.6.2"
 androidx-arch = "2.2.0"
 
 # Google
-google-material = "1.8.0"
+google-material = "1.9.0"
 
 # RxJava
 rx2 = "2.2.21"
@@ -37,8 +37,9 @@ junit = "4.13.2"
 
 # Plugins
 publish-plugin = "1.1.0"
-dependency-analysis = "1.19.0"
+dependency-analysis = "1.24.0"
 ktlint-plugin = "11.3.1"
+vanniktech = "0.25.3"
 
 [libraries]
 ## Build libraries
@@ -48,6 +49,8 @@ kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", v
 kotlin-dokka-plugin = { module = "org.jetbrains.dokka:dokka-gradle-plugin", version.ref = "dokka" }
 ktlint-plugin = { module = "org.jlleitschuh.gradle:ktlint-gradle", version.ref = "ktlint-plugin" }
 dependency-analysis = { module = "com.autonomousapps:dependency-analysis-gradle-plugin", version.ref = "dependency-analysis" }
+## Publishing
+vanniktech = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "vanniktech" }
 
 ## Project libraries
 

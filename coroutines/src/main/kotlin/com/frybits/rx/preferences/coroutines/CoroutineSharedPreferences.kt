@@ -72,7 +72,7 @@ class CoroutineSharedPreferences @VisibleForTesting internal constructor(
     }
 
     // Either use the key changes flow passed in, or the default flow
-    private val keyChanges: Flow<String?> = overrideKeyChanges ?: callbackFlow<String?> {
+    private val keyChanges: Flow<String?> = overrideKeyChanges ?: callbackFlow {
         val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
             check(prefs === sharedPreferences) { "CoroutinePreferences not listening to the right SharedPreferences" }
             trySendBlocking(key)

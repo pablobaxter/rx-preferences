@@ -45,7 +45,6 @@ private fun Project.applyAppPlugins() {
     configureCommon()
 }
 
-@Suppress("UnstableApiUsage")
 private fun ApplicationExtension.configureAndroidApplication() {
     configureCommonAndroid()
 
@@ -58,7 +57,7 @@ private fun ApplicationExtension.configureAndroidApplication() {
 
     buildFeatures.viewBinding = true
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += "META-INF/versions/9/previous-compilation-data.bin"
         }
