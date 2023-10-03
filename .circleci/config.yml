@@ -78,7 +78,6 @@ jobs:
           name: Assemble Core Library
           command: |
             ./gradlew :core:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :core:publishToMavenLocal
 
   Check-Rx2-Health:
@@ -155,7 +154,6 @@ jobs:
           name: Assemble Rx2 Library
           command: |
             ./gradlew :rx2:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx2:publishToMavenLocal
 
   Check-Rx3-Health:
@@ -232,7 +230,6 @@ jobs:
           name: Assemble Rx3 Library
           command: |
             ./gradlew :rx3:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :rx3:publishToMavenLocal
 
   Check-Coroutines-Health:
@@ -309,7 +306,6 @@ jobs:
           name: Assemble Coroutines Library
           command: |
             ./gradlew :coroutines:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :coroutines:publishToMavenLocal
 
   Check-Livedata-Health:
@@ -386,8 +382,20 @@ jobs:
           name: Assemble Livedata Library
           command: |
             ./gradlew :livedata:assembleRelease
-            echo $SIGNING_SECRET | base64 -d > ~/secret.gpg
             ./gradlew :livedata:publishToMavenLocal
+
+  Rx-Preferences-Upload:
+    executor:
+      name: android/android-machine
+      resource-class: medium
+      tag: 2023.03.1
+    steps:
+      - checkout
+      - run:
+          name: Upload RxPreferences Libraries
+          command: |
+            ./gradlew publishAllPublicationsToMavenCentralRepository --no-parallel --no-configuration-cache --stacktrace
+
 
 workflows:
   version: 2
@@ -443,3 +451,22 @@ workflows:
       - Livedata-Build:
           requires:
             - Livedata-Test
+      - Rx-Preferences-Upload-Approval:
+          type: approval
+          requires:
+            - Core-Build
+            - Rx2-Build
+            - Rx3-Build
+            - Coroutines-Build
+            - Livedata-Build
+          filters:
+            branches:
+              only:
+                - master
+      - Rx-Preferences-Upload:
+          requires:
+            - Rx-Preferences-Upload-Approval
+          filters:
+            branches:
+              only:
+                - master

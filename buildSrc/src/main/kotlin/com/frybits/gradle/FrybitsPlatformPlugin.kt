@@ -1,14 +1,11 @@
 package com.frybits.gradle
 
+import com.vanniktech.maven.publish.MavenPublishPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.plugins.JavaPlatformPlugin
-import org.gradle.api.publish.PublishingExtension
-import org.gradle.api.publish.maven.MavenPublication
-import org.gradle.api.publish.maven.plugins.MavenPublishPlugin
-import org.gradle.kotlin.dsl.*
-import org.gradle.plugins.signing.SigningExtension
-import org.gradle.plugins.signing.SigningPlugin
+import org.gradle.kotlin.dsl.apply
+import org.gradle.kotlin.dsl.dependencies
 
 private val FRYBITS_LIBRARY_REGEX = "^plugins \\{(?s).*\\n\\s+id ('frybits-library'|\"frybits-library\")(?s).*}\$".toRegex()
 
@@ -16,7 +13,8 @@ class FrybitsPlatformPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         target.applyPlatformPlugin()
-        target.applyPublishingPlugin()
+        target.apply<MavenPublishPlugin>()
+
     }
 }
 
@@ -30,67 +28,8 @@ private fun Project.applyPlatformPlugin() {
     }.forEach { p ->
         dependencies {
             constraints {
-                add(JavaPlatformPlugin.API_CONFIGURATION_NAME, p.path)
+                add(JavaPlatformPlugin.API_CONFIGURATION_NAME, p)
             }
-        }
-    }
-}
-
-private fun Project.applyPublishingPlugin() {
-    apply<MavenPublishPlugin>()
-    apply<SigningPlugin>()
-    afterEvaluate {
-        configure<PublishingExtension> {
-            publications {
-                whenObjectAdded {
-                    if (this is MavenPublication) {
-                        configurePom(
-                            findProperty("libraryName")?.toString().orEmpty(),
-                            findProperty("description")?.toString().orEmpty()
-                        )
-                    }
-                }
-                create<MavenPublication>("release") {
-                    from(components["javaPlatform"])
-                }
-            }
-        }
-    }
-
-    configure<SigningExtension> {
-        sign(extensions.getByType<PublishingExtension>().publications)
-    }
-}
-
-private fun MavenPublication.configurePom(
-    projectName: String,
-    projectDescription: String
-) {
-    pom {
-        name.set(projectName)
-        description.set(projectDescription)
-        url.set("https://github.com/pablobaxter/rx-preferences")
-        licenses {
-            license {
-                name.set("The Apache License, Version 2.0")
-                url.set("https://opensource.org/licenses/Apache-2.0")
-            }
-        }
-        developers {
-            developer {
-                id.set("pablobaxter")
-                name.set("Pablo Baxter")
-                email.set("pablo@frybits.com")
-            }
-            developer {
-                id.set("f2prateek")
-                name.set("Prateek Srivastava")
-            }
-        }
-        scm {
-            connection.set("scm:git:git://github.com/pablobaxter/rx-preferences.git")
-            developerConnection.set("git:ssh://github.com/pablobaxter/rx-preferences.git")
-            url.set("https://github.com/pablobaxter/rx-preferences")
         }
     }
 }

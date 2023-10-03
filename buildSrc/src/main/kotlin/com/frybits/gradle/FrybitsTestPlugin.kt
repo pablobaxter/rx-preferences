@@ -43,7 +43,6 @@ private fun Project.applyTestPlugins() {
     configureCommon()
 }
 
-@Suppress("UnstableApiUsage")
 private fun TestExtension.configureAndroidTest() {
     configureCommonAndroid()
 }

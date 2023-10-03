@@ -11,6 +11,7 @@ dependencies {
     implementation(libs.kotlin.dokka.plugin)
     implementation(libs.ktlint.plugin)
     implementation(libs.dependency.analysis)
+    implementation(libs.vanniktech)
 }
 
 gradlePlugin {

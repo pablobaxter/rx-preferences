@@ -1,13 +1,3 @@
 plugins {
     id 'frybits-platform'
 }
-
-dependencies {
-    constraints {
-        api project(":core")
-        api project(":coroutines")
-        api project(":livedata")
-        api project(":rx2")
-        api project(":rx3")
-    }
-}
