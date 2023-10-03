@@ -5,7 +5,7 @@
 ### Download
 
 ```groovy
-implementation 'com.frybits.rx.preferences:coroutines:1.0.0'
+implementation 'com.frybits.rx.preferences:coroutines:1.1.0'
 ```
 
 ### Usage
@@ -43,4 +43,4 @@ showWhatsNewView.checkedChanges().skipInitialValue()
 *(Note: `checkedChanges()` is from [FlowBinding](https://github.com/ReactiveCircus/FlowBinding))*
 
 [1]:https://img.shields.io/maven-central/v/com.frybits.rx.preferences/coroutines?label=coroutines
-[2]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/coroutines/1.0.0
+[2]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/coroutines/1.1.0

@@ -5,7 +5,7 @@
 ### Download
 
 ```groovy
-implementation 'com.frybits.rx.preferences:livedata:1.0.0'
+implementation 'com.frybits.rx.preferences:livedata:1.1.0'
 ```
 
 ### Usage
@@ -41,4 +41,4 @@ someBooleanLiveData.observeForever(showWhatsNew.asObserver())
 ```
 
 [1]:https://img.shields.io/maven-central/v/com.frybits.rx.preferences/livedata?label=livedata
-[2]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/livedata/1.0.0
+[2]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/livedata/1.1.0

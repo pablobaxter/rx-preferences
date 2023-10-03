@@ -5,7 +5,7 @@
 ### Download
 
 ```groovy
-implementation 'com.frybits.rx.preferences:rx3:1.0.0'
+implementation 'com.frybits.rx.preferences:rx3:1.1.0'
 ```
 
 ### Usage
@@ -41,4 +41,4 @@ someBooleanRx3Stream.subscribe(showWhatsNew.asConsumer())
 ```
 
 [1]:https://img.shields.io/maven-central/v/com.frybits.rx.preferences/rx3?label=rx3
-[2]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/rx3/1.0.0
+[2]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/rx3/1.1.0
