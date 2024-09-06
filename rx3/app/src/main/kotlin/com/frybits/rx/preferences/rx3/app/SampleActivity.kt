@@ -7,9 +7,13 @@ import android.widget.CheckBox
 import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.frybits.rx.preferences.rx3.Rx3Preference
-import com.frybits.rx.preferences.rx3.Rx3SharedPreferences
+import com.frybits.rx.preferences.core.Preference
+import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
 import com.frybits.rx.preferences.rx3.app.databinding.SampleLayoutBinding
+import com.frybits.rx.preferences.rx3.asConsumer
+import com.frybits.rx.preferences.rx3.asObservable
+import com.frybits.rx.preferences.rx3.asOptional
+import com.google.common.base.Optional
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
@@ -35,8 +39,8 @@ class SampleActivity : AppCompatActivity() {
 
     private lateinit var binding: SampleLayoutBinding
 
-    private lateinit var fooBool: Rx3Preference<Boolean>
-    private lateinit var fooString: Rx3Preference<String>
+    private lateinit var fooBool: Preference<Boolean>
+    private lateinit var fooString: Preference<Optional<String?>>
 
     private val disposables = CompositeDisposable()
 
@@ -46,10 +50,10 @@ class SampleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val rx3Preferences =
-            Rx3SharedPreferences.create(getSharedPreferences("rx3", MODE_PRIVATE))
+            getSharedPreferences("rx3", MODE_PRIVATE).asRxSharedPreferences()
 
         fooBool = rx3Preferences.getBoolean("fooBool")
-        fooString = rx3Preferences.getString("fooString")
+        fooString = rx3Preferences.getString("fooString").asOptional()
 
         bindPreference(binding.checkBox, fooBool)
         bindPreference(binding.checkBox2, fooBool)
@@ -62,11 +66,11 @@ class SampleActivity : AppCompatActivity() {
         disposables.dispose()
     }
 
-    private fun bindPreference(checkBox: CheckBox, preference: Rx3Preference<Boolean>) {
+    private fun bindPreference(checkBox: CheckBox, preference: Preference<Boolean>) {
         // Bind the preference to the checkbox.
         disposables.add(
             preference.asObservable()
-                .subscribe { checkBox.isChecked = it }
+                .subscribe { checkBox.isChecked = it.or(false) }
         )
 
         // Bind the checkbox to the preference.
@@ -84,11 +88,11 @@ class SampleActivity : AppCompatActivity() {
         )
     }
 
-    private fun bindPreference(editText: EditText, preference: Rx3Preference<String>) {
+    private fun bindPreference(editText: EditText, preference: Preference<Optional<String?>>) {
         disposables.add(
             preference.asObservable()
                 .filter { !editText.isFocused }
-                .subscribe { editText.setText(it) }
+                .subscribe { editText.setText(it.orNull()) }
         )
 
         val consumer = preference.asConsumer()
@@ -99,7 +103,7 @@ class SampleActivity : AppCompatActivity() {
                         Unit
 
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        emitter.onNext(s.toString())
+                        emitter.onNext(Optional.fromNullable(s.toString()))
                     }
 
                     override fun afterTextChanged(s: Editable?) = Unit

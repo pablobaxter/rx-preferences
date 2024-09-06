@@ -13,9 +13,6 @@ androidx-core = "1.12.0"
 androidx-lifecycle = "2.6.2"
 androidx-constraintlayout = "2.1.4"
 androidx-annotation = "1.7.0"
-androidx-test-ext = "1.1.5"
-androidx-test-rules = "1.5.0"
-androidx-test-runner = "1.5.2"
 androidx-livedata = "2.6.2"
 androidx-arch = "2.2.0"
 
@@ -25,10 +22,8 @@ android-guava = "33.3.0-android"
 
 # RxJava
 rx2 = "2.2.21"
-rx2Android = "2.1.1"
 rx3 = "3.1.6"
 
-rxBinding3 = "3.1.0"
 
 # Testing
 mockitoCore = "5.2.0"
@@ -37,7 +32,6 @@ mockitoKotlin = "4.1.0"
 junit = "4.13.2"
 
 # Plugins
-publish-plugin = "1.1.0"
 dependency-analysis = "1.24.0"
 ktlint-plugin = "11.3.1"
 vanniktech = "0.25.3"
@@ -58,12 +52,10 @@ vanniktech = { module = "com.vanniktech:gradle-maven-publish-plugin", version.re
 # Kotlin
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlin-coroutines" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlin-coroutines" }
 
 # Androidx
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "androidx-appcompat" }
 androidx-core = { module = "androidx.core:core", version.ref = "androidx-core" }
-androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-lifecycle-common = { module = "androidx.lifecycle:lifecycle-common", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "androidx-lifecycle" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidx-lifecycle" }
@@ -78,21 +70,14 @@ guava = { module = "com.google.guava:guava", version.ref = "android-guava" }
 
 # RxJava
 reactivex-rx2 = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rx2" }
-reactivex-rxandroid2 = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rx2Android" }
 reactivex-rx3 = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rx3" }
-
-jakewharton-rxbinding3 = { module = "com.jakewharton.rxbinding3:rxbinding", version.ref = "rxBinding3" }
 
 # Testing
 junit = { module = "junit:junit", version.ref = "junit" }
 
-androidx-test-junit-ktx = { module = "androidx.test.ext:junit-ktx", version.ref = "androidx-test-ext" }
-androidx-test-rules = { module = "androidx.test:rules", version.ref = "androidx-test-rules" }
-androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidx-test-runner" }
 androidx-arch-test = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch" }
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
-kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockitoCore" }
 mockito-kotlin = { module = "org.mockito.kotlin:mockito-kotlin", version.ref = "mockitoKotlin" }
@@ -101,6 +86,3 @@ kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-t
 
 [bundles]
 android-build = ["android-build-gradle", "android-build-gradle-api"]
-
-[plugins]
-gradle-nexus-publish = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "publish-plugin" }

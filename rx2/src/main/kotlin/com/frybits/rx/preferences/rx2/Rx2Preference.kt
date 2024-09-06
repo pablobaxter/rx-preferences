@@ -2,6 +2,7 @@ package com.frybits.rx.preferences.rx2
 
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
+import com.frybits.rx.preferences.core.Adapter
 import com.frybits.rx.preferences.core.Preference
 import com.google.common.base.Optional
 import io.reactivex.Observable
@@ -32,11 +33,11 @@ private const val RX2_STREAM = "rx2-stream"
  * on start of collection.
  */
 @CheckResult
-fun <T> Preference<T>.asObservable(): Observable<Optional<T>> {
+fun <T: Any> Preference<T>.asObservable(): Observable<T> {
     return keysChanged.filter { it.orNull() == key || it.orNull() == null }
         .startWith(Optional.absent())
         .map {
-            return@map Optional.fromNullable(value).or(Optional.fromNullable(defaultValue))
+            return@map value
         }
 }
 
@@ -44,10 +45,14 @@ fun <T> Preference<T>.asObservable(): Observable<Optional<T>> {
  * An action which stores a new value for this preference
  */
 @CheckResult
-fun <T> Preference<T>.asConsumer(): Consumer<in T> {
+fun <T: Any> Preference<T>.asConsumer(): Consumer<in T> {
     return Consumer {
         value = it
     }
+}
+
+fun <T> Preference<T?>.asOptional(): Preference<Optional<T>> {
+    return Preference(rxSharedPreferences, key, Optional.fromNullable(defaultValue), OptionalAdapter(adapter))
 }
 
 private val <T> Preference<T>.keysChanged: Observable<Optional<String?>>
@@ -65,3 +70,17 @@ private val <T> Preference<T>.keysChanged: Observable<Optional<String?>>
             rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
         }.share()
     }
+
+private class OptionalAdapter<T>(private val adapter: Adapter<T?>) : Adapter<Optional<T>> {
+    override fun get(
+        key: String?,
+        sharedPreference: SharedPreferences,
+        defaultValue: Optional<T>
+    ): Optional<T> {
+        return Optional.fromNullable(adapter.get(key, sharedPreference, defaultValue.get()))
+    }
+
+    override fun set(key: String?, value: Optional<T>, editor: SharedPreferences.Editor) {
+        adapter.set(key, value.orNull(), editor)
+    }
+}

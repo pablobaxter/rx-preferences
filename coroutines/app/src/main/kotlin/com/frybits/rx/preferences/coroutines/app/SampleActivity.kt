@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.frybits.rx.preferences.coroutines.CoroutinePreference
-import com.frybits.rx.preferences.coroutines.CoroutineSharedPreferences
+import com.frybits.rx.preferences.core.Preference
+import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
 import com.frybits.rx.preferences.coroutines.app.databinding.SampleLayoutBinding
+import com.frybits.rx.preferences.coroutines.asCollector
+import com.frybits.rx.preferences.coroutines.asFlow
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
@@ -43,8 +45,8 @@ class SampleActivity : AppCompatActivity() {
 
     private lateinit var binding: SampleLayoutBinding
 
-    private lateinit var fooBool: CoroutinePreference<Boolean>
-    private lateinit var fooString: CoroutinePreference<String?>
+    private lateinit var fooBool: Preference<Boolean>
+    private lateinit var fooString: Preference<String?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,7 @@ class SampleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val coroutinesPreferences =
-            CoroutineSharedPreferences.create(getSharedPreferences("coroutines", MODE_PRIVATE))
+            getSharedPreferences("coroutines", MODE_PRIVATE).asRxSharedPreferences()
 
         fooBool = coroutinesPreferences.getBoolean("fooBool")
         fooString = coroutinesPreferences.getString("fooString")
@@ -69,7 +71,7 @@ class SampleActivity : AppCompatActivity() {
 
     private fun CoroutineScope.bindPreference(
         checkBox: CheckBox,
-        preference: CoroutinePreference<Boolean>
+        preference: Preference<Boolean>
     ) {
         // Bind the preference to the checkbox.
         preference.asFlow()
@@ -93,7 +95,7 @@ class SampleActivity : AppCompatActivity() {
 
     private fun CoroutineScope.bindPreference(
         editText: EditText,
-        preference: CoroutinePreference<String?>
+        preference: Preference<String?>
     ) {
         preference.asFlow()
             .filter { !editText.isFocused }

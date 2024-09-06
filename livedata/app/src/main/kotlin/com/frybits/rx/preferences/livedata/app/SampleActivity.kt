@@ -8,9 +8,11 @@ import android.widget.CompoundButton.OnCheckedChangeListener
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
-import com.frybits.rx.preferences.livedata.LiveDataPreference
-import com.frybits.rx.preferences.livedata.LiveDataSharedPreferences
+import com.frybits.rx.preferences.core.Preference
+import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
 import com.frybits.rx.preferences.livedata.app.databinding.SampleLayoutBinding
+import com.frybits.rx.preferences.livedata.asLiveData
+import com.frybits.rx.preferences.livedata.asObserver
 
 /*
  *  Copyright 2014 Prateek Srivastava
@@ -34,8 +36,8 @@ class SampleActivity : AppCompatActivity() {
 
     private lateinit var binding: SampleLayoutBinding
 
-    private lateinit var fooBool: LiveDataPreference<Boolean>
-    private lateinit var fooString: LiveDataPreference<String?>
+    private lateinit var fooBool: Preference<Boolean>
+    private lateinit var fooString: Preference<String?>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +45,7 @@ class SampleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val livedataPreferences =
-            LiveDataSharedPreferences.create(getSharedPreferences("livedata", MODE_PRIVATE))
+            getSharedPreferences("livedata", MODE_PRIVATE).asRxSharedPreferences()
 
         fooBool = livedataPreferences.getBoolean("fooBool")
         fooString = livedataPreferences.getString("fooString")
@@ -54,7 +56,7 @@ class SampleActivity : AppCompatActivity() {
         bindPreference(binding.text2, fooString)
     }
 
-    private fun bindPreference(checkBox: CheckBox, preference: LiveDataPreference<Boolean>) {
+    private fun bindPreference(checkBox: CheckBox, preference: Preference<Boolean>) {
         // Bind the preference to the checkbox.
         preference.asLiveData()
             .observe(this) { checkBox.isChecked = it }
@@ -69,7 +71,7 @@ class SampleActivity : AppCompatActivity() {
         mutableLiveData.observe(this, observer)
     }
 
-    private fun bindPreference(editText: EditText, preference: LiveDataPreference<String?>) {
+    private fun bindPreference(editText: EditText, preference: Preference<String?>) {
         preference.asLiveData()
             .observe(this) {
                 if (!editText.isFocused) {

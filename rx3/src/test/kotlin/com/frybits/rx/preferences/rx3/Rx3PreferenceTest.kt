@@ -70,7 +70,7 @@ class Rx3PreferenceTest {
         }
         val rxPref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
-        rxPref.asObservable().map { it.get() }.test()
+        rxPref.asObservable().test()
             .assertValueCount(1)
             .assertValue(2)
         verify(sharedPrefs, times(1)).getInt(eq("test"), eq(-1))
