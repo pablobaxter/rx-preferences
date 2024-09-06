@@ -1,13 +1,21 @@
 package com.frybits.rx.preferences.coroutines
 
+import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.frybits.rx.preferences.core.Preference
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
 
 /*
@@ -28,84 +36,72 @@ import kotlinx.coroutines.withContext
  * Created by Pablo Baxter (Github: pablobaxter)
  */
 
+private const val COROUTINE_STREAM = "coroutine-stream"
+
 /**
- * A preference of type [T] that exposes Kotlin [Flow] as the reactive framework. Instances are created from [CoroutineSharedPreferences] factory.
- *
- * This preference exposes Coroutine specific functions.
+ * Observe changes to this preference. The current [Preference.value] or [Preference.defaultValue] will be emitted
+ * on start of collection.
  */
-interface CoroutinePreference<T> : Preference<T> {
-
-    /**
-     * Observe changes to this preference. The current [value] or [defaultValue] will be emitted
-     * on start of collection.
-     */
-    @CheckResult
-    fun asFlow(): Flow<T>
-
-    /**
-     * An action which stores a new value for this preference
-     *
-     * @param committing Flag to indicate that [android.content.SharedPreferences.Editor.commit] should be used instead.
-     * If set to `true`, emissions to the collector will suspend on [Dispatchers.IO] until the commit is completed or throw an [PreferenceNotStoredException] if it has failed.
-     */
-    @CheckResult
-    fun asCollector(committing: Boolean = false): FlowCollector<T>
-
-    /**
-     * Saves the given value using [android.content.SharedPreferences.Editor.commit], suspending using [Dispatchers.IO].
-     *
-     * @return `true` if the data was stored, `false` if there was an error storing the data.
-     */
-    @JvmSynthetic
-    suspend fun commitValue(value: T): Boolean
-
-    /**
-     * Deletes the underlying value using [android.content.SharedPreferences.Editor.commit], suspending using [Dispatchers.IO].
-     */
-    @JvmSynthetic
-    suspend fun deleteAndCommit(): Boolean
+@CheckResult
+fun <T> Preference<T>.asFlow(): Flow<T> {
+    return keysChanged.filter { it == key || it == null }
+        .onStart { emit("") }
+        .map { value }
 }
 
-// Wraps the underling preference and returns the CoroutinePreference variant.
-// Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
+/**
+ * Saves the given value using [android.content.SharedPreferences.Editor.commit], suspending using [Dispatchers.IO].
+ *
+ * @return `true` if the data was stored, `false` if there was an error storing the data.
+ */
 @JvmSynthetic
-internal fun <T> Preference<T>.asCoroutinePreference(keysChanged: Flow<String?>): CoroutinePreference<T> =
-    CoroutinePreferenceImpl(this, keysChanged)
-
-private class CoroutinePreferenceImpl<T>(
-    private val preference: Preference<T>,
-    private val keysChanged: Flow<String?>
-) : CoroutinePreference<T>, Preference<T> by preference {
-
-    override fun asFlow(): Flow<T> {
-        return keysChanged.filter { it == key || it == null }
-            .onStart { emit("") }
-            .map { value }
+suspend fun <T> Preference<T>.commitValue(value: T): Boolean {
+    return withContext(Dispatchers.IO) {
+        val editor = rxSharedPreferences.sharedPreferences.edit()
+        adapter.set(key, value, editor)
+        return@withContext editor.commit()
     }
+}
 
-    override suspend fun commitValue(value: T): Boolean {
-        return withContext(Dispatchers.IO) {
-            val editor = sharedPreferences.edit()
-            adapter.set(key, value, editor)
-            return@withContext editor.commit()
-        }
-    }
-
-    override suspend fun deleteAndCommit(): Boolean {
-        return withContext(Dispatchers.IO) {
-            return@withContext sharedPreferences.edit().remove(key).commit()
-        }
-    }
-
-    override fun asCollector(committing: Boolean): FlowCollector<T> {
-        return FlowCollector { value ->
-            if (committing) {
-                if (!commitValue(value)) {
-                    throw PreferenceNotStoredException(value)
-                }
-            } else {
-                this.value = value
+/**
+ * An action which stores a new value for this preference
+ *
+ * @param committing Flag to indicate that [android.content.SharedPreferences.Editor.commit] should be used instead.
+ * If set to `true`, emissions to the collector will suspend on [Dispatchers.IO] until the commit is completed or throw an [PreferenceNotStoredException] if it has failed.
+ */
+@CheckResult
+fun <T> Preference<T>.asCollector(committing: Boolean = false): FlowCollector<T> {
+    return FlowCollector { value ->
+        if (committing) {
+            if (!commitValue(value)) {
+                throw PreferenceNotStoredException(value)
             }
+        } else {
+            this.value = value
         }
     }
 }
+
+/**
+ * Deletes the underlying value using [android.content.SharedPreferences.Editor.commit], suspending using [Dispatchers.IO].
+ */
+@JvmSynthetic
+suspend fun <T> Preference<T>.deleteAndCommit(): Boolean {
+    return withContext(Dispatchers.IO) {
+        return@withContext rxSharedPreferences.sharedPreferences.edit().remove(key).commit()
+    }
+}
+
+private val <T> Preference<T>.keysChanged: Flow<String?>
+    get() = rxSharedPreferences.getOrCreateKeyChangedStream(COROUTINE_STREAM) {
+        callbackFlow {
+            val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+                check(prefs === rxSharedPreferences.sharedPreferences) { "CoroutinePreferences not listening to the right SharedPreferences" }
+                trySendBlocking(key)
+            }
+
+            rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+
+            awaitClose { rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener) }
+        }.shareIn(CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate), SharingStarted.WhileSubscribed())
+    }

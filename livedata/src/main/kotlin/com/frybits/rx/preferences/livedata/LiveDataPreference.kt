@@ -1,5 +1,6 @@
 package com.frybits.rx.preferences.livedata
 
+import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
@@ -23,38 +24,45 @@ import com.frybits.rx.preferences.core.Preference
  * Created by Pablo Baxter (Github: pablobaxter)
  */
 
-interface LiveDataPreference<T> : Preference<T> {
+private const val LIVEDATA_STREAM = "livedata-stream"
 
-    fun asLiveData(): LiveData<T>
-
-    fun asObserver(): Observer<T>
+fun <T> Preference<T>.asLiveData(): LiveData<T> {
+    val mediatorLiveData = MediatorLiveData<T>()
+    mediatorLiveData.value = value
+    mediatorLiveData.addSource(keysChanged) {
+        if (it == key || it == null) {
+            mediatorLiveData.value = value
+        }
+    }
+    return mediatorLiveData
 }
 
-// Wraps the underling preference and returns the CoroutinePreference variant.
-// Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
-@JvmSynthetic
-internal fun <T> Preference<T>.asLiveDataPreference(keysChanged: LiveData<String?>): LiveDataPreference<T> =
-    LiveDataPreferenceImpl(this, keysChanged)
+fun <T> Preference<T>.asObserver(): Observer<T> {
+    return Observer {
+        value = it
+    }
+}
 
-private class LiveDataPreferenceImpl<T>(
-    private val preference: Preference<T>,
-    private val keysChanged: LiveData<String?>
-) : LiveDataPreference<T>, Preference<T> by preference {
-
-    override fun asLiveData(): LiveData<T> {
-        val mediatorLiveData = MediatorLiveData<T>()
-        mediatorLiveData.value = value
-        mediatorLiveData.addSource(keysChanged) {
-            if (it == key || it == null) {
-                mediatorLiveData.value = value
-            }
-        }
-        return mediatorLiveData
+private val <T> Preference<T>.keysChanged: LiveData<String?>
+    get() = rxSharedPreferences.getOrCreateKeyChangedStream(LIVEDATA_STREAM) {
+        SharedPreferenceKeyChangedLiveData(rxSharedPreferences.sharedPreferences)
     }
 
-    override fun asObserver(): Observer<T> {
-        return Observer {
-            value = it
-        }
+private class SharedPreferenceKeyChangedLiveData(private val sharedPreferences: SharedPreferences) :
+    LiveData<String?>() {
+
+    private val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+        check(prefs === sharedPreferences) { "CoroutinePreferences not listening to the right SharedPreferences" }
+        value = key
+    }
+
+    override fun onActive() {
+        super.onActive()
+        sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+    }
+
+    override fun onInactive() {
+        super.onInactive()
+        sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
     }
 }

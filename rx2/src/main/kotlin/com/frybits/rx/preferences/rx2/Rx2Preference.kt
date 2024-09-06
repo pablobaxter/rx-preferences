@@ -1,7 +1,9 @@
 package com.frybits.rx.preferences.rx2
 
+import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.frybits.rx.preferences.core.Preference
+import com.google.common.base.Optional
 import io.reactivex.Observable
 import io.reactivex.functions.Consumer
 
@@ -23,96 +25,43 @@ import io.reactivex.functions.Consumer
  * Created by Pablo Baxter (Github: pablobaxter)
  */
 
+private const val RX2_STREAM = "rx2-stream"
+
 /**
- * A preference of type [T] that exposes RxJava2 [Observable] as the reactive framework. Instances are created from [Rx2SharedPreferences] factory.
- *
- * This preference exposes RxJava2 specific functions.
+ * Observe changes to this preference. The current [Preference.value] or [Preference.defaultValue] will be emitted
+ * on start of collection.
  */
-interface Rx2Preference<T: Any>: Preference<T> {
-
-    /**
-     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
-     *
-     * @see [Preference.key]
-     */
-    @Deprecated(message = "Use `key` instead.", replaceWith = ReplaceWith("key"), level = DeprecationLevel.ERROR)
-    fun key(): String? {
-        return key
-    }
-
-    /**
-     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
-     *
-     * @see [Preference.defaultValue]
-     */
-    @Deprecated(message = "Use `defaultValue` instead.", replaceWith = ReplaceWith("defaultValue"), level = DeprecationLevel.ERROR)
-    fun defaultValue(): T {
-        return defaultValue
-    }
-
-    /**
-     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
-     *
-     * @see [Preference.value]
-     */
-    @Deprecated(message = "Use `value` instead.", replaceWith = ReplaceWith("value"), level = DeprecationLevel.ERROR)
-    fun get(): T {
-        return value
-    }
-
-    /**
-     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
-     *
-     * @see [Preference.value]
-     */
-    // Unable to use ReplaceWith, due to bug with setters. https://youtrack.jetbrains.com/issue/KTIJ-12836/ReplaceWith-cannot-replace-function-invocation-with-property-assignment
-    @Deprecated(message = "Use `this.value = value` instead.", level = DeprecationLevel.ERROR)
-    fun set(value: T)
-
-    /**
-     * Observe changes to this preference. The current [value] or [defaultValue] will be emitted
-     * on start of collection.
-     */
-    @CheckResult
-    fun asObservable(): Observable<T>
-
-    /**
-     * An action which stores a new value for this preference
-     */
-    @CheckResult
-    fun asConsumer(): Consumer<in T>
+@CheckResult
+fun <T> Preference<T>.asObservable(): Observable<Optional<T>> {
+    return keysChanged.filter { it.orNull() == key || it.orNull() == null }
+        .startWith(Optional.absent())
+        .map {
+            return@map Optional.fromNullable(value).or(Optional.fromNullable(defaultValue))
+        }
 }
 
-// Wraps the underling preference and returns the Rx2Preference variant.
-// Marked as internal, to prevent improper usage of this, as it is possible to continuously wrap the same object forever.
-@JvmSynthetic
-internal fun <T: Any> Preference<T>.asRx2Preference(keysChanged: Observable<Optional<String?>>): Rx2Preference<T> = Rx2PreferenceImpl(this, keysChanged)
-
-private class Rx2PreferenceImpl<T: Any>(
-    private val preference: Preference<T>,
-    private val keysChanged: Observable<Optional<String?>>
-): Rx2Preference<T>, Preference<T> by preference {
-
-    @Deprecated("Use `this.value = value` instead.", level = DeprecationLevel.ERROR)
-    override fun set(value: T) {
-        this.value = value
-    }
-
-    override var value: T
-        get() = preference.value
-        set(value) {
-            preference.value = value
-        }
-
-    override fun asObservable(): Observable<T> {
-        return keysChanged.filter { it.value == key || it.value == null }
-            .startWith(Optional(""))
-            .map { value }
-    }
-
-    override fun asConsumer(): Consumer<in T> {
-        return Consumer {
-            value = it
-        }
+/**
+ * An action which stores a new value for this preference
+ */
+@CheckResult
+fun <T> Preference<T>.asConsumer(): Consumer<in T> {
+    return Consumer {
+        value = it
     }
 }
+
+private val <T> Preference<T>.keysChanged: Observable<Optional<String?>>
+    get() = rxSharedPreferences.getOrCreateKeyChangedStream(RX2_STREAM) {
+        Observable.create<Optional<String?>> { emitter ->
+            val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+                check(prefs === rxSharedPreferences.sharedPreferences) { "Rx2SharedPreferences not listening to the right SharedPreferences" }
+                emitter.onNext(Optional.fromNullable(key)) // Handle `null` values
+            }
+
+            emitter.setCancellable {
+                rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+            }
+
+            rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+        }.share()
+    }

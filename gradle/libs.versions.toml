@@ -21,6 +21,7 @@ androidx-arch = "2.2.0"
 
 # Google
 google-material = "1.9.0"
+android-guava = "33.3.0-android"
 
 # RxJava
 rx2 = "2.2.21"
@@ -73,6 +74,7 @@ androidx-livedata-core = { module = "androidx.lifecycle:lifecycle-livedata-core"
 
 # Google
 google-material = { module = "com.google.android.material:material", version.ref = "google-material" }
+guava = { module = "com.google.guava:guava", version.ref = "android-guava" }
 
 # RxJava
 reactivex-rx2 = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rx2" }

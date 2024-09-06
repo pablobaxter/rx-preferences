@@ -21,7 +21,7 @@ import androidx.annotation.RestrictTo
  * Created by Pablo Baxter (Github: pablobaxter)
  */
 
-/** A preference of type [T]. Instances are created from [BaseRxSharedPreferences] factories. */
+/** A preference of type [T]. Instances are created from [RxSharedPreferences] factories. */
 interface Preference<T> {
 
     /** Converts instances of [T] to be stored and retrieved as Strings in [SharedPreferences]. */
@@ -37,8 +37,47 @@ interface Preference<T> {
         fun serialize(value: T): String?
     }
 
-    /** The [SharedPreferences] that backs this preference */
-    val sharedPreferences: SharedPreferences
+    /**
+     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
+     *
+     * @see [Preference.key]
+     */
+    @Deprecated(message = "Use `key` instead.", replaceWith = ReplaceWith("key"), level = DeprecationLevel.ERROR)
+    fun key(): String? {
+        return key
+    }
+
+    /**
+     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
+     *
+     * @see [Preference.defaultValue]
+     */
+    @Deprecated(message = "Use `defaultValue` instead.", replaceWith = ReplaceWith("defaultValue"), level = DeprecationLevel.ERROR)
+    fun defaultValue(): T {
+        return defaultValue
+    }
+
+    /**
+     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
+     *
+     * @see [Preference.value]
+     */
+    @Deprecated(message = "Use `value` instead.", replaceWith = ReplaceWith("value"), level = DeprecationLevel.ERROR)
+    fun get(): T {
+        return value
+    }
+
+    /**
+     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
+     *
+     * @see [Preference.value]
+     */
+    // Unable to use ReplaceWith, due to bug with setters. https://youtrack.jetbrains.com/issue/KTIJ-12836/ReplaceWith-cannot-replace-function-invocation-with-property-assignment
+    @Deprecated(message = "Use `this.value = value` instead.", level = DeprecationLevel.ERROR)
+    fun set(value: T)
+
+    /** The [RxSharedPreferences] that backs this preference */
+    val rxSharedPreferences: RxSharedPreferences
 
     /** The adapter to use for the given type [T] */
     val adapter: Adapter<T>
@@ -64,27 +103,33 @@ interface Preference<T> {
  *
  * @suppress **This function should be internal, but used by library group**
  */
-@Suppress("FunctionName")
 @JvmSynthetic
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 fun <T> Preference(
-    preferences: SharedPreferences,
+    preferences: RxSharedPreferences,
     key: String?,
     defaultValue: T,
     adapter: Adapter<T>
 ): Preference<T> = PreferenceImpl(
-    sharedPreferences = preferences,
+    rxSharedPreferences = preferences,
     key = key,
     defaultValue = defaultValue,
     adapter = adapter
 )
 
 private class PreferenceImpl<T>(
-    override val sharedPreferences: SharedPreferences,
+    override val rxSharedPreferences: RxSharedPreferences,
     override val key: String?,
     override val defaultValue: T,
     override val adapter: Adapter<T>
 ): Preference<T> {
+
+    private val sharedPreferences: SharedPreferences = rxSharedPreferences.sharedPreferences
+
+    @Deprecated("Use `this.value = value` instead.", level = DeprecationLevel.ERROR)
+    override fun set(value: T) {
+        this.value = value
+    }
 
     override var value: T
         get() = adapter.get(key, sharedPreferences, defaultValue)
