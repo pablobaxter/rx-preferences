@@ -34,21 +34,16 @@ import com.frybits.rx.preferences.livedata.asObserver
 
 class SampleActivity : AppCompatActivity() {
 
-    private lateinit var binding: SampleLayoutBinding
-
-    private lateinit var fooBool: Preference<Boolean>
-    private lateinit var fooString: Preference<String?>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = SampleLayoutBinding.inflate(layoutInflater)
+        val binding = SampleLayoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val livedataPreferences =
             getSharedPreferences("livedata", MODE_PRIVATE).asRxSharedPreferences()
 
-        fooBool = livedataPreferences.getBoolean("fooBool")
-        fooString = livedataPreferences.getString("fooString")
+        val fooBool = livedataPreferences.getBoolean("fooBool")
+        val fooString = livedataPreferences.getString("fooString")
 
         bindPreference(binding.checkBox, fooBool)
         bindPreference(binding.checkBox2, fooBool)

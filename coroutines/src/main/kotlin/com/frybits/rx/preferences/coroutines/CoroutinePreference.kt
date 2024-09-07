@@ -1,3 +1,5 @@
+@file:JvmName("CoroutinePreference")
+
 package com.frybits.rx.preferences.coroutines
 
 import android.content.SharedPreferences

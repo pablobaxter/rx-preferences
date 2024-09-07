@@ -1,3 +1,5 @@
+@file:JvmName("LiveDataPreference")
+
 package com.frybits.rx.preferences.livedata
 
 import android.content.SharedPreferences

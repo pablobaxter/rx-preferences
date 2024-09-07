@@ -1,3 +1,5 @@
+@file:JvmName("Rx3Preference")
+
 package com.frybits.rx.preferences.rx3
 
 import android.content.SharedPreferences

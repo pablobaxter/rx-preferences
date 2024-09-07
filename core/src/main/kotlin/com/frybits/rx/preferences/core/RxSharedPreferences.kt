@@ -32,7 +32,6 @@ import java.util.concurrent.ConcurrentHashMap
  * @param sharedPreferences The preferences that back this factory
  */
 class RxSharedPreferences private constructor(
-    @get:RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
     val sharedPreferences: SharedPreferences
 ) {
 
