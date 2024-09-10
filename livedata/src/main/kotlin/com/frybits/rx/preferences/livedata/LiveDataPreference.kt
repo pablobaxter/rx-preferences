@@ -28,6 +28,10 @@ import com.frybits.rx.preferences.core.Preference
 
 private const val LIVEDATA_STREAM = "livedata-stream"
 
+/**
+ * Observe changes to this preference. The current [Preference.value] or [Preference.defaultValue] will be emitted
+ * on start of observation.
+ */
 fun <T> Preference<T>.asLiveData(): LiveData<T> {
     val mediatorLiveData = MediatorLiveData<T>()
     mediatorLiveData.value = value
@@ -39,6 +43,9 @@ fun <T> Preference<T>.asLiveData(): LiveData<T> {
     return mediatorLiveData
 }
 
+/**
+ * An action which stores a new value for this preference
+ */
 fun <T> Preference<T>.asObserver(): Observer<T> {
     return Observer {
         value = it
