@@ -47,12 +47,15 @@ fun <T: Any> Preference<T>.asObservable(): Observable<T> {
  * An action which stores a new value for this preference
  */
 @CheckResult
-fun <T: Any> Preference<T>.asConsumer(): Consumer<in T> {
+fun <T: Any> Preference<T>.asConsumer(): Consumer<T> {
     return Consumer {
         value = it
     }
 }
 
+/**
+ * Converts a preference of a nullable type to be an [Optional] of that same type instead.
+ */
 fun <T> Preference<T?>.asOptional(): Preference<Optional<T>> {
     return Preference(rxSharedPreferences, key, Optional.fromNullable(defaultValue), OptionalAdapter(adapter))
 }

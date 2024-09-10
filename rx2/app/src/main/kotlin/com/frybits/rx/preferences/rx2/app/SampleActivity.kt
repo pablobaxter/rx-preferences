@@ -70,7 +70,7 @@ class SampleActivity : AppCompatActivity() {
         // Bind the preference to the checkbox.
         disposables.add(
             preference.asObservable()
-                .subscribe { checkBox.isChecked = it.or(false) }
+                .subscribe { checkBox.isChecked = it }
         )
 
         // Bind the checkbox to the preference.
