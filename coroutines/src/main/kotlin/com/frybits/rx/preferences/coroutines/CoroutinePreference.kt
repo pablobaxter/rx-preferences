@@ -68,7 +68,7 @@ suspend fun <T> Preference<T>.commitValue(value: T): Boolean {
 /**
  * An action which stores a new value for this preference
  *
- * @param committing Flag to indicate that [android.content.SharedPreferences.Editor.commit] should be used instead.
+ * @param committing Flag to indicate that [android.content.SharedPreferences.Editor.commit] should be used instead of [android.content.SharedPreferences.Editor.apply].
  * If set to `true`, emissions to the collector will suspend on [Dispatchers.IO] until the commit is completed or throw an [PreferenceNotStoredException] if it has failed.
  */
 @CheckResult

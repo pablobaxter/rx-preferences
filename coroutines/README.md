@@ -10,20 +10,20 @@ implementation 'com.frybits.rx.preferences:coroutines:1.1.0'
 
 ### Usage
 
-Create a `CoroutineSharedPreferences` instance which wraps a `SharedPreferences`:
+Create a `RxSharedPreferences` instance which wraps a `SharedPreferences`:
 
 ```kotlin
 val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-val coroutinePreferences = CoroutineSharedPreferences.create(preferences)
+val rxPreferences = RxSharedPreferences.create(preferences)
 ```
 
-*Hint: Keep a strong reference on your `CoroutineSharedPreferences` instance for as long as you want to observe them to prevent listeners from being GCed.*
+*Hint: Keep a strong reference on your `RxSharedPreferences` instance for as long as you want to observe them to prevent listeners from being GCed.*
 
-Create individual `CoroutinePreference` objects:
+Create individual `Preference` objects:
 
 ```kotlin
-val username = coroutinePreferences.getString("username")
-val showWhatsNew = coroutinePreferences.getBoolean("show-whats-new", true)
+val username = rxPreferences.getString("username")
+val showWhatsNew = rxPreferences.getBoolean("show-whats-new", true)
 ```
 
 Observe changes to individual preferences:
