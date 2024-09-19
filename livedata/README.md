@@ -45,7 +45,7 @@ Observe changes to individual preferences:
 Kotlin
 ```kotlin
 username.asLiveData().observeForever { name ->
-  Log.d(TAG, "Username: $username")
+  Log.d(TAG, "Username: $name")
 }
 ```
 

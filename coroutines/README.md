@@ -29,8 +29,8 @@ val showWhatsNew = rxPreferences.getBoolean("show-whats-new", true)
 Observe changes to individual preferences:
 
 ```kotlin
-username.asFlow().collect { username ->
-  Log.d(TAG, "Username: $username")
+username.asFlow().collect { name ->
+  Log.d(TAG, "Username: $name")
 }
 ```
 
