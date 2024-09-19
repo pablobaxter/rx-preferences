@@ -53,6 +53,9 @@ fun <T : Any> Preference<T>.asConsumer(): Consumer<T> {
     }
 }
 
+/**
+ * Converts a preference of a nullable type to be an [Optional] of that same type instead.
+ */
 fun <T> Preference<T?>.asOptional(): Preference<Optional<T>> {
     return Preference(rxSharedPreferences, key, Optional.fromNullable(defaultValue), OptionalAdapter(adapter))
 }
