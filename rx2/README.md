@@ -30,8 +30,8 @@ Create individual `Preference` objects:
 
 Kotlin
 ```kotlin
-val username = rx2SharedPreferences.getString("username")
-val showWhatsNew = rx2SharedPreferences.getBoolean("show-whats-new", true)
+val username = rxSharedPreferences.getString("username")
+val showWhatsNew = rxSharedPreferences.getBoolean("show-whats-new", true)
 ```
 
 Java
