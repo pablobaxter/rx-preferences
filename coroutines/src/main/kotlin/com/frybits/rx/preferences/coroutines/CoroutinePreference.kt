@@ -8,6 +8,7 @@ import com.frybits.rx.preferences.core.Preference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.channels.trySendBlocking
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.withContext
+import java.io.Closeable
 
 /*
  *  Copyright 2014 Prateek Srivastava
@@ -39,6 +41,7 @@ import kotlinx.coroutines.withContext
  */
 
 private const val COROUTINE_STREAM = "coroutine-stream"
+private const val COROUTINE_SCOPE = "coroutine-scope"
 
 /**
  * Observe changes to this preference. The current [Preference.value] or [Preference.defaultValue] will be emitted
@@ -105,5 +108,17 @@ private val <T> Preference<T>.keysChanged: Flow<String?>
             rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
 
             awaitClose { rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener) }
-        }.shareIn(CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate), SharingStarted.WhileSubscribed())
+        }.shareIn(rxScope, SharingStarted.WhileSubscribed())
     }
+
+private val <T> Preference<T>.rxScope: CoroutineScope
+    get() = rxSharedPreferences.getOrCreateKeyChangedStream(COROUTINE_SCOPE) {
+        CoroutineCloseable(CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate))
+    }.coroutineScope
+
+private class CoroutineCloseable(val coroutineScope: CoroutineScope): Closeable {
+
+    override fun close() {
+        coroutineScope.cancel()
+    }
+}

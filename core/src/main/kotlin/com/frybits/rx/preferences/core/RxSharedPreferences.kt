@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.os.Build
 import androidx.annotation.CheckResult
 import androidx.annotation.RestrictTo
+import java.io.Closeable
 import java.util.concurrent.ConcurrentHashMap
 
 /*
@@ -53,7 +54,7 @@ class RxSharedPreferences private constructor(
 
     @JvmSynthetic
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
-    fun <T: Any> getOrCreateKeyChangedStream(key: String, streamCreator: () -> T): T {
+    fun <T : Any> getOrCreateKeyChangedStream(key: String, streamCreator: () -> T): T {
         val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             keyChangedStreams.computeIfAbsent(key) { streamCreator() }
         } else {
@@ -171,5 +172,11 @@ class RxSharedPreferences private constructor(
     /** Clears the underlying shared preferences */
     fun clear() {
         sharedPreferences.edit().clear().apply()
+    }
+
+    // Clear out any closeables created
+    protected fun finalize() {
+        keyChangedStreams.values.filterIsInstance<Closeable>().forEach { it.close() }
+        keyChangedStreams.clear()
     }
 }
