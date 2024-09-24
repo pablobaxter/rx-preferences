@@ -4,9 +4,9 @@ import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 import com.frybits.rx.preferences.core.IntegerAdapter
 import com.frybits.rx.preferences.core.Preference
+import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.toCollection
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
@@ -46,8 +46,7 @@ class CoroutinePreferenceTest {
         val sharedPrefs = mock<SharedPreferences> {
             on { getInt(any(), any()) } doReturn 2
         }
-        val keyChangeSharedFlow = MutableSharedFlow<String?>()
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(keyChangeSharedFlow)
+        val coroutinePref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         val testResult = arrayListOf<Int>()
         val job = launch {
@@ -70,7 +69,9 @@ class CoroutinePreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keyChangeSharedFlow = MutableSharedFlow<String?>()
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(keyChangeSharedFlow)
+        val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
+        rxSharedPreferences.getOrCreateKeyChangedStream("coroutine-stream") { keyChangeSharedFlow }
+        val coroutinePref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)
 
         val testResult = arrayListOf<Int>()
         val job = launch {
@@ -93,7 +94,9 @@ class CoroutinePreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keyChangeSharedFlow = MutableSharedFlow<String?>()
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(keyChangeSharedFlow)
+        val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
+        rxSharedPreferences.getOrCreateKeyChangedStream("coroutine-stream") { keyChangeSharedFlow }
+        val coroutinePref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)
 
         val testResult = arrayListOf<Int>()
         val job = launch {
@@ -116,7 +119,9 @@ class CoroutinePreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keyChangeSharedFlow = MutableSharedFlow<String?>()
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(keyChangeSharedFlow)
+        val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
+        rxSharedPreferences.getOrCreateKeyChangedStream("coroutine-stream") { keyChangeSharedFlow }
+        val coroutinePref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)
 
         val testResult = arrayListOf<Int>()
         val job = launch {
@@ -140,7 +145,7 @@ class CoroutinePreferenceTest {
             on { getInt(any(), any()) } doReturn 2
             on { edit() } doReturn editor
         }
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(emptyFlow())
+        val coroutinePref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         val collector = coroutinePref.asCollector()
 
@@ -157,7 +162,7 @@ class CoroutinePreferenceTest {
             on { getInt(any(), any()) } doReturn 2
             on { edit() } doReturn editor
         }
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(emptyFlow())
+        val coroutinePref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         val collector = coroutinePref.asCollector(committing = true)
 
@@ -176,7 +181,7 @@ class CoroutinePreferenceTest {
             on { getInt(any(), any()) } doReturn 2
             on { edit() } doReturn editor
         }
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(emptyFlow())
+        val coroutinePref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         val collector = coroutinePref.asCollector(committing = true)
 
@@ -195,7 +200,7 @@ class CoroutinePreferenceTest {
             on { getInt(any(), any()) } doReturn 2
             on { edit() } doReturn editor
         }
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(emptyFlow())
+        val coroutinePref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         assertTrue { coroutinePref.commitValue(2) }
         verify(sharedPrefs).edit()
@@ -213,7 +218,7 @@ class CoroutinePreferenceTest {
             on { getInt(any(), any()) } doReturn 2
             on { edit() } doReturn editor
         }
-        val coroutinePref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asCoroutinePreference(emptyFlow())
+        val coroutinePref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         assertTrue { coroutinePref.deleteAndCommit() }
         verify(sharedPrefs).edit()

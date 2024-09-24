@@ -10,35 +10,64 @@ implementation 'com.frybits.rx.preferences:rx2:1.1.0'
 
 ### Usage
 
-Create a `Rx2SharedPreferences` instance which wraps a `SharedPreferences`:
+Create a `RxSharedPreferences` instance which wraps a `SharedPreferences`:
 
+Kotlin
 ```kotlin
 val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-val rx2SharedPreferences = Rx2SharedPreferences.create(preferences)
+val rxSharedPreferences = RxSharedPreferences.create(preferences)
 ```
 
-*Hint: Keep a strong reference on your `Rx2SharedPreferences` instance for as long as you want to observe them to prevent listeners from being GCed.*
+Java
+```java
+SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+RxSharedPreferences rxSharedPreferences =  RxSharedPreferences.create(preferences);
+```
 
-Create individual `Rx2Preference` objects:
+*Hint: Keep a strong reference on your `RxSharedPreferences` instance for as long as you want to observe them to prevent listeners from being GCed.*
 
+Create individual `Preference` objects:
+
+Kotlin
 ```kotlin
-val username = rx2SharedPreferences.getString("username")
-val showWhatsNew = rx2SharedPreferences.getBoolean("show-whats-new", true)
+val username = rxSharedPreferences.getString("username")
+val showWhatsNew = rxSharedPreferences.getBoolean("show-whats-new", true)
+```
+
+Java
+```java
+Preference<String> username = rxPreferences.getString("username");
+Preference<Boolean> showWhatsNew = rxPreferences.getBoolean("show-whats-new", true);
 ```
 
 Observe changes to individual preferences:
 
+Kotlin
 ```kotlin
-username.asObservable().subscribe { username ->
-  Log.d(TAG, "Username: $username")
+username.asObservable().subscribe { name ->
+  Log.d(TAG, "Username: $name")
 }
+```
+
+Java
+```java
+Rx2Preference.asObservable(preference).subscribe(name -> {
+  Log.d(TAG, "Username: " + name);
+});
 ```
 
 Subscribe preferences to streams to store values:
 
+Kotlin
 ```kotlin
 RxCompoundButton.checks(showWhatsNewView)
     .subscribe(showWhatsNew.asConsumer())
+```
+
+Java
+```java
+RxCompoundButton.checks(showWhatsNewView)
+    .subscribe(Rx2Preference.asConsumer(preference))
 ```
 *(Note: `RxCompoundButton` is from [RxBinding](https://github.com/JakeWharton/RxBinding))*
 
