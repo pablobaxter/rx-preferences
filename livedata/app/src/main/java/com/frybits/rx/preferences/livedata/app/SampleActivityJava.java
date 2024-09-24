@@ -39,7 +39,7 @@ public class SampleActivityJava extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        com.frybits.rx.preferences.livedata.app.databinding.SampleLayoutBinding binding = SampleLayoutBinding.inflate(getLayoutInflater());
+        SampleLayoutBinding binding = SampleLayoutBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         RxSharedPreferences livedataPreferences = RxSharedPreferences.create(getSharedPreferences("livedata", MODE_PRIVATE));
