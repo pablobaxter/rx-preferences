@@ -1,14 +1,13 @@
 version: 2.1
 
 orbs:
-  android: circleci/android@2.2.0
+  android: circleci/android@2.5.0
 
 jobs:
   Core-Lint:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -27,7 +26,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -55,7 +53,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -77,7 +74,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -96,7 +92,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -124,7 +119,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -145,7 +139,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -164,7 +157,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -192,7 +184,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -213,7 +204,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -232,7 +222,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -260,7 +249,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -281,7 +269,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -300,7 +287,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -328,7 +314,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -349,7 +334,6 @@ jobs:
     executor:
       name: android/android-machine
       resource-class: medium
-      tag: 2023.03.1
     steps:
       - checkout
       - android/restore-gradle-cache:
