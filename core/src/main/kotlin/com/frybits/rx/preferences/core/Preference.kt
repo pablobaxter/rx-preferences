@@ -37,57 +37,6 @@ interface Preference<T> {
         fun serialize(value: T): String?
     }
 
-    /**
-     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
-     *
-     * @see [Preference.key]
-     */
-    @Deprecated(
-        message = "Use `key` instead.",
-        replaceWith = ReplaceWith("key"),
-        level = DeprecationLevel.ERROR
-    )
-    fun key(): String? {
-        return key
-    }
-
-    /**
-     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
-     *
-     * @see [Preference.defaultValue]
-     */
-    @Deprecated(
-        message = "Use `defaultValue` instead.",
-        replaceWith = ReplaceWith("defaultValue"),
-        level = DeprecationLevel.ERROR
-    )
-    fun defaultValue(): T {
-        return defaultValue
-    }
-
-    /**
-     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
-     *
-     * @see [Preference.value]
-     */
-    @Deprecated(
-        message = "Use `value` instead.",
-        replaceWith = ReplaceWith("value"),
-        level = DeprecationLevel.ERROR
-    )
-    fun get(): T {
-        return value
-    }
-
-    /**
-     * Legacy function to support transition from [f2prateek/rx-preference](https://github.com/f2prateek/rx-preferences/blob/master/rx-preferences/src/main/java/com/f2prateek/rx/preferences2/Preference.java).
-     *
-     * @see [Preference.value]
-     */
-    // Unable to use ReplaceWith, due to bug with setters. https://youtrack.jetbrains.com/issue/KTIJ-12836/ReplaceWith-cannot-replace-function-invocation-with-property-assignment
-    @Deprecated(message = "Use `this.value = value` instead.", level = DeprecationLevel.ERROR)
-    fun set(value: T)
-
     /** The [RxSharedPreferences] that backs this preference */
     val rxSharedPreferences: RxSharedPreferences
 
@@ -137,11 +86,6 @@ private class PreferenceImpl<T>(
 ) : Preference<T> {
 
     private val sharedPreferences: SharedPreferences = rxSharedPreferences.sharedPreferences
-
-    @Deprecated("Use `this.value = value` instead.", level = DeprecationLevel.ERROR)
-    override fun set(value: T) {
-        this.value = value
-    }
 
     override var value: T
         get() = adapter.get(key, sharedPreferences, defaultValue)
