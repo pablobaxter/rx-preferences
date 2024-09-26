@@ -107,7 +107,11 @@ private val <T> Preference<T>.keysChanged: Flow<String?>
 
             rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
 
-            awaitClose { rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener) }
+            awaitClose {
+                rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(
+                    listener
+                )
+            }
         }.shareIn(rxScope, SharingStarted.WhileSubscribed())
     }
 
@@ -116,7 +120,7 @@ private val <T> Preference<T>.rxScope: CoroutineScope
         CoroutineCloseable(CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate))
     }.coroutineScope
 
-private class CoroutineCloseable(val coroutineScope: CoroutineScope): Closeable {
+private class CoroutineCloseable(val coroutineScope: CoroutineScope) : Closeable {
 
     override fun close() {
         coroutineScope.cancel()

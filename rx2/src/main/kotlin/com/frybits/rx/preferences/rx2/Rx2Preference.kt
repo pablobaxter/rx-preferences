@@ -35,7 +35,7 @@ private const val RX2_STREAM = "rx2-stream"
  * on start of collection.
  */
 @CheckResult
-fun <T: Any> Preference<T>.asObservable(): Observable<T> {
+fun <T : Any> Preference<T>.asObservable(): Observable<T> {
     return keysChanged.filter { it.orNull() == key || it.orNull() == null }
         .startWith(Optional.absent())
         .map {
@@ -47,7 +47,7 @@ fun <T: Any> Preference<T>.asObservable(): Observable<T> {
  * An action which stores a new value for this preference
  */
 @CheckResult
-fun <T: Any> Preference<T>.asConsumer(): Consumer<T> {
+fun <T : Any> Preference<T>.asConsumer(): Consumer<T> {
     return Consumer {
         value = it
     }
@@ -57,7 +57,12 @@ fun <T: Any> Preference<T>.asConsumer(): Consumer<T> {
  * Converts a preference of a nullable type to be an [Optional] of that same type instead.
  */
 fun <T> Preference<T?>.asOptional(): Preference<Optional<T>> {
-    return Preference(rxSharedPreferences, key, Optional.fromNullable(defaultValue), OptionalAdapter(adapter))
+    return Preference(
+        rxSharedPreferences,
+        key,
+        Optional.fromNullable(defaultValue),
+        OptionalAdapter(adapter)
+    )
 }
 
 private val <T> Preference<T>.keysChanged: Observable<Optional<String?>>
@@ -69,7 +74,9 @@ private val <T> Preference<T>.keysChanged: Observable<Optional<String?>>
             }
 
             emitter.setCancellable {
-                rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(listener)
+                rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(
+                    listener
+                )
             }
 
             rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)

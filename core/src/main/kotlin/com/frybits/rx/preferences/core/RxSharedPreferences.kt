@@ -94,7 +94,7 @@ class RxSharedPreferences private constructor(
 
     /** Creates a [T] preference for the [key] using the enum class [clazz] with a default of [defaultValue] */
     @CheckResult
-    fun <T: Enum<T>> getEnum(key: String?, defaultValue: T, clazz: Class<T>): Preference<T> {
+    fun <T : Enum<T>> getEnum(key: String?, defaultValue: T, clazz: Class<T>): Preference<T> {
         return Preference(
             this,
             key,
@@ -141,7 +141,11 @@ class RxSharedPreferences private constructor(
 
     /** Creates a [T] preference for the [key] using the [converter], and with a default of [defaultValue]. This function ensures objects in stream are not `null`. */
     @CheckResult
-    fun <T: Any> getObjectNonNull(key: String?, defaultValue: T, converter: Preference.Converter<T>): Preference<T> {
+    fun <T : Any> getObjectNonNull(
+        key: String?,
+        defaultValue: T,
+        converter: Preference.Converter<T>
+    ): Preference<T> {
         return Preference(this, key, defaultValue, ConverterAdapter(converter))
     }
 

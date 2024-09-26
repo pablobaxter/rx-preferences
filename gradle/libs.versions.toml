@@ -1,40 +1,40 @@
 [versions]
 # Kotlin
-kotlin = "1.9.10"
-kotlin-coroutines = "1.7.3"
-dokka = "1.9.0"
+kotlin = "2.0.20"
+kotlin-coroutines = "1.9.0"
+dokka = "1.9.20"
 
 # Android Build
-android-build-gradle = "8.1.2"
+android-build-gradle = "8.6.1"
 
 # Androidx
-androidx-appcompat = "1.6.1"
-androidx-core = "1.12.0"
-androidx-lifecycle = "2.6.2"
+androidx-appcompat = "1.7.0"
+androidx-core = "1.13.1"
+androidx-lifecycle = "2.8.6"
 androidx-constraintlayout = "2.1.4"
-androidx-annotation = "1.7.0"
-androidx-livedata = "2.6.2"
+androidx-annotation = "1.8.2"
+androidx-livedata = "2.8.6"
 androidx-arch = "2.2.0"
 
 # Google
-google-material = "1.9.0"
+google-material = "1.12.0"
 android-guava = "33.3.0-android"
 
 # RxJava
 rx2 = "2.2.21"
-rx3 = "3.1.6"
+rx3 = "3.1.9"
 
 
 # Testing
 mockitoCore = "5.13.0"
 mockitoKotlin = "5.4.0"
 
-junit = "4.13.2"
+junit = "5.11.0"
 
 # Plugins
-dependency-analysis = "1.24.0"
-ktlint-plugin = "11.3.1"
-vanniktech = "0.25.3"
+dependency-analysis = "2.1.0"
+ktlint-plugin = "12.1.1"
+vanniktech = "0.29.0"
 
 [libraries]
 ## Build libraries
@@ -73,7 +73,7 @@ reactivex-rx2 = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rx2" }
 reactivex-rx3 = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rx3" }
 
 # Testing
-junit = { module = "junit:junit", version.ref = "junit" }
+junit = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit" }
 
 androidx-arch-test = { module = "androidx.arch.core:core-testing", version.ref = "androidx-arch" }
 

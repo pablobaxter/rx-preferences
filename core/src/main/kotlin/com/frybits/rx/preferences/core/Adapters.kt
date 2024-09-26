@@ -39,8 +39,12 @@ interface Adapter<T> {
 }
 
 /** Store and retrieves instances of [Boolean] in [SharedPreferences] */
-object BooleanAdapter: Adapter<Boolean> {
-    override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: Boolean): Boolean {
+object BooleanAdapter : Adapter<Boolean> {
+    override fun get(
+        key: String?,
+        sharedPreference: SharedPreferences,
+        defaultValue: Boolean
+    ): Boolean {
         return sharedPreference.getBoolean(key, defaultValue)
     }
 
@@ -50,7 +54,7 @@ object BooleanAdapter: Adapter<Boolean> {
 }
 
 /** Store and retrieves instances of [T] converted into a [String] using [converter] in [SharedPreferences] */
-class ConverterAdapter<T>(private val converter: Preference.Converter<T>): Adapter<T> {
+class ConverterAdapter<T>(private val converter: Preference.Converter<T>) : Adapter<T> {
     override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: T): T {
         val serialized = sharedPreference.getString(key, null) ?: return defaultValue
         return converter.deserialize(serialized)
@@ -63,7 +67,7 @@ class ConverterAdapter<T>(private val converter: Preference.Converter<T>): Adapt
 }
 
 /** Stores and retrieves instances of enum [T] converted into a [String] in [SharedPreferences] */
-class EnumAdapter<T : Enum<T>>(private val clazz: Class<T>): Adapter<T> {
+class EnumAdapter<T : Enum<T>>(private val clazz: Class<T>) : Adapter<T> {
 
     override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: T): T {
         val value = sharedPreference.getString(key, null) ?: return defaultValue
@@ -80,8 +84,12 @@ class EnumAdapter<T : Enum<T>>(private val clazz: Class<T>): Adapter<T> {
 }
 
 /** Store and retrieves instances of [Float] in [SharedPreferences] */
-object FloatAdapter: Adapter<Float> {
-    override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: Float): Float {
+object FloatAdapter : Adapter<Float> {
+    override fun get(
+        key: String?,
+        sharedPreference: SharedPreferences,
+        defaultValue: Float
+    ): Float {
         return sharedPreference.getFloat(key, defaultValue)
     }
 
@@ -91,7 +99,7 @@ object FloatAdapter: Adapter<Float> {
 }
 
 /** Store and retrieves instances of [Int] in [SharedPreferences] */
-object IntegerAdapter: Adapter<Int> {
+object IntegerAdapter : Adapter<Int> {
     override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: Int): Int {
         return sharedPreference.getInt(key, defaultValue)
     }
@@ -102,7 +110,7 @@ object IntegerAdapter: Adapter<Int> {
 }
 
 /** Store and retrieves instances of [Long] in [SharedPreferences] */
-object LongAdapter: Adapter<Long> {
+object LongAdapter : Adapter<Long> {
     override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: Long): Long {
         return sharedPreference.getLong(key, defaultValue)
     }
@@ -113,8 +121,12 @@ object LongAdapter: Adapter<Long> {
 }
 
 /** Store and retrieves instances of [String] in [SharedPreferences] */
-object StringAdapter: Adapter<String?> {
-    override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: String?): String? {
+object StringAdapter : Adapter<String?> {
+    override fun get(
+        key: String?,
+        sharedPreference: SharedPreferences,
+        defaultValue: String?
+    ): String? {
         return sharedPreference.getString(key, defaultValue)
     }
 
@@ -124,8 +136,12 @@ object StringAdapter: Adapter<String?> {
 }
 
 /** Store and retrieves instances of a collection of [String] within a [Set] in [SharedPreferences] */
-object StringSetAdapter: Adapter<Set<String?>?> {
-    override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: Set<String?>?): Set<String?>? {
+object StringSetAdapter : Adapter<Set<String?>?> {
+    override fun get(
+        key: String?,
+        sharedPreference: SharedPreferences,
+        defaultValue: Set<String?>?
+    ): Set<String?>? {
         return sharedPreference.getStringSet(key, defaultValue)?.toSet()
     }
 
