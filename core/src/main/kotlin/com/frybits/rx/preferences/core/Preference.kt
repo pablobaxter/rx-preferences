@@ -42,7 +42,11 @@ interface Preference<T> {
      *
      * @see [Preference.key]
      */
-    @Deprecated(message = "Use `key` instead.", replaceWith = ReplaceWith("key"), level = DeprecationLevel.ERROR)
+    @Deprecated(
+        message = "Use `key` instead.",
+        replaceWith = ReplaceWith("key"),
+        level = DeprecationLevel.ERROR
+    )
     fun key(): String? {
         return key
     }
@@ -52,7 +56,11 @@ interface Preference<T> {
      *
      * @see [Preference.defaultValue]
      */
-    @Deprecated(message = "Use `defaultValue` instead.", replaceWith = ReplaceWith("defaultValue"), level = DeprecationLevel.ERROR)
+    @Deprecated(
+        message = "Use `defaultValue` instead.",
+        replaceWith = ReplaceWith("defaultValue"),
+        level = DeprecationLevel.ERROR
+    )
     fun defaultValue(): T {
         return defaultValue
     }
@@ -62,7 +70,11 @@ interface Preference<T> {
      *
      * @see [Preference.value]
      */
-    @Deprecated(message = "Use `value` instead.", replaceWith = ReplaceWith("value"), level = DeprecationLevel.ERROR)
+    @Deprecated(
+        message = "Use `value` instead.",
+        replaceWith = ReplaceWith("value"),
+        level = DeprecationLevel.ERROR
+    )
     fun get(): T {
         return value
     }
@@ -122,7 +134,7 @@ private class PreferenceImpl<T>(
     override val key: String?,
     override val defaultValue: T,
     override val adapter: Adapter<T>
-): Preference<T> {
+) : Preference<T> {
 
     private val sharedPreferences: SharedPreferences = rxSharedPreferences.sharedPreferences
 
