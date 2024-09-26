@@ -5,7 +5,9 @@ import com.android.build.api.dsl.BuildFeatures
 import com.android.build.api.dsl.BuildType
 import com.android.build.api.dsl.CommonExtension
 import com.android.build.api.dsl.DefaultConfig
+import com.android.build.api.dsl.Installation
 import com.android.build.api.dsl.ProductFlavor
+import com.autonomousapps.DependencyAnalysisPlugin
 import com.autonomousapps.DependencyAnalysisSubExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
@@ -35,8 +37,8 @@ import org.jlleitschuh.gradle.ktlint.KtlintPlugin
  */
 
 @Suppress("UnstableApiUsage")
-internal fun <BuildFeaturesT : BuildFeatures, BuildTypeT : BuildType, DefaultConfigT : DefaultConfig, ProductFlavorT : ProductFlavor, AndroidResourcesT: AndroidResources>
-        CommonExtension<BuildFeaturesT, BuildTypeT, DefaultConfigT, ProductFlavorT, AndroidResourcesT>.configureCommonAndroid() {
+internal fun <BuildFeaturesT : BuildFeatures, BuildTypeT : BuildType, DefaultConfigT : DefaultConfig, ProductFlavorT : ProductFlavor, AndroidResourcesT: AndroidResources, InstallationT: Installation>
+        CommonExtension<BuildFeaturesT, BuildTypeT, DefaultConfigT, ProductFlavorT, AndroidResourcesT, InstallationT>.configureCommonAndroid() {
     compileSdk = 34
 
     defaultConfig {
@@ -75,6 +77,7 @@ internal fun Project.applyKtlint() {
 }
 
 internal fun Project.applyDependencyAnalysis() {
+    apply<DependencyAnalysisPlugin>()
     configure<DependencyAnalysisSubExtension> {
         issues {
             onAny {
