@@ -9,10 +9,10 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.frybits.rx.preferences.core.Preference
 import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
+import com.frybits.rx.preferences.core.asOptional
 import com.frybits.rx.preferences.rx3.app.databinding.SampleLayoutBinding
 import com.frybits.rx.preferences.rx3.asConsumer
 import com.frybits.rx.preferences.rx3.asObservable
-import com.frybits.rx.preferences.rx3.asOptional
 import com.google.common.base.Optional
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
