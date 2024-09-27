@@ -1,5 +1,8 @@
 # Change Log
 
+### Version 2.0.0 / Unreleased
+* 
+
 ### Version 1.1.0 / 2023-10-03
 * Update dependencies
 * Move to compile sdk 34
