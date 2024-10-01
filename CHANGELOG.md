@@ -1,6 +1,6 @@
 # Change Log
 
-### Version 2.0.0 / Unreleased
+### Version 2.0.0 / 2024-09-30
 * **Breaking Change release**
 * Use extension functions for Rx libraries
   * This removes the uses of the various `*SharedPreference` classes, and provides a single `RxSharedPreferences` class
