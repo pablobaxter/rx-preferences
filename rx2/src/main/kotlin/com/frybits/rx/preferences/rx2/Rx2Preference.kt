@@ -4,7 +4,6 @@ package com.frybits.rx.preferences.rx2
 
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
-import com.frybits.rx.preferences.core.Adapter
 import com.frybits.rx.preferences.core.Preference
 import com.google.common.base.Optional
 import io.reactivex.Observable
@@ -53,18 +52,6 @@ fun <T : Any> Preference<T>.asConsumer(): Consumer<T> {
     }
 }
 
-/**
- * Converts a preference of a nullable type to be an [Optional] of that same type instead.
- */
-fun <T> Preference<T?>.asOptional(): Preference<Optional<T>> {
-    return Preference(
-        rxSharedPreferences,
-        key,
-        Optional.fromNullable(defaultValue),
-        OptionalAdapter(adapter)
-    )
-}
-
 private val <T> Preference<T>.keysChanged: Observable<Optional<String?>>
     get() = rxSharedPreferences.getOrCreateKeyChangedStream(RX2_STREAM) {
         Observable.create<Optional<String?>> { emitter ->
@@ -82,17 +69,3 @@ private val <T> Preference<T>.keysChanged: Observable<Optional<String?>>
             rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
         }.share()
     }
-
-private class OptionalAdapter<T>(private val adapter: Adapter<T?>) : Adapter<Optional<T>> {
-    override fun get(
-        key: String?,
-        sharedPreference: SharedPreferences,
-        defaultValue: Optional<T>
-    ): Optional<T> {
-        return Optional.fromNullable(adapter.get(key, sharedPreference, defaultValue.get()))
-    }
-
-    override fun set(key: String?, value: Optional<T>, editor: SharedPreferences.Editor) {
-        adapter.set(key, value.orNull(), editor)
-    }
-}

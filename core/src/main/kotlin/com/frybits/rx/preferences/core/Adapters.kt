@@ -1,6 +1,7 @@
 package com.frybits.rx.preferences.core
 
 import android.content.SharedPreferences
+import com.google.common.base.Optional
 
 /*
  *  Copyright 2014 Prateek Srivastava
@@ -147,5 +148,19 @@ object StringSetAdapter : Adapter<Set<String?>?> {
 
     override fun set(key: String?, value: Set<String?>?, editor: SharedPreferences.Editor) {
         editor.putStringSet(key, value)
+    }
+}
+
+internal class OptionalAdapter<T>(private val adapter: Adapter<T?>) : Adapter<Optional<T>> {
+    override fun get(
+        key: String?,
+        sharedPreference: SharedPreferences,
+        defaultValue: Optional<T>
+    ): Optional<T> {
+        return Optional.fromNullable(adapter.get(key, sharedPreference, defaultValue.orNull()))
+    }
+
+    override fun set(key: String?, value: Optional<T>, editor: SharedPreferences.Editor) {
+        adapter.set(key, value.orNull(), editor)
     }
 }

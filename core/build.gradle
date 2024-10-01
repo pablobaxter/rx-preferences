@@ -9,6 +9,8 @@ dependencies {
     implementation libs.kotlin.stdlib
     implementation libs.androidx.annotation
 
+    api libs.guava
+
     // Test
     testImplementation libs.junit
     testImplementation libs.kotlin.test

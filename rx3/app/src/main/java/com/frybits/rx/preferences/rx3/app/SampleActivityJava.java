@@ -29,6 +29,7 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.frybits.rx.preferences.core.Preference;
+import com.frybits.rx.preferences.core.PreferenceUtil;
 import com.frybits.rx.preferences.core.RxSharedPreferences;
 import com.frybits.rx.preferences.rx3.Rx3Preference;
 import com.frybits.rx.preferences.rx3.app.databinding.SampleLayoutBinding;
@@ -52,7 +53,7 @@ public class SampleActivityJava extends AppCompatActivity {
         RxSharedPreferences rxPreferences = RxSharedPreferences.create(getSharedPreferences("rx2", Context.MODE_PRIVATE));
 
         Preference<Boolean> fooBool = rxPreferences.getBoolean("fooBool");
-        Preference<Optional<String>> fooString = Rx3Preference.asOptional(rxPreferences.getString("fooString"));
+        Preference<Optional<String>> fooString = PreferenceUtil.asOptional(rxPreferences.getString("fooString"));
 
         bindPreference(binding.checkBox, fooBool);
         bindPreference(binding.checkBox2, fooBool);

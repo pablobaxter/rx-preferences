@@ -14,7 +14,6 @@ dependencies {
 
     // RxJava
     api libs.reactivex.rx2
-    api libs.guava
 
     // Test
     testImplementation libs.junit
