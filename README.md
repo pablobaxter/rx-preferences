@@ -50,136 +50,102 @@ This guide can be used for migrating from `f2prateek/rx-preferences` to `pabloba
 ## Usage
 The `core` library provides the entryway to getting the `RxSharedPreferences`. This allows creating the `Preference<T>` objects that represent the requested preference, as well as providing a base for the various extension functions used to create the reactive object.
 
-Quick start (Kotlin):
+### Quick start (Kotlin)
+
+Core:
 ```kotlin
 val rxSharedPreferences: RxSharedPreferences = getSharedPreferences("foobar", MODE_PRIVATE).asRxSharedPreferences()
 val username: Preference<String?> = rxSharedPreferences.getString("username")
 
-/* === Reading and observing changes on a preference === */
+println(username.value) // Outputs value of "username" preference
+username.value = "myName" // Sets the preference to "myName"
+```
 
-// com.frybits.rx.preferences:core
-println(username.value) // Outputs `null`
-
-// com.frybits.rx.preferences:coroutines
-// import com.frybits.rx.preferences.coroutines.asFlow
+Coroutines:
+```kotlin
 username.asFlow().collect { name ->
-    println("Username: $name")
+    println("Username: $name") // Outputs value of "username" preference
 }
 
-// com.frybits.rx.preferences:livedata
-// import com.frybits.rx.preferences.livedata.asLiveData
+flow {
+  emit("coroutineName")
+}.collect(username.asCollector()) // username is updated to "coroutineName"
+```
+
+LiveData:
+```kotlin
 username.asLiveData().observeForever { name ->
-  println("Username: $name")
+  println("Username: $name") // Outputs value of "username" preference
 }
 
-// com.frybits.rx.preferences:rx2
-// import com.frybits.rx.preferences.rx2.asObservable
-// import com.frybits.rx.preferences.core.asOptional
+MutableLiveData("livedataName")
+  .observeForever(username.asObserver()) // username is updated to "livedataName"
+```
 
-// or
-
-// com.frybits.rx.preferences:rx3
-// import com.frybits.rx.preferences.rx3.asObservable
-// import com.frybits.rx.preferences.core.asOptional
+Rx2 and Rx3:
+```kotlin
 username.asOptional() // Helper operator to convert nullable types to com.google.common.base.Optional<>
   .asObservable()
   .subscribe { name ->
-    println("Username: ${name.get()}")
+    println("Username: ${name.get()}") // Outputs value of "username" preference
   }
 
-/* === Setting and consuming updates to a preference === */
-
-// com.frybits.rx.preferences:core
-username.value = "myName"
-
-// com.frybits.rx.preferences:coroutines
-// import com.frybits.rx.preferences.coroutines.asCollector
-flow {
-    emit("coroutineName")
-}.collect(username.asCollector()) // username is updated to "coroutineName"
-
-// com.frybits.rx.preferences:livedata
-// import com.frybits.rx.preferences.livedata.asObserver
-MutableLiveData("livedataName")
-    .observeForever(username.asObserver()) // username is updated to "livedataName"
-
-// com.frybits.rx.preferences:rx2
-// import com.frybits.rx.preferences.rx2.asConsumer
-// import com.frybits.rx.preferences.core.asOptional
-
-// or
-
-// com.frybits.rx.preferences:rx3
-// import com.frybits.rx.preferences.rx3.asConsumer
-// import com.frybits.rx.preferences.core.asOptional
 Observable.just(Optional.fromNullable("observableName"))
     .subscribe(
-      username
-          .asOptional() // Helper operator to convert nullable types to com.google.common.base.Optional<>
+      username.asOptional() // Helper operator to convert nullable types to com.google.common.base.Optional<>
           .asConsumer() // username is updated to "observableName"
     )
 ```
 
-Quickstart (Java):
+### Quickstart (Java)
+
+Core:
 ```java
 RxSharedPreferences rxSharedPreferences = RxSharedPreferences.create(getSharedPreferences("foobar", MODE_PRIVATE));
 Preference<String> username = rxSharedPreferences.getString("username");
 
-/* === Reading and observing changes on a preference === */
-
-// com.frybits.rx.preferences:core
 String name = username.getValue();
-System.out.println(name); // Outputs `null`
 
-// Note: Coroutines extension library not accessible in Java
+System.out.println(name); // Outputs value of "username" preference
+username.setValue("myName"); // Sets the preference to "myName"
+```
 
-// com.frybits.rx.preferences:livedata
-// import com.frybits.rx.preferences.livedata.LiveDataPreference;
+**Note:** Coroutines library is not accessible to Java
+
+LiveData:
+```java
 LiveDataPreference.asLiveData(username).observeForever (s -> {
-    System.out.println("Username: " + s);
+    System.out.println("Username: " + s); // Outputs value of "username" preference
 });
 
-// import com.frybits.rx.preferences.core.PreferenceUtil;
-// Helper operator to convert nullable types to com.google.common.base.Optional<>
-Preference<Optional<String>> optionalUsername = PreferenceUtil.asOptional(username);
-
-// com.frybits.rx.preferences:rx2
-// import com.frybits.rx.preferences.rx2.Rx2SharedPreference;
-Rx2SharedPreference.asObservable(optionalUsername).subscribe(s -> {
-    System.out.println("Username: " + s.orNull());
-});
-  
-// com.frybits.rx.preferences:rx3
-// import com.frybits.rx.preferences.rx3.Rx3SharedPreference;
-Rx3SharedPreference.asObservable(optionalUsername).subscribe(s -> {
-    System.out.println("Username: " + s.orNull());
-});
-
-/* === Setting and consuming updates to a preference === */
-
-// com.frybits.rx.preferences:core
-username.setValue("myName");
-
-// Coroutines extension library not available for Java
-
-// com.frybits.rx.preferences:livedata
-// import com.frybits.rx.preferences.livedata.LiveDataPreference;
 LiveData<String> stringLiveData = new MutableLiveData("livedataName");
 stringLiveData.observeForever(LivedataPreference.asObserver(username)); // username is updated to "livedataName"
+```
 
-// import com.frybits.rx.preferences.core.PreferenceUtil;
+Rx2:
+```java
 // Helper operator to convert nullable types to com.google.common.base.Optional<>
 Preference<Optional<String>> optionalUsername = PreferenceUtil.asOptional(username);
 
-// com.frybits.rx.preferences:rx2
-// import com.frybits.rx.preferences.rx2.Rx2SharedPreferences;
-Observable<Optional<String>> rx2Observable = Observable.just(Optional.fromNullable("observableName"));
-rx2Observable.subscribe(Rx2SharedPreferences.asConsumer(optionalUsername));
+Rx2SharedPreference.asObservable(optionalUsername).subscribe(s -> {
+    System.out.println("Username: " + s.orNull()); // Outputs value of "username" preference
+});
 
-// com.frybits.rx.preferences:rx3
-// import com.frybits.rx.preferences.rx3.Rx3SharedPreferences;
+Observable<Optional<String>> rx2Observable = Observable.just(Optional.fromNullable("observableName"));
+rx2Observable.subscribe(Rx2SharedPreferences.asConsumer(optionalUsername)); // username is updated to "observableName"
+```
+
+Rx3:
+```java
+// Helper operator to convert nullable types to com.google.common.base.Optional<>
+Preference<Optional<String>> optionalUsername = PreferenceUtil.asOptional(username);
+
+Rx3SharedPreference.asObservable(optionalUsername).subscribe(s -> {
+    System.out.println("Username: " + s.orNull()); // Outputs value of "username" preference
+});
+
 Observable<Optional<String>> rx3Observable = Observable.just(Optional.fromNullable("observableName"));
-rx3Observable.subscribe(Rx3SharedPreferences.asConsumer(optionalUsername));
+rx3Observable.subscribe(Rx3SharedPreferences.asConsumer(optionalUsername)); // username is updated to "observableName"
 ```
 
 License
