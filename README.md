@@ -33,7 +33,7 @@ implementation 'com.frybits.rx.preferences:livedata'
 implementation 'com.frybits.rx.preferences:rx2'
 ```
 
-## Migration from `:rx-preferences` to `:rx2`
+## Migration from `f2prateek/rx-preferences` to `pablobaxter/rx-preferences`
 
 Many of the APIs are similar to [f2prateek/rx-preferences][8], however there were some changes to packages.
 This guide can be used for migrating from `f2prateek/rx-preferences` to `pablobaxter/rx-preferences` library:
@@ -41,6 +41,9 @@ This guide can be used for migrating from `f2prateek/rx-preferences` to `pabloba
 1. Change Gradle dependency import from `com.f2prateek.rx.preferences2:rx-preferences` to `com.frybits.rx.preferences:core`
 2. Rename all `com.f2prateek.rx.preferences2.Preference` imports to `com.frybits.rx.preferences.core.Preference`
 3. Rename all `com.f2prateek.rx.preferences2.RxSharedPreferences` imports to `com.frybits.rx.preferences.core.RxSharedPreferences`
+4. Add an import of the following package...
+   5. In Kotlin: `import com.frybits.rx.preferences.rx2.asObservable`
+   6. In Java: `import com.frybits.rx.preferences.rx2.Rx2Preference;` and change instances of `preference.asObservable()` to `Rx2Preference.asObservable(preference)`
 
 **NOTE**: Version 1.x of `pablobaxter/rx-preferences` had multiple "Preference" classes for each reactive framework. This has since been changed, so that all libraries share the same class.
 
