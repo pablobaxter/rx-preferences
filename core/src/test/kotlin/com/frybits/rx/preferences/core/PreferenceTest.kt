@@ -2,6 +2,7 @@ package com.frybits.rx.preferences.core
 
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
@@ -36,7 +37,7 @@ class PreferenceTest {
         val sharedPrefs = mock<SharedPreferences> {
             on { getInt(any(), any()) } doReturn 0
         }
-        val pref = Preference(sharedPrefs, "test", -1, IntegerAdapter)
+        val pref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         assertEquals(0, pref.value, "SharedPreferences not reached")
         verify(sharedPrefs).getInt(eq("test"), eq(-1))
@@ -50,7 +51,7 @@ class PreferenceTest {
             on { contains(any()) } doReturn true
             on { edit() } doReturn editor
         }
-        val pref = Preference(sharedPrefs, "test", -1, IntegerAdapter)
+        val pref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         pref.value = 2
         verify(sharedPrefs).edit()
@@ -65,7 +66,7 @@ class PreferenceTest {
         val sharedPrefs = mock<SharedPreferences> {
             on { contains(any()) } doReturn true
         }
-        val pref = Preference(sharedPrefs, "test", -1, IntegerAdapter)
+        val pref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         assertEquals(true, pref.isSet, "SharedPreferences not reached")
         verify(sharedPrefs).contains(eq("test"))
@@ -81,7 +82,7 @@ class PreferenceTest {
             on { contains(any()) } doReturn true
             on { edit() } doReturn editor
         }
-        val pref = Preference(sharedPrefs, "test", -1, IntegerAdapter)
+        val pref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         pref.delete()
         verify(sharedPrefs).edit()

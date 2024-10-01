@@ -21,7 +21,7 @@ import androidx.annotation.RestrictTo
  * Created by Pablo Baxter (Github: pablobaxter)
  */
 
-/** A preference of type [T]. Instances are created from [BaseRxSharedPreferences] factories. */
+/** A preference of type [T]. Instances are created from [RxSharedPreferences] factories. */
 interface Preference<T> {
 
     /** Converts instances of [T] to be stored and retrieved as Strings in [SharedPreferences]. */
@@ -37,8 +37,8 @@ interface Preference<T> {
         fun serialize(value: T): String?
     }
 
-    /** The [SharedPreferences] that backs this preference */
-    val sharedPreferences: SharedPreferences
+    /** The [RxSharedPreferences] that backs this preference */
+    val rxSharedPreferences: RxSharedPreferences
 
     /** The adapter to use for the given type [T] */
     val adapter: Adapter<T>
@@ -64,27 +64,28 @@ interface Preference<T> {
  *
  * @suppress **This function should be internal, but used by library group**
  */
-@Suppress("FunctionName")
 @JvmSynthetic
 @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
 fun <T> Preference(
-    preferences: SharedPreferences,
+    preferences: RxSharedPreferences,
     key: String?,
     defaultValue: T,
     adapter: Adapter<T>
 ): Preference<T> = PreferenceImpl(
-    sharedPreferences = preferences,
+    rxSharedPreferences = preferences,
     key = key,
     defaultValue = defaultValue,
     adapter = adapter
 )
 
 private class PreferenceImpl<T>(
-    override val sharedPreferences: SharedPreferences,
+    override val rxSharedPreferences: RxSharedPreferences,
     override val key: String?,
     override val defaultValue: T,
     override val adapter: Adapter<T>
-): Preference<T> {
+) : Preference<T> {
+
+    private val sharedPreferences: SharedPreferences = rxSharedPreferences.sharedPreferences
 
     override var value: T
         get() = adapter.get(key, sharedPreferences, defaultValue)

@@ -5,6 +5,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import com.frybits.rx.preferences.core.IntegerAdapter
 import com.frybits.rx.preferences.core.Preference
+import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
 import org.junit.Rule
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
@@ -43,11 +44,10 @@ class LiveDataPreferenceTest {
         val sharedPrefs = mock<SharedPreferences> {
             on { getInt(any(), any()) } doReturn 2
         }
-        val keysChangedLiveData = MutableLiveData<String?>()
-        val liveDataPref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asLiveDataPreference(keysChangedLiveData)
+        val rxPref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
         val testResult = arrayListOf<Int>()
-        liveDataPref.asLiveData().observeForever { testResult.add(it) }
+        rxPref.asLiveData().observeForever { testResult.add(it) }
 
         // Ensure value is emitted on start
         assertEquals(1, testResult.size)
@@ -61,10 +61,12 @@ class LiveDataPreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keysChangedLiveData = MutableLiveData<String?>()
-        val liveDataPref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asLiveDataPreference(keysChangedLiveData)
+        val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
+        rxSharedPreferences.getOrCreateKeyChangedStream("livedata-stream") { keysChangedLiveData }
+        val rxPref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)
 
         val testResult = arrayListOf<Int>()
-        liveDataPref.asLiveData().observeForever { testResult.add(it) }
+        rxPref.asLiveData().observeForever { testResult.add(it) }
 
         // No value is emitted for other keys
         keysChangedLiveData.value = "test2"
@@ -78,10 +80,12 @@ class LiveDataPreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keysChangedLiveData = MutableLiveData<String?>()
-        val liveDataPref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asLiveDataPreference(keysChangedLiveData)
+        val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
+        rxSharedPreferences.getOrCreateKeyChangedStream("livedata-stream") { keysChangedLiveData }
+        val rxPref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)
 
         val testResult = arrayListOf<Int>()
-        liveDataPref.asLiveData().observeForever { testResult.add(it) }
+        rxPref.asLiveData().observeForever { testResult.add(it) }
 
         // Value is emitted for "clear" event
         keysChangedLiveData.value = null
@@ -95,10 +99,12 @@ class LiveDataPreferenceTest {
             on { getInt(any(), any()) } doReturn 2
         }
         val keysChangedLiveData = MutableLiveData<String?>()
-        val liveDataPref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asLiveDataPreference(keysChangedLiveData)
+        val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
+        rxSharedPreferences.getOrCreateKeyChangedStream("livedata-stream") { keysChangedLiveData }
+        val rxPref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)
 
         val testResult = arrayListOf<Int>()
-        liveDataPref.asLiveData().observeForever { testResult.add(it) }
+        rxPref.asLiveData().observeForever { testResult.add(it) }
 
         // Value is emitted for normal use case
         keysChangedLiveData.value = "test"
@@ -113,9 +119,9 @@ class LiveDataPreferenceTest {
             on { getInt(any(), any()) } doReturn 2
             on { edit() } doReturn editor
         }
-        val liveDataPref = Preference(sharedPrefs, "test", -1, IntegerAdapter).asLiveDataPreference(MutableLiveData())
+        val rxPref = Preference(sharedPrefs.asRxSharedPreferences(), "test", -1, IntegerAdapter)
 
-        val observer = liveDataPref.asObserver()
+        val observer = rxPref.asObserver()
 
         observer.onChanged(1)
         verify(sharedPrefs).edit()
