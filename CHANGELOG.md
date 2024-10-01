@@ -1,5 +1,17 @@
 # Change Log
 
+### Version 2.0.0 / Unreleased
+* **Breaking Change release**
+* Use extension functions for Rx libraries
+  * This removes the uses of the various `*SharedPreference` classes, and provides a single `RxSharedPreferences` class
+  * This also removes the various `*Preference` classes in favor of a single `Preference` class
+  * All reactive frameworks are now accessible as extension functions against the `Preference` class.
+    * Java will have util classes to provide the access to extension functions
+* Update CI to build against latest android images
+* Update several dependencies
+* Remove deprecated APIs from rx-sharedpreferences
+* Add in utility to convert `Preference<T>` to `Preference<Optional<T>>` for reactive frameworks that don't allow `null`.
+
 ### Version 1.1.0 / 2023-10-03
 * Update dependencies
 * Move to compile sdk 34
