@@ -98,21 +98,25 @@ suspend fun <T> Preference<T>.deleteAndCommit(): Boolean {
 }
 
 private val <T> Preference<T>.keysChanged: Flow<String?>
-    get() = rxSharedPreferences.getOrCreateKeyChangedStream(COROUTINE_STREAM) {
-        callbackFlow {
-            val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
-                check(prefs === rxSharedPreferences.sharedPreferences) { "CoroutinePreferences not listening to the right SharedPreferences" }
-                trySendBlocking(key)
-            }
+    get() {
+        // Prevents "IllegalStateException: Recursive update" in ConcurrentHashMap
+        val scope = rxScope
+        return rxSharedPreferences.getOrCreateKeyChangedStream(COROUTINE_STREAM) {
+            callbackFlow {
+                val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+                    check(prefs === rxSharedPreferences.sharedPreferences) { "CoroutinePreferences not listening to the right SharedPreferences" }
+                    trySendBlocking(key)
+                }
 
-            rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
+                rxSharedPreferences.sharedPreferences.registerOnSharedPreferenceChangeListener(listener)
 
-            awaitClose {
-                rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(
-                    listener
-                )
-            }
-        }.shareIn(rxScope, SharingStarted.WhileSubscribed())
+                awaitClose {
+                    rxSharedPreferences.sharedPreferences.unregisterOnSharedPreferenceChangeListener(
+                        listener
+                    )
+                }
+            }.shareIn(scope, SharingStarted.WhileSubscribed())
+        }
     }
 
 private val <T> Preference<T>.rxScope: CoroutineScope
