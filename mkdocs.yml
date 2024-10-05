@@ -1,0 +1,58 @@
+site_name: Rx-Preferences
+site_url: https://rx-preferences.frybits.com
+site_description: Reactive SharedPreferences for Android
+site_author: Pablo Baxter
+
+repo_name: Rx-Preferences
+repo_url: https://github.com/pablobaxter/rx-preferences
+remote_branch: gh-pages
+edit_uri: ""
+
+copyright: 'Copyright &copy; 2024 Pablo Baxter'
+
+theme:
+  logo: assets/images/icon.png
+  favicon: assets/images/icon.png
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: purple
+      toggle:
+        icon: octicons/sun-24
+        name: "Switch to Dark Mode"
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: purple
+      toggle:
+        icon: octicons/moon-24
+        name: "Switch to Light Mode"
+
+  features:
+    - navigation.tabs
+    - content.tabs.link
+
+markdown_extensions:
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+      slugify: !!python/object/apply:pymdownx.slugs.slugify
+        kwds:
+          case: lower
+
+  - attr_list
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - 'Overview':
+    - 'Overview': index.md
+    - 'Libraries':
+      - 'Core': core.md
+      - 'Coroutines': coroutines.md
+      - 'LiveData': livedata.md
+      - 'Rx2': rx2.md
+      - 'Rx3': rx3.md
