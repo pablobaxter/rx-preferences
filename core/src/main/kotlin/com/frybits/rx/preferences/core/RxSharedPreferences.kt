@@ -147,7 +147,7 @@ class RxSharedPreferences private constructor(
         ),
         level = DeprecationLevel.WARNING
     )
-    fun <T: Any> getObjectNonNull(
+    fun <T : Any> getObjectNonNull(
         key: String?,
         defaultValue: T,
         converter: Preference.Converter<T>
