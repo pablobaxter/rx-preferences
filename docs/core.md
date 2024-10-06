@@ -20,8 +20,8 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
 === ":material-language-java: Java"
 
     ```java
-    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-    RxSharedPreferences rxPreferences = RxSharedPreferences.create(preferences);
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+    RxSharedPreferences rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
     ```
 
 ### Basic usage of preferences
@@ -29,7 +29,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
 
     ```kotlin
     // Using a string preference
-    val usernamePref: Preference<String?> = rxPreferences.getString("username") // Default value optional
+    val usernamePref: Preference<String?> = rxSharedPreferences.getString("username") // Default value optional
 
     println(usernamePref.value) // null
     
@@ -42,7 +42,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
 
     ```java
     // Using a string prefrence
-    Preference<String> usernamePref = rxPreferences.getString("username"); // Default value optional
+    Preference<String> usernamePref = rxSharedPreferences.getString("username"); // Default value optional
 
     System.out.println(usernamePref.getValue()); // null
 
@@ -60,7 +60,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
         BLACK,
         ORANGE
     }
-    val catsPref: Preference<Cats> = rxPreferences.getEnum("cats", Cats.TABBY)
+    val catsPref: Preference<Cats> = rxSharedPreferences.getEnum("cats", Cats.TABBY)
 
     println(catsPref.value) // "TABBY"
 
@@ -77,7 +77,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
         BLACK,
         ORANGE
     }
-    Preference<Cats> catsPref = rxPreferences.getEnum("cats", Cats.TABBY, Cats.class);
+    Preference<Cats> catsPref = rxSharedPreferences.getEnum("cats", Cats.TABBY, Cats.class);
 
     System.out.println(catsPref.getValue()); // "TABBY"
 
@@ -104,7 +104,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
         }
     }
 
-    val foobarPref: Preference<Foobar?> = rxPreferences.getObject("foobar", null, converter)
+    val foobarPref: Preference<Foobar?> = rxSharedPreferences.getObject("foobar", null, converter)
 
     println(foobarPref.value) // null
 
@@ -160,7 +160,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
             return gson.toJson(value);
         }
     };
-    Preference<Foobar> foobarPref = rxPreferences.getObject("foobar", null, converter);
+    Preference<Foobar> foobarPref = rxSharedPreferences.getObject("foobar", null, converter);
 
     System.out.println(foobarPref.getValue()); // null
 
@@ -174,7 +174,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
 
     ```kotlin
     // Using a string preference
-    val usernamePref: Preference<String?> = rxPreferences.getString("username", "bob") // Default value optional
+    val usernamePref: Preference<String?> = rxSharedPreferences.getString("username", "bob") // Default value optional
 
     println(usernamePref.isSet) // false
     println(usernamePref.defaultValue) // "bob"
@@ -189,7 +189,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
     // Clears this preference
     usernamePref.delete()
     // or to clear everything
-    // rxPreferences.clear() 
+    // rxSharedPreferences.clear() 
 
     println(usernamePref.isSet) // false
     println(usernamePref.defaultValue) // "bob"
@@ -200,7 +200,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
 
     ```java
     // Using a string prefrence
-    Preference<String> usernamePref = rxPreferences.getString("username", "bob"); // Default value optional
+    Preference<String> usernamePref = rxSharedPreferences.getString("username", "bob"); // Default value optional
 
     System.out.println(usernamePref.isSet()); // false
     System.out.println(usernamePref.getDefaultValue()); // "bob"
@@ -215,7 +215,7 @@ implementation "com.frybits.rx.preferences:core:2.0.0"
     // Clears this preference
     usernamePref.delete();
     // or to clear everything
-    // rxPreferences.clear();
+    // rxSharedPreferences.clear();
 
     System.out.println(usernamePref.isSet()); // false
     System.out.println(usernamePref.getDefaultValue()); // "bob"

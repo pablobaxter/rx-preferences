@@ -11,11 +11,13 @@ implementation "com.frybits.rx.preferences:coroutines:2.0.0"
 
 ## Usage
 
-### Preference as a flow
+### Preference as a Flow
 ```kotlin
+val rxSharedPreferences = sharedPreferences.asRxSharedPreferences()
+
 val scope = CoroutineScope(Dispatchers.Main.immediate)
 
-val usernamePref: Preference<String?> = rxPreferences.getString("username")
+val usernamePref: Preference<String?> = rxSharedPreferences.getString("username")
 
 val usernameFlow: Flow<String?> = usernamePref.asFlow()
 
@@ -27,11 +29,13 @@ usernamePref.value = "bob"
 // Output from flow => "bob"
 ```
 
-### Preference as a collector
+### Preference as a Collector
 ```kotlin
+RxSharedPreferences rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
+
 val scope = CoroutineScope(Dispatchers.Main.immediate)
 
-val featureEnabledPref: Preference<Boolean> = rxPreferences.getBoolean("somePref")
+val featureEnabledPref: Preference<Boolean> = rxSharedPreferences.getBoolean("somePref")
 
 val featureEnabledCollector = featureEnabledPref.asCollector(committing = true) // Commit every emit
 
