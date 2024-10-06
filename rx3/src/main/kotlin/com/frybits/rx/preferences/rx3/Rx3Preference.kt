@@ -56,7 +56,7 @@ private val <T> Preference<T>.keysChanged: Observable<Optional<String?>>
     get() = rxSharedPreferences.getOrCreateKeyChangedStream(RX3_STREAM) {
         Observable.create<Optional<String?>> { emitter ->
             val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
-                check(prefs === rxSharedPreferences.sharedPreferences) { "Rx3SharedPreferences not listening to the right SharedPreferences" }
+                check(prefs === rxSharedPreferences.sharedPreferences) { "Rx3Preference not listening to the right SharedPreferences" }
                 emitter.onNext(Optional.fromNullable(key)) // Handle `null` values
             }
 
