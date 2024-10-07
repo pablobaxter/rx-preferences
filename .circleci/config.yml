@@ -432,13 +432,13 @@ workflows:
           requires:
             - Livedata-Test
       - Publish-Documentation-Approval:
-        type: approval
-        requirements:
-          - Core-Build
-          - Rx2-Build
-          - Rx3-Build
-          - Coroutines-Build
-          - Livedata-Build
+          type: approval
+          requires:
+            - Core-Build
+            - Rx2-Build
+            - Rx3-Build
+            - Coroutines-Build
+            - Livedata-Build
       - Publish-Documentation:
           requires:
             - Documentation-Publish-Approval
