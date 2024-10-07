@@ -378,7 +378,8 @@ jobs:
             ./gradlew publishAllPublicationsToMavenCentralRepository --no-parallel --no-configuration-cache --stacktrace
 
   Publish-Documentation:
-    name: android/android_docker
+    executor:
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
