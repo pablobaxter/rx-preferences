@@ -377,6 +377,20 @@ jobs:
           command: |
             ./gradlew publishAllPublicationsToMavenCentralRepository --no-parallel --no-configuration-cache --stacktrace
 
+  Publish-Documentation:
+    docker:
+      - image: cimg/python:3.12.6
+    steps:
+      - checkout
+      - run: |
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+      - run: ./gradlew dokkaHtmlMultiModule
+      - run: mv ./build/dokka/htmlMultiModule docs/api
+      - run: cat README.md | grep -v '\[8\]' | grep -v '\[9\]' | grep -v '\[10\]' | grep -v '\[11\]' | grep -v '\[12\]' | grep -v '\[13\]' | grep -v '\[14\]' > docs/index.md
+      - run: cat CHANGELOG.md > docs/changelog.md
+      - run: pip install mkdocs-material
+      - run: mkdocs gh-deploy --force
 
 workflows:
   version: 2
@@ -417,6 +431,17 @@ workflows:
       - Livedata-Build:
           requires:
             - Livedata-Test
+      - Documentation-Publish-Approval:
+        type: approval
+        requirements:
+          - Core-Build
+          - Rx2-Build
+          - Rx3-Build
+          - Coroutines-Build
+          - Livedata-Build
+      - Documentation-Publish:
+          requires:
+            - Documentation-Publish-Approval
       - Rx-Preferences-Upload-Approval:
           type: approval
           requires:

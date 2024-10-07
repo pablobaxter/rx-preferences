@@ -58,3 +58,4 @@ nav:
       - 'Rx3': rx3.md
     - 'Migrating from f2prateek/rx-preferences': migration.md
   - 'API': api/
+  - 'Changelog': changelog.md
