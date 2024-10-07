@@ -392,7 +392,6 @@ jobs:
       - run: cat README.md | grep -v '\[8\]' | grep -v '\[9\]' | grep -v '\[10\]' | grep -v '\[11\]' | grep -v '\[12\]' | grep -v '\[13\]' | grep -v '\[14\]' > docs/index.md
       - run: cat CHANGELOG.md > docs/changelog.md
       - run: sudo apt-get install python3
-      - run: python -m ensurepip --upgrade
       - run: pip install mkdocs-material
       - run: mkdocs gh-deploy --force
 
