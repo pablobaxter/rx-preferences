@@ -6,7 +6,7 @@ orbs:
 jobs:
   Core-Lint:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -25,7 +25,7 @@ jobs:
 
   Core-Test:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -53,7 +53,7 @@ jobs:
 
   Core-Build:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -75,7 +75,7 @@ jobs:
 
   Rx2-Lint:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -94,7 +94,7 @@ jobs:
 
   Rx2-Test:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -122,7 +122,7 @@ jobs:
 
   Rx2-Build:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -143,7 +143,7 @@ jobs:
 
   Rx3-Lint:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -162,7 +162,7 @@ jobs:
 
   Rx3-Test:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -190,7 +190,7 @@ jobs:
 
   Rx3-Build:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -211,7 +211,7 @@ jobs:
 
   Coroutines-Lint:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -230,7 +230,7 @@ jobs:
 
   Coroutines-Test:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -258,7 +258,7 @@ jobs:
 
   Coroutines-Build:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -279,7 +279,7 @@ jobs:
 
   Livedata-Lint:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -298,7 +298,7 @@ jobs:
 
   Livedata-Test:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -326,7 +326,7 @@ jobs:
 
   Livedata-Build:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -347,7 +347,7 @@ jobs:
 
   Rx-Preferences-Upload:
     executor:
-      name: android/android-machine
+      name: android/android_docker
       resource-class: medium
       tag: default
     steps:
@@ -378,8 +378,9 @@ jobs:
             ./gradlew publishAllPublicationsToMavenCentralRepository --no-parallel --no-configuration-cache --stacktrace
 
   Publish-Documentation:
-    docker:
-      - image: cimg/python:3.12.6
+    name: android/android_docker
+      resource-class: medium
+      tag: default
     steps:
       - checkout
       - run: |
@@ -389,6 +390,8 @@ jobs:
       - run: mv ./build/dokka/htmlMultiModule docs/api
       - run: cat README.md | grep -v '\[8\]' | grep -v '\[9\]' | grep -v '\[10\]' | grep -v '\[11\]' | grep -v '\[12\]' | grep -v '\[13\]' | grep -v '\[14\]' > docs/index.md
       - run: cat CHANGELOG.md > docs/changelog.md
+      - run: sudo apt-get install python3
+      - run: python -m ensurepip --upgrade
       - run: pip install mkdocs-material
       - run: mkdocs gh-deploy --force
 
