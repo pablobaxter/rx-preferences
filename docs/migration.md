@@ -3,7 +3,7 @@
 Many of the APIs are similar to [f2prateek/rx-preferences][1], however there were some changes to packages.
 This guide can be used for migrating from `f2prateek/rx-preferences` to `pablobaxter/rx-preferences` library.
 
-## In project `build.gradle`
+## Project `build.gradle`
 ```diff
 // build.gradle
 - implementation 'com.f2prateek.rx.preferences2:rx-preferences'
