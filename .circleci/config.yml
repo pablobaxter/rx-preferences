@@ -8,7 +8,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -27,7 +27,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -55,7 +55,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -77,7 +77,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -96,7 +96,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -124,7 +124,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -145,7 +145,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -164,7 +164,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -192,7 +192,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -213,7 +213,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -232,7 +232,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -260,7 +260,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -281,7 +281,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -300,7 +300,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -328,7 +328,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -349,7 +349,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -381,7 +381,7 @@ jobs:
     executor:
       name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - run: |
