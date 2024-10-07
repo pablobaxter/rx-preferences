@@ -56,3 +56,4 @@ nav:
       - 'LiveData': livedata.md
       - 'Rx2': rx2.md
       - 'Rx3': rx3.md
+    - 'Migrating from f2prateek/rx-preferences': migration.md
