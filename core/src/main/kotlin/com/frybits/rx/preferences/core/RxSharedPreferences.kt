@@ -52,6 +52,9 @@ class RxSharedPreferences private constructor(
 
     private val keyChangedStreams: ConcurrentHashMap<String, Any> = ConcurrentHashMap()
 
+    /**
+     * @suppress
+     */
     @JvmSynthetic
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
     fun <T : Any> getOrCreateKeyChangedStream(key: String, streamCreator: () -> T): T {
