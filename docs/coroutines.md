@@ -31,7 +31,7 @@ usernamePref.value = "bob"
 
 ### Preference as a Collector
 ```kotlin
-RxSharedPreferences rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
+val rxSharedPreferences = sharedPreferences.asRxSharedPreferences()
 
 val scope = CoroutineScope(Dispatchers.Main.immediate)
 

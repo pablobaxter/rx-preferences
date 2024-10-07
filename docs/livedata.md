@@ -19,7 +19,7 @@ implementation "com.frybits.rx.preferences:livedata:2.0.0"
 
     val usernameLiveData: LiveData<String?> = usernamePref.asLiveData()
 
-    usernameLiveData.asLiveData().observeForever { name ->
+    usernameLiveData.observeForever { name ->
         println(name) // Immediately emits 'null'
     }
 
@@ -86,7 +86,7 @@ implementation "com.frybits.rx.preferences:livedata:2.0.0"
         private OnCheckedChangeListener onChangedListener = new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                value = isChecked;
+                setValue(isChecked);
             }
         };
 

@@ -17,7 +17,7 @@ Due to RxJava not allowing for `null` to be emitted, the `asOptional()` operator
     val rxSharedPreferences = sharedPreferences.asRxSharedPreferences()
 
     val usernamePref: Preference<String?> = rxSharedPreferences.getString("username")
-    val optionalUsernamePref<Optional<String?>> = usernamePref.asOptional()
+    val optionalUsernamePref: Preference<Optional<String?>> = usernamePref.asOptional()
     ```
     
 === ":material-language-java: Java"
@@ -26,7 +26,7 @@ Due to RxJava not allowing for `null` to be emitted, the `asOptional()` operator
     RxSharedPreferences rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
 
     Preference<String> usernamePref = rxSharedPreferences.getString("username");
-    Preference<Optional<String>> optionalUsernamePref = PreferenceUtil.asOptional(usernamePref)
+    Preference<Optional<String>> optionalUsernamePref = PreferenceUtil.asOptional(usernamePref);
     ```
 
 ## Preference as an Observable
@@ -123,7 +123,7 @@ Due to RxJava not allowing for `null` to be emitted, the `asOptional()` operator
 
     Observable<Boolean> checkButtonObservable = Observable.create(emitter -> {
 
-        private OnCheckedChangeListener onChangedListener = new OnCheckedChangeListener() {
+        OnCheckedChangeListener onChangedListener = new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 emitter.onNext(isChecked);
