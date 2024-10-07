@@ -441,7 +441,7 @@ workflows:
             - Livedata-Build
       - Publish-Documentation:
           requires:
-            - Documentation-Publish-Approval
+            - Publish-Documentation-Approval
       - Rx-Preferences-Upload-Approval:
           type: approval
           requires:
