@@ -1,6 +1,6 @@
 # Coroutines
 
-The coroutines library adds extension functions to collect changes occurring on a `Preference`, as wel as perform `commit()` operations with suspend functions.
+The coroutines library adds extension functions to convert the `Prefrence` into `Flow` and `Collector` objects. It also provides a few extra APIs to perform `commit()` operations with suspend functions.
 
 **Note:** This library is not accessible from Java sources.
 

@@ -1,6 +1,6 @@
 # LiveData
 
-The Livedata adds in extension functions to collect changes occurring on a Preference.
+The livedata library adds extension functions to convert the `Prefrence` into `LiveData` and `Observer` objects.
 
 ## Getting the Dependency
 ```groovy
@@ -30,7 +30,6 @@ implementation "com.frybits.rx.preferences:livedata:2.0.0"
 === ":material-language-java: Java"
 
     ```java
-    // Using a string prefrence
     RxSharedPreferences rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
 
     Preference<String> usernamePref = rxSharedPreferences.getString("username");
@@ -76,7 +75,6 @@ implementation "com.frybits.rx.preferences:livedata:2.0.0"
 === ":material-language-java: Java"
 
     ```java
-    // Using a string prefrence
     RxSharedPreferences rxSharedPreferences = RxSharedPreferences.create(sharedPreferences);
 
     Preference<Boolean> featureEnabledPref = rxSharedPreferences.getBoolean("somePref");
