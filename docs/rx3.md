@@ -1,15 +1,15 @@
-# Rx2
+# Rx3
 
 The livedata library adds extension functions to convert the `Prefrence` into `Observable` and `Consumer` objects.
 
 ## Getting the Dependency
 ```groovy
-implementation "com.frybits.rx.preferences:rx2:2.0.0"
+implementation "com.frybits.rx.preferences:rx3:2.0.0"
 ```
 
 ## Usage
 
-### Using non-nullable Preference with Rx2
+### Using non-nullable Preference with Rx3
 Due to RxJava not allowing for `null` to be emitted, the `asOptional()` operator was created for `Preference` to convert any `Preference<T>` object into a `Preference<Optional<T>>` object. Note: This is the `com.google.common.base.Optional` class, and not the Java8 `Optional` class.
 === ":material-language-kotlin: Kotlin"
 
@@ -68,7 +68,7 @@ Due to RxJava not allowing for `null` to be emitted, the `asOptional()` operator
     // RxJava doesn't allow for 'null' values to be emitted. Make it optional instead.
     Preference<Optional<String>> optionalUsernamePref = PreferenceUtil.asOptional(usernamePref);
 
-    Observable<Optional<String>> usernameObservable = Rx2Preference.asObservable(optionalUsernamePref);
+    Observable<Optional<String>> usernameObservable = Rx3Preference.asObservable(optionalUsernamePref);
 
     usernameObservable.subscribe(name -> {
         System.out.println(name.orNull()); // Immediately emits an empty Optional
@@ -119,7 +119,7 @@ Due to RxJava not allowing for `null` to be emitted, the `asOptional()` operator
 
     Preference<Boolean> featureEnabledPref = rxSharedPreferences.getBoolean("somePref");
 
-    Consumer<Boolean> featureEnabledConsumer = Rx2Preference.asConsumer(featureEnabledPref);
+    Consumer<Boolean> featureEnabledConsumer = Rx3Preference.asConsumer(featureEnabledPref);
 
     Observable<Boolean> checkButtonObservable = Observable.create(emitter -> {
 
