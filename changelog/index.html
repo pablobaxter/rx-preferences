@@ -1,0 +1,1077 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Reactive SharedPreferences for Android">
+      
+      
+        <meta name="author" content="Pablo Baxter">
+      
+      
+        <link rel="canonical" href="https://rx-preferences.frybits.com/changelog/">
+      
+      
+        <link rel="prev" href="../migration/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/icon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
+    
+    
+      
+        <title>Changelog - Rx-Preferences</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#change-log" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Rx-Preferences" class="md-header__button md-logo" aria-label="Rx-Preferences" data-md-component="logo">
+      
+  <img src="../assets/images/icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Rx-Preferences
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Changelog
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Switch to Dark Mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to Dark Mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 19a7 7 0 1 1 0-14 7 7 0 0 1 0 14m0-1.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 1 0 0 11m-5.657.157a.75.75 0 0 1 0 1.06l-1.768 1.768a.749.749 0 0 1-1.275-.326.75.75 0 0 1 .215-.734l1.767-1.768a.75.75 0 0 1 1.061 0M3.515 3.515a.75.75 0 0 1 1.06 0l1.768 1.768a.749.749 0 0 1-.326 1.275.75.75 0 0 1-.734-.215L3.515 4.575a.75.75 0 0 1 0-1.06M12 0a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0V.75A.75.75 0 0 1 12 0M4 12a.75.75 0 0 1-.75.75H.75a.75.75 0 0 1 0-1.5h2.5A.75.75 0 0 1 4 12m8 8a.75.75 0 0 1 .75.75v2.5a.75.75 0 0 1-1.5 0v-2.5A.75.75 0 0 1 12 20m12-8a.75.75 0 0 1-.75.75h-2.5a.75.75 0 0 1 0-1.5h2.5A.75.75 0 0 1 24 12m-6.343 5.657a.75.75 0 0 1 1.06 0l1.768 1.768a.75.75 0 0 1-.018 1.042.75.75 0 0 1-1.042.018l-1.768-1.767a.75.75 0 0 1 0-1.061m2.828-14.142a.75.75 0 0 1 0 1.06l-1.768 1.768a.75.75 0 0 1-1.042-.018.75.75 0 0 1-.018-1.042l1.767-1.768a.75.75 0 0 1 1.061 0"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="purple"  aria-label="Switch to Light Mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to Light Mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.768 3.96zl-.002-.005a9 9 0 0 0-.218-.779c-.13-.394.21-.8.602-.67q.435.144.855.328l.01.005A10.002 10.002 0 0 1 12 22a10 10 0 0 1-9.162-5.985l-.004-.01a10 10 0 0 1-.329-.855c-.13-.392.277-.732.67-.602q.386.126.78.218l.004.002A9 9 0 0 0 14.999 6a9 9 0 0 0-.231-2.04M16.5 6c0 5.799-4.701 10.5-10.5 10.5q-.64 0-1.26-.075A8.5 8.5 0 1 0 16.425 4.74q.075.62.075 1.259Z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/pablobaxter/rx-preferences" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Rx-Preferences
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href=".." class="md-tabs__link">
+          
+  
+  Overview
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../api/" class="md-tabs__link">
+        
+  
+    
+  
+  API
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="./" class="md-tabs__link">
+        
+  
+    
+  
+  Changelog
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Rx-Preferences" class="md-nav__button md-logo" aria-label="Rx-Preferences" data-md-component="logo">
+      
+  <img src="../assets/images/icon.png" alt="logo">
+
+    </a>
+    Rx-Preferences
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/pablobaxter/rx-preferences" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Rx-Preferences
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Overview
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Libraries
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Libraries
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Core
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../coroutines/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Coroutines
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../livedata/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    LiveData
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rx2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rx2
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rx3/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Rx3
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../migration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Migrating from f2prateek/rx-preferences
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    API
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Changelog
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-2024-09-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0 / 2024-09-30
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-110-2023-10-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.1.0 / 2023-10-03
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-100-all-2023-03-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.0.0 - ALL / 2023-03-27
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-to-comfrybitsrxpreferences" class="md-nav__link">
+    <span class="md-ellipsis">
+      === Migration to com.frybits.rx.preferences ===
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-201-18-09-2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.1 (18-09-2020)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-201-beta1-15-04-2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.1-beta1 (15-04-2020)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-22-04-2018" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0 (22-04-2018)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-rc3-13-08-2017" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0-RC3 (13-08-2017)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-rc2-27-04-2017" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0-RC2 (27-04-2017)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-rc1-25-12-2016" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0-RC1 (25-12-2016)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-102-15-06-2016" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.0.2 (15-06-2016)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-101-28-10-2015" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.0.1 (28-10-2015)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-100-23-08-2015" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.0.0 (23-08-2015)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-2024-09-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0 / 2024-09-30
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-110-2023-10-03" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.1.0 / 2023-10-03
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-100-all-2023-03-27" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.0.0 - ALL / 2023-03-27
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#migration-to-comfrybitsrxpreferences" class="md-nav__link">
+    <span class="md-ellipsis">
+      === Migration to com.frybits.rx.preferences ===
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-201-18-09-2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.1 (18-09-2020)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-201-beta1-15-04-2020" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.1-beta1 (15-04-2020)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-22-04-2018" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0 (22-04-2018)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-rc3-13-08-2017" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0-RC3 (13-08-2017)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-rc2-27-04-2017" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0-RC2 (27-04-2017)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-200-rc1-25-12-2016" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 2.0.0-RC1 (25-12-2016)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-102-15-06-2016" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.0.2 (15-06-2016)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-101-28-10-2015" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.0.1 (28-10-2015)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#version-100-23-08-2015" class="md-nav__link">
+    <span class="md-ellipsis">
+      Version 1.0.0 (23-08-2015)
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="change-log">Change Log</h1>
+<h3 id="version-200-2024-09-30">Version 2.0.0 / 2024-09-30</h3>
+<ul>
+<li><strong>Breaking Change release</strong></li>
+<li>Use extension functions for Rx libraries</li>
+<li>This removes the uses of the various <code>*SharedPreference</code> classes, and provides a single <code>RxSharedPreferences</code> class</li>
+<li>This also removes the various <code>*Preference</code> classes in favor of a single <code>Preference</code> class</li>
+<li>All reactive frameworks are now accessible as extension functions against the <code>Preference</code> class.<ul>
+<li>Java will have util classes to provide the access to extension functions</li>
+</ul>
+</li>
+<li>Update CI to build against latest android images</li>
+<li>Update several dependencies</li>
+<li>Remove deprecated APIs from rx-sharedpreferences</li>
+<li>Add in utility to convert <code>Preference&lt;T&gt;</code> to <code>Preference&lt;Optional&lt;T&gt;&gt;</code> for reactive frameworks that don't allow <code>null</code>.</li>
+</ul>
+<h3 id="version-110-2023-10-03">Version 1.1.0 / 2023-10-03</h3>
+<ul>
+<li>Update dependencies</li>
+<li>Move to compile sdk 34</li>
+<li>Use vanniktech for maven publishing</li>
+<li>Update CI script so that publishing occurs via CI now</li>
+<li>Remove build health checks from CI (for now)</li>
+</ul>
+<h3 id="version-100-all-2023-03-27">Version 1.0.0 - ALL / 2023-03-27</h3>
+<ul>
+<li>Fork of <a href="https://github.com/f2prateek/rx-preferences">f2prateek/rx-preferences</a></li>
+<li>Due to group ID change and package change, this project will start the versioning at <code>1.0.0</code> for all libraries.</li>
+<li><code>rx2</code></li>
+<li>Initial release</li>
+<li>Contains fix for <a href="https://github.com/f2prateek/rx-preferences/issues/141">f2prateek/rx-preferences#141</a></li>
+<li><code>rx3</code></li>
+<li>Initial release</li>
+<li>Fix for <a href="https://github.com/f2prateek/rx-preferences/issues/135">f2prateek/rx-preferences#135</a></li>
+<li><code>coroutines</code>, <code>livedata</code>, <code>core</code>, <code>bom</code></li>
+<li>Initial release</li>
+</ul>
+<hr />
+<h3 id="migration-to-comfrybitsrxpreferences"><strong>=== Migration to <code>com.frybits.rx.preferences</code></strong> ===</h3>
+<hr />
+<h2 id="version-201-18-09-2020">Version 2.0.1 <em>(18-09-2020)</em></h2>
+<p>Promotes <code>2.0.1-beta1</code> to a stable release.</p>
+<h2 id="version-201-beta1-15-04-2020">Version 2.0.1-beta1 <em>(15-04-2020)</em></h2>
+<ul>
+<li>
+<p><a href="https://github.com/f2prateek/rx-preferences/pull/132">Fix</a>: Improve handling for <code>null</code> values stored in preferences.</p>
+</li>
+<li>
+<p><a href="https://github.com/f2prateek/rx-preferences/pull/124">Improvement</a>: Update dependencies and tools.</p>
+</li>
+</ul>
+<h2 id="version-200-22-04-2018">Version 2.0.0 <em>(22-04-2018)</em></h2>
+<p>Promotes <code>2.0.0-RC3</code> to a stable release. If you are migrating from v1, please refer to the changelog for earlier RC versions to see what has changed.</p>
+<h2 id="version-200-rc3-13-08-2017">Version 2.0.0-RC3 <em>(13-08-2017)</em></h2>
+<ul>
+<li>
+<p><a href="https://github.com/f2prateek/rx-preferences/pull/92">New</a>: Add ability to clear preferences via <code>RxSharedPreferences</code>.</p>
+</li>
+<li>
+<p><a href="https://github.com/f2prateek/rx-preferences/pull/98">Fix</a>: The default value for <code>RxSharedPreferences#getObject</code> may not be null, but was incorrectly annotated as <code>@Nullable</code>. This corrects the annotation to <code>@NonNull</code>.</p>
+</li>
+</ul>
+<h2 id="version-200-rc2-27-04-2017">Version 2.0.0-RC2 <em>(27-04-2017)</em></h2>
+<p>This release includes multiple breaking changes.</p>
+<ul>
+<li><a href="https://github.com/f2prateek/rx-preferences/pull/75">New</a>: Replace <code>Adapter</code> with <code>Converter</code>. A <code>Converter</code> is a simpler interface that only deals with serialization, and abstracts away the complexity of working with <code>SharedPreferences</code> or <code>SharedPreferences.Editor</code>.</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="cm">/**</span>
+<span class="cm"> * Converts instances of {@code T} to be stored and retrieved as Strings in {@link</span>
+<span class="cm"> * SharedPreferences}.</span>
+<span class="cm"> */</span>
+<span class="kd">interface</span> <span class="nc">Converter</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Deserialize to an instance of {@code T}. The input is retrieved from {@link</span>
+<span class="cm">   * SharedPreferences#getString(String, String)}.</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="nd">@NonNull</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="nf">deserialize</span><span class="p">(</span><span class="nd">@NonNull</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="n">serialized</span><span class="p">);</span>
+
+<span class="w">  </span><span class="cm">/**</span>
+<span class="cm">   * Serialize the {@code value} to a String. The result will be used with {@link</span>
+<span class="cm">   * SharedPreferences.Editor#putString(String, String)}.</span>
+<span class="cm">   */</span>
+<span class="w">  </span><span class="nd">@NonNull</span><span class="w"> </span><span class="n">String</span><span class="w"> </span><span class="nf">serialize</span><span class="p">(</span><span class="nd">@NonNull</span><span class="w"> </span><span class="n">T</span><span class="w"> </span><span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li>
+<p><a href="https://github.com/f2prateek/rx-preferences/commit/0424808557c308108b0af7fcd046a7d047fde486">New</a>: Disallow null values from being emitted by the Preference observable. Specifically <code>RxSharedPreferences#getEnum</code> and <code>RxSharedPreferences#getObject</code> do not allow null values to be used as a default value.</p>
+</li>
+<li>
+<p><a href="https://github.com/f2prateek/rx-preferences/pull/85">New</a>: Make <code>Preference#set</code> only accept non null values. Trying to call <code>set</code> with a null value will now throw an exception.</p>
+</li>
+<li>
+<p><a href="https://github.com/f2prateek/rx-preferences/pull/65">New</a>: Make the <code>Set&lt;String&gt;</code> returned by <code>RxSharedPreferences#getStringSet</code> unmodifiable.</p>
+</li>
+<li>
+<p><a href="https://github.com/f2prateek/rx-preferences/pull/68">Improvement</a>: Use <code>@RequiresApi</code> instead of <code>@TargetApi</code>.</p>
+</li>
+</ul>
+<h2 id="version-200-rc1-25-12-2016">Version 2.0.0-RC1 <em>(25-12-2016)</em></h2>
+<p>rx-preferences has been updated to support RxJava 2.0. The <code>Preference</code> type is now an interface, but the core itself is mostly unchanged. <code>2.0.0-RC1</code> does not handle backpressure yet.</p>
+<p>Because the release includes breaking API changes, we're changing the project's package name from <code>com.f2prateek.rx.preferences</code> to <code>com.f2prateek.rx.preferences2</code>. The maven group has also changed to <code>com.f2prateek.rx.preferences2</code>. This should make it possible for large applications and libraries to migrate incrementally.</p>
+<h2 id="version-102-15-06-2016">Version 1.0.2 <em>(15-06-2016)</em></h2>
+<ul>
+<li>Remove custom backpressure support in favor of RxJava 1.1's built-in <a href="https://github.com/f2prateek/rx-preferences/pull/39">buffer latest</a>.</li>
+</ul>
+<h2 id="version-101-28-10-2015">Version 1.0.1 <em>(28-10-2015)</em></h2>
+<ul>
+<li>Add support for <a href="https://github.com/f2prateek/rx-preferences/pull/27">backpressure</a>.</li>
+<li>Use <a href="https://github.com/f2prateek/rx-preferences/pull/29">reasonable defaults</a> for creating Preferences that store primitives.</li>
+</ul>
+<h2 id="version-100-23-08-2015">Version 1.0.0 <em>(23-08-2015)</em></h2>
+<p>Initial release.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2024 Pablo Baxter
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "content.tabs.link"], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.525ec568.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,13 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+
+module:core
+com.frybits.rx.preferences.core
+module:coroutines
+com.frybits.rx.preferences.coroutines
+module:livedata
+com.frybits.rx.preferences.livedata
+module:rx2
+com.frybits.rx.preferences.rx2
+module:rx3
+com.frybits.rx.preferences.rx3
