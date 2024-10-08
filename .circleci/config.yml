@@ -384,13 +384,31 @@ jobs:
       tag: 2024.10.1
     steps:
       - checkout
-      - run: |
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
       - run: ./gradlew dokkaHtmlMultiModule
-      - run: mv ./build/dokka/htmlMultiModule docs/api
-      - run: cat README.md | grep -v '\[8\]' | grep -v '\[9\]' | grep -v '\[10\]' | grep -v '\[11\]' | grep -v '\[12\]' | grep -v '\[13\]' | grep -v '\[14\]' > docs/index.md
-      - run: cat CHANGELOG.md > docs/changelog.md
+      - run: |
+          mv ./build/dokka/htmlMultiModule docs/api
+          cat README.md | grep -v '\[8\]' | grep -v '\[9\]' | grep -v '\[10\]' | grep -v '\[11\]' | grep -v '\[12\]' | grep -v '\[13\]' | grep -v '\[14\]' > docs/index.md
+          cat CHANGELOG.md > docs/changelog.md
       - run: |
           sudo apt-get install python3
           sudo apt install python3-pip
@@ -444,9 +462,17 @@ workflows:
             - Rx3-Build
             - Coroutines-Build
             - Livedata-Build
+          filters:
+            branches:
+              only:
+                - master
       - Publish-Documentation:
           requires:
             - Publish-Documentation-Approval
+          filters:
+            branches:
+              only:
+                - master
       - Rx-Preferences-Upload-Approval:
           type: approval
           requires:
