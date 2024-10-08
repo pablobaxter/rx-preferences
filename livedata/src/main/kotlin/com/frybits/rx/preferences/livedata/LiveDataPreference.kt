@@ -62,7 +62,7 @@ private class SharedPreferenceKeyChangedLiveData(
 ) : LiveData<String?>() {
 
     private val listener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
-        check(prefs === sharedPreferences) { "CoroutinePreferences not listening to the right SharedPreferences" }
+        check(prefs === sharedPreferences) { "LiveDataPreference not listening to the right SharedPreferences" }
         value = key
     }
 
