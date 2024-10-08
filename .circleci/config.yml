@@ -6,9 +6,9 @@ orbs:
 jobs:
   Core-Lint:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -25,9 +25,9 @@ jobs:
 
   Core-Test:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -53,9 +53,9 @@ jobs:
 
   Core-Build:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -75,9 +75,9 @@ jobs:
 
   Rx2-Lint:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -94,9 +94,9 @@ jobs:
 
   Rx2-Test:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -122,9 +122,9 @@ jobs:
 
   Rx2-Build:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -143,9 +143,9 @@ jobs:
 
   Rx3-Lint:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -162,9 +162,9 @@ jobs:
 
   Rx3-Test:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -190,9 +190,9 @@ jobs:
 
   Rx3-Build:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -211,9 +211,9 @@ jobs:
 
   Coroutines-Lint:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -230,9 +230,9 @@ jobs:
 
   Coroutines-Test:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -258,9 +258,9 @@ jobs:
 
   Coroutines-Build:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -279,9 +279,9 @@ jobs:
 
   Livedata-Lint:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -298,9 +298,9 @@ jobs:
 
   Livedata-Test:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -326,9 +326,9 @@ jobs:
 
   Livedata-Build:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -347,9 +347,9 @@ jobs:
 
   Rx-Preferences-Upload:
     executor:
-      name: android/android-machine
+      name: android/android-docker
       resource-class: medium
-      tag: default
+      tag: 2024.10.1
     steps:
       - checkout
       - android/restore-gradle-cache:
@@ -377,6 +377,43 @@ jobs:
           command: |
             ./gradlew publishAllPublicationsToMavenCentralRepository --no-parallel --no-configuration-cache --stacktrace
 
+  Publish-Documentation:
+    executor:
+      name: android/android-docker
+      resource-class: medium
+      tag: 2024.10.1
+    steps:
+      - checkout
+      - android/restore-gradle-cache:
+          cache-prefix: core-v1
+      - android/restore-build-cache:
+          cache-prefix: core-v1
+      - android/restore-gradle-cache:
+          cache-prefix: rx2-v1
+      - android/restore-build-cache:
+          cache-prefix: rx2-v1
+      - android/restore-gradle-cache:
+          cache-prefix: rx3-v1
+      - android/restore-build-cache:
+          cache-prefix: rx3-v1
+      - android/restore-gradle-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-build-cache:
+          cache-prefix: coroutines-v1
+      - android/restore-gradle-cache:
+          cache-prefix: livedata-v1
+      - android/restore-build-cache:
+          cache-prefix: livedata-v1
+      - run: ./gradlew dokkaHtmlMultiModule
+      - run: |
+          mv ./build/dokka/htmlMultiModule docs/api
+          cat README.md | grep -v '\[8\]' | grep -v '\[9\]' | grep -v '\[10\]' | grep -v '\[11\]' | grep -v '\[12\]' | grep -v '\[13\]' | grep -v '\[14\]' > docs/index.md
+          cat CHANGELOG.md > docs/changelog.md
+      - run: |
+          sudo apt-get install python3
+          sudo apt install python3-pip
+          pip3 install mkdocs-material
+      - run: mkdocs gh-deploy --force
 
 workflows:
   version: 2
@@ -417,6 +454,25 @@ workflows:
       - Livedata-Build:
           requires:
             - Livedata-Test
+      - Publish-Documentation-Approval:
+          type: approval
+          requires:
+            - Core-Build
+            - Rx2-Build
+            - Rx3-Build
+            - Coroutines-Build
+            - Livedata-Build
+          filters:
+            branches:
+              only:
+                - master
+      - Publish-Documentation:
+          requires:
+            - Publish-Documentation-Approval
+          filters:
+            branches:
+              only:
+                - master
       - Rx-Preferences-Upload-Approval:
           type: approval
           requires:
