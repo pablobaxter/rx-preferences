@@ -52,6 +52,9 @@ class RxSharedPreferences private constructor(
 
     private val keyChangedStreams: ConcurrentHashMap<String, Any> = ConcurrentHashMap()
 
+    /**
+     * @suppress
+     */
     @JvmSynthetic
     @RestrictTo(RestrictTo.Scope.LIBRARY_GROUP)
     fun <T : Any> getOrCreateKeyChangedStream(key: String, streamCreator: () -> T): T {
@@ -139,9 +142,25 @@ class RxSharedPreferences private constructor(
         return Preference(this, key, defaultValue, LongAdapter)
     }
 
-    /** Creates a [T] preference for the [key] using the [converter], and with a default of [defaultValue]. This function ensures objects in stream are not `null`. */
     @CheckResult
+    @Deprecated(
+        message = "Not used any longer. Use 'getObject()' with 'asOptional()' operator for handle nullable objects.",
+        replaceWith = ReplaceWith(
+            expression = "getObject(key, defaultValue, converter)"
+        ),
+        level = DeprecationLevel.WARNING
+    )
     fun <T : Any> getObjectNonNull(
+        key: String?,
+        defaultValue: T,
+        converter: Preference.Converter<T>
+    ): Preference<T> {
+        return getObject(key, defaultValue, converter)
+    }
+
+    /** Creates a [T] preference for the [key] using the [converter], and with a default of [defaultValue]. */
+    @CheckResult
+    fun <T> getObject(
         key: String?,
         defaultValue: T,
         converter: Preference.Converter<T>
