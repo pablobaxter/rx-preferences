@@ -4,7 +4,7 @@ The core library provides the `RxSharedPreferences` class that contains APIs to 
 
 ## Getting the dependency
 ```groovy
-implementation "com.frybits.rx.preferences:core:2.0.0"
+implementation "com.frybits.rx.preferences:core:2.0.1"
 ```
 
 ## Usage

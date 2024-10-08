@@ -4,7 +4,7 @@ The livedata library adds extension functions to convert the `Prefrence` into `O
 
 ## Getting the Dependency
 ```groovy
-implementation "com.frybits.rx.preferences:rx3:2.0.0"
+implementation "com.frybits.rx.preferences:rx3:2.0.1"
 ```
 
 ## Usage

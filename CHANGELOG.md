@@ -1,5 +1,13 @@
 # Change Log
 
+### Version 2.0.1 / 2024-10-07
+* Add license to PreferenceUtil.kt
+* Fix crash "IllegalStateException: Recursive update" on Coroutines library (#23)
+* Deprecates getObjectNonNull() function (#24)
+* Correct the exception message when incorrect sharedprefereces is listened to (#26)
+* Add in docs and website for Rx-Preferences (#25)
+* Deprecates `RxSharedPreferences.getObjectNonNull()` in favor of `RxSharedPreferences.getObject()`
+
 ### Version 2.0.0 / 2024-09-30
 * **Breaking Change release**
 * Use extension functions for Rx libraries

@@ -14,34 +14,34 @@ In order to handle the varying number of reactive frameworks available, there ar
 
 [Core][3]
 ```groovy
-implementation 'com.frybits.rx.preferences:core:2.0.0'
+implementation 'com.frybits.rx.preferences:core:2.0.1'
 ```
 
 [Coroutine/Flow][4]
 ```groovy
-implementation 'com.frybits.rx.preferences:coroutine:2.0.0'
+implementation 'com.frybits.rx.preferences:coroutine:2.0.1'
 ```
 
 [LiveData][5]
 ```groovy
-implementation 'com.frybits.rx.preferences:livedata:2.0.0'
+implementation 'com.frybits.rx.preferences:livedata:2.0.1'
 ```
 
 [Rx2][6]
 ```groovy
-implementation 'com.frybits.rx.preferences:rx2:2.0.0'
+implementation 'com.frybits.rx.preferences:rx2:2.0.1'
 ```
 
 [Rx3][7]
 ```groovy
-implementation 'com.frybits.rx.preferences:rx3:2.0.0'
+implementation 'com.frybits.rx.preferences:rx3:2.0.1'
 ```
 
 For ease of ensuring all libraries are compatible, as they may have varying release cadences, a BOM is also provided:
 
 ```groovy
 // Import BOM
-implementation platform('com.frybits.rx.preferences:bom:2.0.0')
+implementation platform('com.frybits.rx.preferences:bom:2.0.1')
 implementation 'com.frybits.rx.preferences:core'
 implementation 'com.frybits.rx.preferences:livedata'
 implementation 'com.frybits.rx.preferences:rx2'
@@ -80,5 +80,5 @@ License
 [11]:./LICENSE
 
 [12]:https://img.shields.io/maven-central/v/com.frybits.rx.preferences/bom?label=bom
-[13]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/bom/2.0.0
+[13]:https://central.sonatype.com/artifact/com.frybits.rx.preferences/bom/2.0.1
 [14]:https://rx-preferences.frybits.com

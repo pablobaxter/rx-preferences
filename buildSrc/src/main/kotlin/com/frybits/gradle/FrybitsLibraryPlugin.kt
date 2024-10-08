@@ -5,12 +5,8 @@ import com.android.build.gradle.LibraryPlugin
 import com.vanniktech.maven.publish.MavenPublishPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.getByName
-import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.gradle.DokkaPlugin
@@ -73,6 +69,7 @@ private fun Project.configureDokka() {
     apply<DokkaPlugin>()
     val mmTask = tasks.findByName("dokkaHtmlMultiModule") as? DokkaMultiModuleTask
     if (mmTask != null) {
+        // Disabling for library modules, so the app submodule doesn't publish docs
         mmTask.enabled = false
     }
     tasks.withType<DokkaTaskPartial> {
