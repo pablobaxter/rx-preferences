@@ -1,8 +1,3 @@
-package com.frybits.rx.preferences.core
-
-import android.content.SharedPreferences
-import com.google.common.base.Optional
-
 /*
  *  Copyright 2014 Prateek Srivastava
  *
@@ -20,6 +15,11 @@ import com.google.common.base.Optional
  *
  * Created by Pablo Baxter (Github: pablobaxter)
  */
+
+package com.frybits.rx.preferences.core
+
+import android.content.SharedPreferences
+import com.google.common.base.Optional
 
 /** Stores and retrieves instances of [T] in [SharedPreferences]. */
 interface Adapter<T> {
