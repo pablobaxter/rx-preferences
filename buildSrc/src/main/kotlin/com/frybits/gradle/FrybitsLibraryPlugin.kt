@@ -24,8 +24,10 @@ import com.android.build.gradle.LibraryPlugin
 import com.vanniktech.maven.publish.MavenPublishPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
 import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
 import org.jetbrains.dokka.gradle.DokkaPlugin
@@ -95,15 +97,14 @@ private fun Project.configureDokka() {
                     url.set(URI("https://kotlinlang.org/api/kotlinx.coroutines/").toURL())
                 }
             )
-//            val guavaVersion = this@configureDokka.the<VersionCatalogsExtension>()
-//                .named("libs")
-//                .findVersion("android-guava")
-//                .get()
+            val guavaVersion = this@configureDokka.the<VersionCatalogsExtension>()
+                .named("libs")
+                .findVersion("android-guava")
+                .get()
             externalDocumentationLinks.add(
                 GradleExternalDocumentationLinkBuilder(this@configureDokka).apply {
-//                    url.set(URI("https://google.github.io/guava/releases/$guavaVersion/api/docs/").toURL())
-                    // Workaround for https://github.com/google/guava/issues/5653
-                    url.set(URI("https://guava.dev/releases/29.0-android/api/docs/").toURL())
+                    url.set(URI("https://google.github.io/guava/releases/$guavaVersion/api/docs/").toURL())
+                    packageListUrl.set(URI("https://google.github.io/guava/releases/$guavaVersion/api/docs/element-list").toURL())
                 }
             )
         }
