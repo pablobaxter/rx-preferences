@@ -50,7 +50,8 @@ implementation 'com.frybits.rx.preferences:rx2'
 License
 -------
 ```
-    Copyright 2014 Prateek Srivastava
+    Copyright 2014-2023 Prateek Srivastava
+    Copyright 2023 Pablo Baxter
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
