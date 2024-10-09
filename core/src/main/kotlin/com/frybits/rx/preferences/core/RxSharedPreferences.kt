@@ -1,14 +1,3 @@
-@file:Suppress("unused")
-
-package com.frybits.rx.preferences.core
-
-import android.content.SharedPreferences
-import android.os.Build
-import androidx.annotation.CheckResult
-import androidx.annotation.RestrictTo
-import java.io.Closeable
-import java.util.concurrent.ConcurrentHashMap
-
 /*
  *  Copyright 2014 Prateek Srivastava
  *
@@ -26,6 +15,17 @@ import java.util.concurrent.ConcurrentHashMap
  *
  * Created by Pablo Baxter (Github: pablobaxter)
  */
+
+@file:Suppress("unused")
+
+package com.frybits.rx.preferences.core
+
+import android.content.SharedPreferences
+import android.os.Build
+import androidx.annotation.CheckResult
+import androidx.annotation.RestrictTo
+import java.io.Closeable
+import java.util.concurrent.ConcurrentHashMap
 
 /**
  * Preference factory class to provide [Preference] objects used reactive frameworks

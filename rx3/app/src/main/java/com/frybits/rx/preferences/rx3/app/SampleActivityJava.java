@@ -1,5 +1,3 @@
-package com.frybits.rx.preferences.rx3.app;
-
 /*
  *  Copyright 2014 Prateek Srivastava
  *
@@ -17,6 +15,8 @@ package com.frybits.rx.preferences.rx3.app;
  *
  * Created by Pablo Baxter (Github: pablobaxter)
  */
+
+package com.frybits.rx.preferences.rx3.app;
 
 import android.content.Context;
 import android.os.Bundle;

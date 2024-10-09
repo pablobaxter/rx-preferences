@@ -1,21 +1,3 @@
-package com.frybits.rx.preferences.livedata
-
-import android.content.SharedPreferences
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.MutableLiveData
-import com.frybits.rx.preferences.core.IntegerAdapter
-import com.frybits.rx.preferences.core.Preference
-import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
-import org.junit.Rule
-import org.mockito.kotlin.any
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.eq
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.times
-import org.mockito.kotlin.verify
-import kotlin.test.Test
-import kotlin.test.assertEquals
-
 /*
  *  Copyright 2014 Prateek Srivastava
  *
@@ -33,6 +15,24 @@ import kotlin.test.assertEquals
  *
  * Created by Pablo Baxter (Github: pablobaxter)
  */
+
+package com.frybits.rx.preferences.livedata
+
+import android.content.SharedPreferences
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.MutableLiveData
+import com.frybits.rx.preferences.core.IntegerAdapter
+import com.frybits.rx.preferences.core.Preference
+import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
+import org.junit.Rule
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.eq
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.times
+import org.mockito.kotlin.verify
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 class LiveDataPreferenceTest {
 

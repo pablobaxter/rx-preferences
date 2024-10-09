@@ -1,8 +1,3 @@
-package com.frybits.rx.preferences.core
-
-import android.content.SharedPreferences
-import androidx.annotation.RestrictTo
-
 /*
  *  Copyright 2014 Prateek Srivastava
  *
@@ -20,6 +15,11 @@ import androidx.annotation.RestrictTo
  *
  * Created by Pablo Baxter (Github: pablobaxter)
  */
+
+package com.frybits.rx.preferences.core
+
+import android.content.SharedPreferences
+import androidx.annotation.RestrictTo
 
 /** A preference of type [T]. Instances are created from [RxSharedPreferences] factories. */
 interface Preference<T> {

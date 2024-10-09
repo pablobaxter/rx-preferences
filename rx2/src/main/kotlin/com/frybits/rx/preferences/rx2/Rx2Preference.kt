@@ -1,14 +1,3 @@
-@file:JvmName("Rx2Preference")
-
-package com.frybits.rx.preferences.rx2
-
-import android.content.SharedPreferences
-import androidx.annotation.CheckResult
-import com.frybits.rx.preferences.core.Preference
-import com.google.common.base.Optional
-import io.reactivex.Observable
-import io.reactivex.functions.Consumer
-
 /*
  *  Copyright 2014 Prateek Srivastava
  *
@@ -26,6 +15,17 @@ import io.reactivex.functions.Consumer
  *
  * Created by Pablo Baxter (Github: pablobaxter)
  */
+
+@file:JvmName("Rx2Preference")
+
+package com.frybits.rx.preferences.rx2
+
+import android.content.SharedPreferences
+import androidx.annotation.CheckResult
+import com.frybits.rx.preferences.core.Preference
+import com.google.common.base.Optional
+import io.reactivex.Observable
+import io.reactivex.functions.Consumer
 
 private const val RX2_STREAM = "rx2-stream"
 
