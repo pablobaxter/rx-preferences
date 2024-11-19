@@ -27,4 +27,9 @@ dependencies {
     implementation libs.androidx.lifecycle.viewmodel
     implementation libs.androidx.livedata.core
     implementation libs.google.material
+
+    implementation enforcedPlatform("org.jetbrains.kotlinx:kotlinx-coroutines-bom:1.9.0")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android")
+
+    androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test")
 }
