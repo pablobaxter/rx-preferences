@@ -46,12 +46,12 @@ class Rx2PreferenceTest {
             sharedPrefs.asRxSharedPreferences(),
             "test",
             "bar" to "foo",
-            ConverterAdapter(object : Preference.Converter<Pair<String, String>> {
-                override fun deserialize(serialized: String?): Pair<String, String> {
+            ConverterAdapter(object : Preference.Converter<Pair<String, String>?> {
+                override fun deserialize(serialized: String?): Pair<String, String>? {
                     throw NullPointerException()
                 }
 
-                override fun serialize(value: Pair<String, String>): String? {
+                override fun serialize(value: Pair<String, String>?): String? {
                     return null
                 }
             })
@@ -81,7 +81,7 @@ class Rx2PreferenceTest {
         val sharedPrefs = mock<SharedPreferences> {
             on { getInt(any(), any()) } doReturn 2
         }
-        val keyChangeSharedObservable = PublishSubject.create<Optional<String?>>()
+        val keyChangeSharedObservable = PublishSubject.create<Optional<String>>()
         val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
         rxSharedPreferences.getOrCreateKeyChangedStream("rx2-stream") { keyChangeSharedObservable }
         val rxPref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)
@@ -99,7 +99,7 @@ class Rx2PreferenceTest {
         val sharedPrefs = mock<SharedPreferences> {
             on { getInt(any(), any()) } doReturn 2
         }
-        val keyChangeSharedObservable = PublishSubject.create<Optional<String?>>()
+        val keyChangeSharedObservable = PublishSubject.create<Optional<String>>()
         val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
         rxSharedPreferences.getOrCreateKeyChangedStream("rx2-stream") { keyChangeSharedObservable }
         val rxPref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)
@@ -117,7 +117,7 @@ class Rx2PreferenceTest {
         val sharedPrefs = mock<SharedPreferences> {
             on { getInt(any(), any()) } doReturn 2
         }
-        val keyChangeSharedObservable = PublishSubject.create<Optional<String?>>()
+        val keyChangeSharedObservable = PublishSubject.create<Optional<String>>()
         val rxSharedPreferences = sharedPrefs.asRxSharedPreferences()
         rxSharedPreferences.getOrCreateKeyChangedStream("rx2-stream") { keyChangeSharedObservable }
         val rxPref = Preference(rxSharedPreferences, "test", -1, IntegerAdapter)

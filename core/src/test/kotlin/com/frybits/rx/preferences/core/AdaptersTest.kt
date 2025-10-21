@@ -134,8 +134,8 @@ class AdaptersTest {
             on { getString(any(), anyOrNull()) } doReturn "testString"
         }
 
-        assertEquals("testString", StringAdapter.get("test", sharedPreferences, null), "SharedPreferences not reached")
-        verify(sharedPreferences).getString(eq("test"), isNull())
+        assertEquals("testString", StringAdapter.get("test", sharedPreferences, ""), "SharedPreferences not reached")
+        verify(sharedPreferences).getString(eq("test"), eq(""))
 
         StringAdapter.set("test", "test2", editor)
         verify(editor).putString(eq("test"), eq("test2"))
@@ -148,10 +148,10 @@ class AdaptersTest {
             on { getStringSet(any(), anyOrNull()) } doReturn setOf("test")
         }
 
-        assertEquals(setOf("test"), StringSetAdapter.get("test", sharedPreferences, null), "SharedPreferences not reached")
-        verify(sharedPreferences).getStringSet(eq("test"), isNull())
+        assertEquals(setOf("test"), StringSetAdapter.get("test", sharedPreferences, emptySet()), "SharedPreferences not reached")
+        verify(sharedPreferences).getStringSet(eq("test"), eq(emptySet()))
 
-        StringSetAdapter.set("test", emptySet(), editor)
-        verify(editor).putStringSet(eq("test"), eq(emptySet()))
+        StringSetAdapter.set("test", setOf(null), editor)
+        verify(editor).putStringSet(eq("test"), eq(setOf(null)))
     }
 }

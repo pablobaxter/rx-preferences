@@ -29,9 +29,9 @@ implementation "com.frybits.rx.preferences:core:2.0.1"
 
     ```kotlin
     // Using a string preference
-    val usernamePref: Preference<String?> = rxSharedPreferences.getString("username") // Default value optional
+    val usernamePref: Preference<String> = rxSharedPreferences.getString("username") // Default value optional
 
-    println(usernamePref.value) // null
+    println(usernamePref.value) // ""
     
     usernamePref.value = "bob"
 
@@ -44,7 +44,7 @@ implementation "com.frybits.rx.preferences:core:2.0.1"
     // Using a string prefrence
     Preference<String> usernamePref = rxSharedPreferences.getString("username"); // Default value optional
 
-    System.out.println(usernamePref.getValue()); // null
+    System.out.println(usernamePref.getValue()); // ""
 
     usernamePref.setValue("bob");
 
@@ -104,9 +104,9 @@ implementation "com.frybits.rx.preferences:core:2.0.1"
         }
     }
 
-    val foobarPref: Preference<Foobar?> = rxSharedPreferences.getObject("foobar", null, converter)
+    val foobarPref: Preference<Foobar> = rxSharedPreferences.getObject("foobar", Foobar(), converter)
 
-    println(foobarPref.value) // null
+    println(foobarPref.value) // "Foobar(someString=, someNum=0)"
 
     foobarPref.value = Foobar("str", 42)
     
@@ -160,9 +160,9 @@ implementation "com.frybits.rx.preferences:core:2.0.1"
             return gson.toJson(value);
         }
     };
-    Preference<Foobar> foobarPref = rxSharedPreferences.getObject("foobar", null, converter);
+    Preference<Foobar> foobarPref = rxSharedPreferences.getObject("foobar", new Foobar(), converter);
 
-    System.out.println(foobarPref.getValue()); // null
+    System.out.println(foobarPref.getValue()); // "Foobar(someString=, someInt=0)"
 
     foobarPref.setValue(new Foobar("str", 42));
     
@@ -174,7 +174,7 @@ implementation "com.frybits.rx.preferences:core:2.0.1"
 
     ```kotlin
     // Using a string preference
-    val usernamePref: Preference<String?> = rxSharedPreferences.getString("username", "bob") // Default value optional
+    val usernamePref: Preference<String> = rxSharedPreferences.getString("username", "bob") // Default value optional
 
     println(usernamePref.isSet) // false
     println(usernamePref.defaultValue) // "bob"

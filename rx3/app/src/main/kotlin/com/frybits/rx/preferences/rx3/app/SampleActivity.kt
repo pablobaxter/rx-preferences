@@ -27,11 +27,9 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.frybits.rx.preferences.core.Preference
 import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
-import com.frybits.rx.preferences.core.asOptional
 import com.frybits.rx.preferences.rx3.app.databinding.SampleLayoutBinding
 import com.frybits.rx.preferences.rx3.asConsumer
 import com.frybits.rx.preferences.rx3.asObservable
-import com.google.common.base.Optional
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 
@@ -40,7 +38,7 @@ class SampleActivity : AppCompatActivity() {
     private lateinit var binding: SampleLayoutBinding
 
     private lateinit var fooBool: Preference<Boolean>
-    private lateinit var fooString: Preference<Optional<String?>>
+    private lateinit var fooString: Preference<String>
 
     private val disposables = CompositeDisposable()
 
@@ -53,7 +51,7 @@ class SampleActivity : AppCompatActivity() {
             getSharedPreferences("rx3", MODE_PRIVATE).asRxSharedPreferences()
 
         fooBool = rx3Preferences.getBoolean("fooBool")
-        fooString = rx3Preferences.getString("fooString").asOptional()
+        fooString = rx3Preferences.getString("fooString")
 
         bindPreference(binding.checkBox, fooBool)
         bindPreference(binding.checkBox2, fooBool)
@@ -88,11 +86,11 @@ class SampleActivity : AppCompatActivity() {
         )
     }
 
-    private fun bindPreference(editText: EditText, preference: Preference<Optional<String?>>) {
+    private fun bindPreference(editText: EditText, preference: Preference<String>) {
         disposables.add(
             preference.asObservable()
                 .filter { !editText.isFocused }
-                .subscribe { editText.setText(it.orNull()) }
+                .subscribe { editText.setText(it) }
         )
 
         val consumer = preference.asConsumer()
@@ -103,7 +101,7 @@ class SampleActivity : AppCompatActivity() {
                         Unit
 
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        emitter.onNext(Optional.fromNullable(s.toString()))
+                        emitter.onNext(s.toString())
                     }
 
                     override fun afterTextChanged(s: Editable?) = Unit

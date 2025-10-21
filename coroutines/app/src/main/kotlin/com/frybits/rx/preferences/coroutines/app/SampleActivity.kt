@@ -47,7 +47,7 @@ class SampleActivity : AppCompatActivity() {
     private lateinit var binding: SampleLayoutBinding
 
     private lateinit var fooBool: Preference<Boolean>
-    private lateinit var fooString: Preference<String?>
+    private lateinit var fooString: Preference<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -96,7 +96,7 @@ class SampleActivity : AppCompatActivity() {
 
     private fun CoroutineScope.bindPreference(
         editText: EditText,
-        preference: Preference<String?>
+        preference: Preference<String>
     ) {
         preference.asFlow()
             .filter { !editText.isFocused }
@@ -122,7 +122,7 @@ class SampleActivity : AppCompatActivity() {
                         before: Int,
                         count: Int
                     ) {
-                        trySend(s?.toString())
+                        trySend(s.toString())
                     }
 
                     override fun afterTextChanged(s: Editable?) = Unit
