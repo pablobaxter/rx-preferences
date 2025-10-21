@@ -1,40 +1,40 @@
 [versions]
 # Kotlin
-kotlin = "2.0.20"
-kotlin-coroutines = "1.9.0"
-dokka = "1.9.20"
+kotlin = "2.2.20"
+kotlin-coroutines = "1.10.2"
+dokka = "2.1.0"
 
 # Android Build
-android-build-gradle = "8.6.1"
+android-build-gradle = "8.13.0"
 
 # Androidx
-androidx-appcompat = "1.7.0"
-androidx-core = "1.13.1"
-androidx-lifecycle = "2.8.6"
-androidx-constraintlayout = "2.1.4"
-androidx-annotation = "1.8.2"
-androidx-livedata = "2.8.6"
+androidx-appcompat = "1.7.1"
+androidx-core = "1.17.0"
+androidx-lifecycle = "2.9.4"
+androidx-constraintlayout = "2.2.1"
+androidx-annotation = "1.9.1"
+androidx-livedata = "2.9.4"
 androidx-arch = "2.2.0"
 
 # Google
-google-material = "1.12.0"
-android-guava = "33.3.0-android"
+google-material = "1.13.0"
+android-guava = "33.5.0-android"
 
 # RxJava
 rx2 = "2.2.21"
-rx3 = "3.1.9"
+rx3 = "3.1.12"
 
 
 # Testing
-mockitoCore = "5.13.0"
-mockitoKotlin = "5.4.0"
+mockitoCore = "5.20.0"
+mockitoKotlin = "6.1.0"
 
-junit = "5.11.0"
+junit = "6.0.0"
 
 # Plugins
-dependency-analysis = "2.1.0"
-ktlint-plugin = "12.1.1"
-vanniktech = "0.29.0"
+dependency-analysis = "3.1.0"
+ktlint-plugin = "12.2.0"
+vanniktech = "0.34.0"
 
 [libraries]
 ## Build libraries

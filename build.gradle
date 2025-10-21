@@ -2,7 +2,3 @@ plugins {
     id 'com.autonomousapps.dependency-analysis'
     id 'org.jetbrains.dokka'
 }
-
-tasks.register('clean', Delete) {
-    delete rootProject.layout.buildDirectory
-}

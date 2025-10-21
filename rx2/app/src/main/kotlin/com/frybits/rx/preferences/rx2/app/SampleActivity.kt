@@ -27,11 +27,9 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.frybits.rx.preferences.core.Preference
 import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
-import com.frybits.rx.preferences.core.asOptional
 import com.frybits.rx.preferences.rx2.app.databinding.SampleLayoutBinding
 import com.frybits.rx.preferences.rx2.asConsumer
 import com.frybits.rx.preferences.rx2.asObservable
-import com.google.common.base.Optional
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 
@@ -40,7 +38,7 @@ class SampleActivity : AppCompatActivity() {
     private lateinit var binding: SampleLayoutBinding
 
     private lateinit var fooBool: Preference<Boolean>
-    private lateinit var fooString: Preference<Optional<String?>>
+    private lateinit var fooString: Preference<String>
 
     private val disposables = CompositeDisposable()
 
@@ -53,7 +51,7 @@ class SampleActivity : AppCompatActivity() {
             getSharedPreferences("rx2", MODE_PRIVATE).asRxSharedPreferences()
 
         fooBool = rx2Preferences.getBoolean("fooBool")
-        fooString = rx2Preferences.getString("fooString").asOptional()
+        fooString = rx2Preferences.getString("fooString")
 
         bindPreference(binding.checkBox, fooBool)
         bindPreference(binding.checkBox2, fooBool)
@@ -88,22 +86,22 @@ class SampleActivity : AppCompatActivity() {
         )
     }
 
-    private fun bindPreference(editText: EditText, preference: Preference<Optional<String?>>) {
+    private fun bindPreference(editText: EditText, preference: Preference<String>) {
         disposables.add(
             preference.asObservable()
                 .filter { !editText.isFocused }
-                .subscribe { editText.setText(it.orNull()) }
+                .subscribe { editText.setText(it) }
         )
 
         val consumer = preference.asConsumer()
         disposables.add(
-            Observable.create<Optional<String?>> { emitter ->
+            Observable.create<String> { emitter ->
                 val textWatcher = object : TextWatcher {
                     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) =
                         Unit
 
                     override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                        emitter.onNext(Optional.fromNullable(s.toString()))
+                        emitter.onNext(s.toString())
                     }
 
                     override fun afterTextChanged(s: Editable?) = Unit

@@ -29,11 +29,9 @@ import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.frybits.rx.preferences.core.Preference;
-import com.frybits.rx.preferences.core.PreferenceUtil;
 import com.frybits.rx.preferences.core.RxSharedPreferences;
 import com.frybits.rx.preferences.rx2.Rx2Preference;
 import com.frybits.rx.preferences.rx2.app.databinding.SampleLayoutBinding;
-import com.google.common.base.Optional;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
@@ -53,7 +51,7 @@ public class SampleActivityJava extends AppCompatActivity {
         RxSharedPreferences rxPreferences = RxSharedPreferences.create(getSharedPreferences("rx2", Context.MODE_PRIVATE));
 
         Preference<Boolean> fooBool = rxPreferences.getBoolean("fooBool");
-        Preference<Optional<String>> fooString = PreferenceUtil.asOptional(rxPreferences.getString("fooString"));
+        Preference<String> fooString = rxPreferences.getString("fooString");
 
         bindPreference(binding.checkBox, fooBool);
         bindPreference(binding.checkBox2, fooBool);
@@ -81,23 +79,23 @@ public class SampleActivityJava extends AppCompatActivity {
         );
     }
 
-    private void bindPreference(EditText editText, Preference<Optional<String>> preference) {
+    private void bindPreference(EditText editText, Preference<String> preference) {
         disposables.add(
                 Rx2Preference.asObservable(preference)
-                        .filter(stringOptional -> !editText.isFocused())
-                        .subscribe(stringOptional -> editText.setText(stringOptional.orNull()))
+                        .filter(string -> !editText.isFocused())
+                        .subscribe(editText::setText)
         );
 
-        Consumer<Optional<String>> consumer = Rx2Preference.asConsumer(preference);
+        Consumer<String> consumer = Rx2Preference.asConsumer(preference);
         disposables.add(
-                Observable.create((ObservableOnSubscribe<Optional<String>>) emitter -> {
+                Observable.create((ObservableOnSubscribe<String>) emitter -> {
                     TextWatcher textWatcher = new TextWatcher() {
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {
-                            emitter.onNext(Optional.fromNullable(s.toString()));
+                            emitter.onNext(s.toString());
                         }
 
                         @Override

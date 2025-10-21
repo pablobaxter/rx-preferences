@@ -67,7 +67,7 @@ class SampleActivity : AppCompatActivity() {
         mutableLiveData.observe(this, observer)
     }
 
-    private fun bindPreference(editText: EditText, preference: Preference<String?>) {
+    private fun bindPreference(editText: EditText, preference: Preference<String>) {
         preference.asLiveData()
             .observe(this) {
                 if (!editText.isFocused) {
@@ -76,7 +76,7 @@ class SampleActivity : AppCompatActivity() {
             }
 
         val observer = preference.asObserver()
-        val mutableLiveData = MutableLiveData<String?>()
+        val mutableLiveData = MutableLiveData<String>()
         val textWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
 

@@ -12,6 +12,9 @@ dependencies {
     implementation libs.kotlin.stdlib
     implementation libs.androidx.annotation
 
+    // Guava
+    implementation libs.guava
+
     // RxJava
     api libs.reactivex.rx3
 

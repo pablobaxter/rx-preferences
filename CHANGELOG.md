@@ -1,5 +1,22 @@
 # Change Log
 
+### Unreleased
+* **BREAKING CHANGES**
+  * `StringAdapter` no long returns a null `String`, and requires a non-null `String` default
+  * `RxSharedPreferences.getString()` no longer returns `Preference<String?>` and instead returns `Preference<String>`
+  * `StringSetAdapter` no longer returns a null `Set<String?>`, and requires a non-null `Set<String?>` default
+  * `RxSharedPreferences.getStringSet()` no longer returns `Preference<Set<String?>?>` and instead returns `Preference<Set<String?>>`
+  * `ConverterAdapter` no longer returns a null type, and requires a non-null type as default
+  * `RxSharedPreferences.getObject()` no longer returns `Preference<Any?>` and instead returns `Preference<Any>`
+  * `Preference.asOptional()` and `OptionalConverter` are removed, as nothing returns a Preference with a nullable generic now
+* **LINT UPDATES**
+  * `RxSharedPreferences.getObjectNonNull()` will now cause a lint error
+* Other changes include:
+  * Update of Gradle and several plugins
+  * Update of Kotlin to v2.2.20
+  * Update of various libraries
+  * Cleanup of code for lint warnings/errors
+
 ### Version 2.0.1 / 2024-10-07
 * Add license to PreferenceUtil.kt
 * Fix crash "IllegalStateException: Recursive update" on Coroutines library (#23)
