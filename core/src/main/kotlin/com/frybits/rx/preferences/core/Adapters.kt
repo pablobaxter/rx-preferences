@@ -54,7 +54,7 @@ object BooleanAdapter : Adapter<Boolean> {
 }
 
 /** Store and retrieves instances of [T] converted into a [String] using [converter] in [SharedPreferences] */
-class ConverterAdapter<T: Any>(private val converter: Preference.Converter<T?>) : Adapter<T> {
+class ConverterAdapter<T : Any>(private val converter: Preference.Converter<T?>) : Adapter<T> {
     override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: T): T {
         val serialized = sharedPreference.getString(key, null) ?: return defaultValue
         return converter.deserialize(serialized) ?: defaultValue

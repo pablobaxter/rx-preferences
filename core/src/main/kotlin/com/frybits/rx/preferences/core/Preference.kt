@@ -90,6 +90,7 @@ private class PreferenceImpl<T>(
 
     override var value: T
         get() = adapter.get(key, sharedPreferences, defaultValue)
+
         @SuppressLint("UseKtx")
         set(value) {
             with(sharedPreferences.edit()) {

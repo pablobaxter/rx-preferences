@@ -161,7 +161,7 @@ class RxSharedPreferences private constructor(
 
     /** Creates a [T] preference for the [key] using the [converter], and with a default of [defaultValue]. */
     @CheckResult
-    fun <T: Any> getObject(
+    fun <T : Any> getObject(
         key: String?,
         defaultValue: T,
         converter: Preference.Converter<T?>
