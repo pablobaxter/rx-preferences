@@ -17,12 +17,12 @@ val rxSharedPreferences = sharedPreferences.asRxSharedPreferences()
 
 val scope = CoroutineScope(Dispatchers.Main.immediate)
 
-val usernamePref: Preference<String?> = rxSharedPreferences.getString("username")
+val usernamePref: Preference<String> = rxSharedPreferences.getString("username")
 
-val usernameFlow: Flow<String?> = usernamePref.asFlow()
+val usernameFlow: Flow<String> = usernamePref.asFlow()
 
 usernameFlow.onEach { name ->
-    println(name) // Immediately emits 'null'
+    println(name) // Immediately emits ''
 }.launchIn(scope)
 
 usernamePref.value = "bob"

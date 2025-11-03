@@ -19,7 +19,6 @@
 package com.frybits.rx.preferences.core
 
 import android.content.SharedPreferences
-import com.google.common.base.Optional
 
 /** Stores and retrieves instances of [T] in [SharedPreferences]. */
 interface Adapter<T> {
@@ -55,10 +54,10 @@ object BooleanAdapter : Adapter<Boolean> {
 }
 
 /** Store and retrieves instances of [T] converted into a [String] using [converter] in [SharedPreferences] */
-class ConverterAdapter<T>(private val converter: Preference.Converter<T>) : Adapter<T> {
+class ConverterAdapter<T : Any>(private val converter: Preference.Converter<T?>) : Adapter<T> {
     override fun get(key: String?, sharedPreference: SharedPreferences, defaultValue: T): T {
         val serialized = sharedPreference.getString(key, null) ?: return defaultValue
-        return converter.deserialize(serialized)
+        return converter.deserialize(serialized) ?: defaultValue
     }
 
     override fun set(key: String?, value: T, editor: SharedPreferences.Editor) {
@@ -74,7 +73,7 @@ class EnumAdapter<T : Enum<T>>(private val clazz: Class<T>) : Adapter<T> {
         val value = sharedPreference.getString(key, null) ?: return defaultValue
         return try {
             java.lang.Enum.valueOf(clazz, value)
-        } catch (e: IllegalArgumentException) {
+        } catch (_: IllegalArgumentException) {
             defaultValue
         }
     }
@@ -122,45 +121,31 @@ object LongAdapter : Adapter<Long> {
 }
 
 /** Store and retrieves instances of [String] in [SharedPreferences] */
-object StringAdapter : Adapter<String?> {
+object StringAdapter : Adapter<String> {
     override fun get(
         key: String?,
         sharedPreference: SharedPreferences,
-        defaultValue: String?
-    ): String? {
-        return sharedPreference.getString(key, defaultValue)
+        defaultValue: String
+    ): String {
+        return sharedPreference.getString(key, defaultValue) ?: defaultValue
     }
 
-    override fun set(key: String?, value: String?, editor: SharedPreferences.Editor) {
+    override fun set(key: String?, value: String, editor: SharedPreferences.Editor) {
         editor.putString(key, value)
     }
 }
 
 /** Store and retrieves instances of a collection of [String] within a [Set] in [SharedPreferences] */
-object StringSetAdapter : Adapter<Set<String?>?> {
+object StringSetAdapter : Adapter<Set<String?>> {
     override fun get(
         key: String?,
         sharedPreference: SharedPreferences,
-        defaultValue: Set<String?>?
-    ): Set<String?>? {
-        return sharedPreference.getStringSet(key, defaultValue)?.toSet()
+        defaultValue: Set<String?>
+    ): Set<String?> {
+        return sharedPreference.getStringSet(key, defaultValue)?.toSet().orEmpty()
     }
 
-    override fun set(key: String?, value: Set<String?>?, editor: SharedPreferences.Editor) {
+    override fun set(key: String?, value: Set<String?>, editor: SharedPreferences.Editor) {
         editor.putStringSet(key, value)
-    }
-}
-
-internal class OptionalAdapter<T>(private val adapter: Adapter<T?>) : Adapter<Optional<T>> {
-    override fun get(
-        key: String?,
-        sharedPreference: SharedPreferences,
-        defaultValue: Optional<T>
-    ): Optional<T> {
-        return Optional.fromNullable(adapter.get(key, sharedPreference, defaultValue.orNull()))
-    }
-
-    override fun set(key: String?, value: Optional<T>, editor: SharedPreferences.Editor) {
-        adapter.set(key, value.orNull(), editor)
     }
 }

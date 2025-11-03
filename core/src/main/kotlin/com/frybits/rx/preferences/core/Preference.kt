@@ -18,6 +18,7 @@
 
 package com.frybits.rx.preferences.core
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.annotation.RestrictTo
 
@@ -89,6 +90,8 @@ private class PreferenceImpl<T>(
 
     override var value: T
         get() = adapter.get(key, sharedPreferences, defaultValue)
+
+        @SuppressLint("UseKtx")
         set(value) {
             with(sharedPreferences.edit()) {
                 adapter.set(key, value, this)
@@ -99,6 +102,7 @@ private class PreferenceImpl<T>(
     override val isSet: Boolean
         get() = sharedPreferences.contains(key)
 
+    @SuppressLint("UseKtx")
     override fun delete() {
         sharedPreferences.edit().remove(key).apply()
     }

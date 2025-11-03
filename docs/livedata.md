@@ -15,12 +15,12 @@ implementation "com.frybits.rx.preferences:livedata:2.0.1"
     ```kotlin
     val rxSharedPreferences = sharedPreferences.asRxSharedPreferences()
 
-    val usernamePref: Preference<String?> = rxSharedPreferences.getString("username")
+    val usernamePref: Preference<String> = rxSharedPreferences.getString("username")
 
-    val usernameLiveData: LiveData<String?> = usernamePref.asLiveData()
+    val usernameLiveData: LiveData<String> = usernamePref.asLiveData()
 
     usernameLiveData.observeForever { name ->
-        println(name) // Immediately emits 'null'
+        println(name) // Immediately emits ''
     }
 
     usernamePref.value = "bob"
@@ -37,7 +37,7 @@ implementation "com.frybits.rx.preferences:livedata:2.0.1"
     LiveData<String> usernameLiveData = LiveDataPreference.asLiveData(usernamePref);
 
     usernameLiveData.observeForever(s -> {
-        System.out.println(s); // Immediately emits 'null'
+        System.out.println(s); // Immediately emits ''
     });
 
     usernamePref.setValue("bob");

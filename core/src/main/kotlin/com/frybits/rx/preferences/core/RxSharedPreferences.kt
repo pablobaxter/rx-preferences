@@ -20,6 +20,7 @@
 
 package com.frybits.rx.preferences.core
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import android.os.Build
 import androidx.annotation.CheckResult
@@ -144,55 +145,56 @@ class RxSharedPreferences private constructor(
 
     @CheckResult
     @Deprecated(
-        message = "Not used any longer. Use 'getObject()' with 'asOptional()' operator for handle nullable objects.",
+        message = "Not used any longer. Use 'getObject()'.",
         replaceWith = ReplaceWith(
             expression = "getObject(key, defaultValue, converter)"
         ),
-        level = DeprecationLevel.WARNING
+        level = DeprecationLevel.ERROR
     )
     fun <T : Any> getObjectNonNull(
         key: String?,
         defaultValue: T,
-        converter: Preference.Converter<T>
+        converter: Preference.Converter<T?>
     ): Preference<T> {
         return getObject(key, defaultValue, converter)
     }
 
     /** Creates a [T] preference for the [key] using the [converter], and with a default of [defaultValue]. */
     @CheckResult
-    fun <T> getObject(
+    fun <T : Any> getObject(
         key: String?,
         defaultValue: T,
-        converter: Preference.Converter<T>
+        converter: Preference.Converter<T?>
     ): Preference<T> {
         return Preference(this, key, defaultValue, ConverterAdapter(converter))
     }
 
     /** Creates a [String] preference for the [key] with a default of an empty string */
     @CheckResult
-    fun getString(key: String?): Preference<String?> {
+    fun getString(key: String?): Preference<String> {
         return getString(key, "") // Rx2 doesn't allow null values
     }
 
     /** Creates a [String] preference for the [key] with a default of [defaultValue] */
     @CheckResult
-    fun getString(key: String?, defaultValue: String?): Preference<String?> {
+    fun getString(key: String?, defaultValue: String): Preference<String> {
         return Preference(this, key, defaultValue, StringAdapter)
     }
 
     /** Creates a string [Set] preference for the [key] with a default of [emptySet] */
     @CheckResult
-    fun getStringSet(key: String?): Preference<Set<String?>?> {
+    fun getStringSet(key: String?): Preference<Set<String?>> {
         return getStringSet(key, emptySet()) // Rx2 doesn't allow null values
     }
 
     /** Creates a string [Set] preference for the [key] with a default of [defaultValue] */
     @CheckResult
-    fun getStringSet(key: String?, defaultValue: Set<String?>?): Preference<Set<String?>?> {
+    fun getStringSet(key: String?, defaultValue: Set<String?>): Preference<Set<String?>> {
         return Preference(this, key, defaultValue, StringSetAdapter)
     }
 
     /** Clears the underlying shared preferences */
+    @SuppressLint("UseKtx")
     fun clear() {
         sharedPreferences.edit().clear().apply()
     }

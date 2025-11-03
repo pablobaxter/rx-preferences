@@ -23,11 +23,18 @@ import android.content.SharedPreferences.Editor
 import com.frybits.rx.preferences.core.IntegerAdapter
 import com.frybits.rx.preferences.core.Preference
 import com.frybits.rx.preferences.core.RxSharedPreferences.Companion.asRxSharedPreferences
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.toCollection
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
+import org.junit.After
+import org.junit.Before
 import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.eq
@@ -40,6 +47,18 @@ import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
 
 class CoroutinePreferenceTest {
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Before
+    fun setup() {
+        Dispatchers.setMain(UnconfinedTestDispatcher())
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
+    }
 
     @Test
     fun testPreferenceFlowOnStart() = runTest {

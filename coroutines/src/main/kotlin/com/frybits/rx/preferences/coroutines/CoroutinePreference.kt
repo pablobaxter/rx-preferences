@@ -21,6 +21,7 @@
 
 package com.frybits.rx.preferences.coroutines
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.annotation.CheckResult
 import com.frybits.rx.preferences.core.Preference
@@ -60,6 +61,7 @@ fun <T> Preference<T>.asFlow(): Flow<T> {
  *
  * @return `true` if the data was stored, `false` if there was an error storing the data.
  */
+@SuppressLint("UseKtx")
 @JvmSynthetic
 suspend fun <T> Preference<T>.commitValue(value: T): Boolean {
     return withContext(Dispatchers.IO) {
@@ -91,6 +93,7 @@ fun <T> Preference<T>.asCollector(committing: Boolean = false): FlowCollector<T>
 /**
  * Deletes the underlying value using [android.content.SharedPreferences.Editor.commit], suspending using [Dispatchers.IO].
  */
+@SuppressLint("UseKtx")
 @JvmSynthetic
 suspend fun <T> Preference<T>.deleteAndCommit(): Boolean {
     return withContext(Dispatchers.IO) {
