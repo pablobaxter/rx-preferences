@@ -6,7 +6,7 @@ The coroutines library adds extension functions to convert the `Prefrence` into 
 
 ## Getting the dependency
 ```groovy
-implementation "com.frybits.rx.preferences:coroutines:2.0.1"
+implementation "com.frybits.rx.preferences:coroutines:2.1.0"
 ```
 
 ## Usage
