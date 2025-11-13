@@ -50,7 +50,7 @@ private fun ApplicationExtension.configureAndroidApplication() {
     configureCommonAndroid()
 
     buildTypes {
-        maybeCreate("release").apply {
+        release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }

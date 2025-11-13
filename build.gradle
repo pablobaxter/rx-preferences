@@ -2,3 +2,11 @@ plugins {
     id 'com.autonomousapps.dependency-analysis'
     id 'org.jetbrains.dokka'
 }
+
+dependencies {
+    dokka(project(":core"))
+    dokka(project(":coroutines"))
+    dokka(project(":livedata"))
+    dokka(project(":rx2"))
+    dokka(project(":rx3"))
+}

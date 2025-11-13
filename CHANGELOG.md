@@ -1,6 +1,6 @@
 # Change Log
 
-### Unreleased
+### Version 2.1.0 / 2025-11-12
 * **BREAKING CHANGES**
   * `StringAdapter` no long returns a null `String`, and requires a non-null `String` default
   * `RxSharedPreferences.getString()` no longer returns `Preference<String?>` and instead returns `Preference<String>`
