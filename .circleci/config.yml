@@ -410,6 +410,7 @@ jobs:
           cat README.md | grep -v '\[8\]' | grep -v '\[9\]' | grep -v '\[10\]' | grep -v '\[11\]' | grep -v '\[12\]' | grep -v '\[13\]' | grep -v '\[14\]' > docs/index.md
           cat CHANGELOG.md > docs/changelog.md
       - run: |
+          sudo apt-get update
           sudo apt-get install python3
           sudo apt install python3-pip
           pip3 install mkdocs-material
