@@ -24,17 +24,11 @@ import com.android.build.gradle.LibraryPlugin
 import com.vanniktech.maven.publish.MavenPublishPlugin
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.apply
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.the
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.dokka.gradle.DokkaMultiModuleTask
+import org.jetbrains.dokka.gradle.DokkaExtension
 import org.jetbrains.dokka.gradle.DokkaPlugin
-import org.jetbrains.dokka.gradle.DokkaTaskPartial
-import org.jetbrains.dokka.gradle.GradleExternalDocumentationLinkBuilder
 import org.jetbrains.kotlin.gradle.plugin.KotlinAndroidPluginWrapper
-import java.net.URI
 
 class FrybitsLibraryPlugin : Plugin<Project> {
 
@@ -61,7 +55,7 @@ private fun LibraryExtension.configureAndroidLibrary() {
     configureCommonAndroid()
 
     buildTypes {
-        maybeCreate("release").apply {
+        release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
@@ -70,43 +64,29 @@ private fun LibraryExtension.configureAndroidLibrary() {
 
 private fun Project.configureDokka() {
     apply<DokkaPlugin>()
-    val mmTask = tasks.findByName("dokkaHtmlMultiModule") as? DokkaMultiModuleTask
-    if (mmTask != null) {
-        // Disabling for library modules, so the app submodule doesn't publish docs
-        mmTask.enabled = false
-    }
-    tasks.withType<DokkaTaskPartial> {
-        dokkaSourceSets.configureEach {
+
+    extensions.configure<DokkaExtension> {
+        dokkaPublications.named("html") {
+            suppressInheritedMembers.set(true)
+            failOnWarning.set(true)
+        }
+
+        dokkaSourceSets.named("main") {
             sourceLink {
-                localDirectory.set(this@configureDokka.projectDir.resolve("src").resolve("main").resolve("kotlin"))
-                remoteUrl.set(URI("https://github.com/pablobaxter/rx-preferences/tree/master/${this@configureDokka.name}/src/main/kotlin/").toURL())
+                localDirectory.set(layout.projectDirectory.dir("src").dir("main").dir("kotlin"))
+                remoteUrl("https://github.com/pablobaxter/rx-preferences/tree/master/${this@configureDokka.name}/src/main/kotlin/")
                 remoteLineSuffix.set("#L")
             }
-            externalDocumentationLinks.add(
-                GradleExternalDocumentationLinkBuilder(this@configureDokka).apply {
-                    url.set(URI("https://reactivex.io/RxJava/2.x/javadoc/").toURL())
-                }
-            )
-            externalDocumentationLinks.add(
-                GradleExternalDocumentationLinkBuilder(this@configureDokka).apply {
-                    url.set(URI("https://reactivex.io/RxJava/3.x/javadoc/").toURL())
-                }
-            )
-            externalDocumentationLinks.add(
-                GradleExternalDocumentationLinkBuilder(this@configureDokka).apply {
-                    url.set(URI("https://kotlinlang.org/api/kotlinx.coroutines/").toURL())
-                }
-            )
-            val guavaVersion = this@configureDokka.the<VersionCatalogsExtension>()
-                .named("libs")
-                .findVersion("android-guava")
-                .get()
-            externalDocumentationLinks.add(
-                GradleExternalDocumentationLinkBuilder(this@configureDokka).apply {
-                    url.set(URI("https://google.github.io/guava/releases/$guavaVersion/api/docs/").toURL())
-                    packageListUrl.set(URI("https://google.github.io/guava/releases/$guavaVersion/api/docs/element-list").toURL())
-                }
-            )
+            externalDocumentationLinks.create("rxJava2") {
+                url("https://reactivex.io/RxJava/2.x/javadoc/")
+            }
+            externalDocumentationLinks.create("rxJava3") {
+                url("https://reactivex.io/RxJava/3.x/javadoc/")
+            }
+            externalDocumentationLinks.create("coroutines") {
+                url("https://kotlinlang.org/api/kotlinx.coroutines/")
+            }
+
         }
     }
 }

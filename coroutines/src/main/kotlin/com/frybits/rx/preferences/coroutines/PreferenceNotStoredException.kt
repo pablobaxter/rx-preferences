@@ -20,7 +20,7 @@
 package com.frybits.rx.preferences.coroutines
 
 /**
- * Thrown when [android.content.SharedPreferences.Editor.commit] fails in [CoroutinePreference.asCollector]
+ * Thrown when [android.content.SharedPreferences.Editor.commit] fails in [asCollector]
  */
 class PreferenceNotStoredException internal constructor(message: String) : Exception(message)
 

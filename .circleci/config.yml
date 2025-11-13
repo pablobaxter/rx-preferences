@@ -404,9 +404,9 @@ jobs:
           cache-prefix: livedata-v1
       - android/restore-build-cache:
           cache-prefix: livedata-v1
-      - run: ./gradlew dokkaHtmlMultiModule
+      - run: ./gradlew dokkaGenerate
       - run: |
-          mv ./build/dokka/htmlMultiModule docs/api
+          mv ./build/dokka/html docs/api
           cat README.md | grep -v '\[8\]' | grep -v '\[9\]' | grep -v '\[10\]' | grep -v '\[11\]' | grep -v '\[12\]' | grep -v '\[13\]' | grep -v '\[14\]' > docs/index.md
           cat CHANGELOG.md > docs/changelog.md
       - run: |
